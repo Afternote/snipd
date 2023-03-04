@@ -1,6 +1,7 @@
 import { Card, Typography } from '@mui/material'
 import confused from '../assets/confused.png'
 import {Button} from '@mui/material'
+import { openAllSnipdPage } from '../utils/snippitUtils';
 
 export function EmptySelecion() {
   return (
