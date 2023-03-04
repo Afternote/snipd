@@ -3,11 +3,13 @@ import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import NewCategory from './NewCategory.';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import SchoolIcon from '@mui/icons-material/School';
@@ -55,11 +57,18 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function CategoriesMenu() {
+export default function CategoriesMenu({addCategory, categoriesList}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [custom, setCustom] = React.useState(false)
+
+  const handleCustomClose = () => {
+    setCustom(true)
+  }
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -100,11 +109,28 @@ export default function CategoriesMenu() {
           <FormatQuoteIcon />
           Quotes
         </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <DashboardCustomizeIcon />
-          Custom Category
-        </MenuItem>
+        {
+          categoriesList.map(category => {
+            return (
+              <MenuItem key={category} onClick={handleClose} disableRipple>
+              <FormatQuoteIcon />
+                {category}
+              </MenuItem>
+            );
+          })
+        }
+        {
+          !custom ? <MenuItem onClick={handleCustomClose} disableRipple>
+             <DashboardCustomizeIcon />
+             Custom Category
+             </MenuItem> : <NewCategory addCategory={addCategory} style={{margin:'8px'}}/>
+        }
+
       </StyledMenu>
     </div>
   );
 }
+// (!custom) ? (<MenuItem onClick={handleCustomClose} disableRipple>
+//   <DashboardCustomizeIcon />
+//   Custom Category
+// </MenuItem>) : (<NewCategory addCategory={addCategory} style={{margin:'8px'}}/>)

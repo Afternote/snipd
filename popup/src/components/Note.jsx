@@ -23,7 +23,11 @@ const bull = (
 
 export default function Note({highlightedText, pageNumber, date, time, bookName, snipd}) {
 
- 
+  const [categoriesList, setCategoriesList]  = React.useState([])
+  const addCategory = (newCategory)=>{
+    setCategoriesList((old) => [...old, newCategory]);
+  };
+
 
   return (
     <Card style={{
@@ -48,36 +52,38 @@ export default function Note({highlightedText, pageNumber, date, time, bookName,
 
         <Stack direction="row" justifyContent="space-evenly"
           alignItems="center"
-          spacing={0}>
-          <Typography style={{
+          >
+          <Typography display="inline" style={{
             margin: '16px',
+            width:'50px',
             fontSize: '12px'
           }}
-            sx={{ mb: 3.0 }} color="text.secondary">
+             color="text.secondary">
             Your Highlight on page {pageNumber}
           </Typography>
 
 
-          <Typography style={{
+          <Typography display="inline" style={{
             margin: '16px',
-            fontSize: '12px'
+            fontSize: '12px',
+            display:'inline'
 
-          }} sx={{ mb: 1.5 }} color="text.secondary">
+          }}  color="text.secondary">
             Location 264 - 265
           </Typography>
 
-          <Typography style={{
+          <Typography display="inline" style={{
             margin: '16px',
             fontSize: '12px'
 
-          }} sx={{ mb: 1.5 }} color="text.secondary">
+          }}  color="text.secondary">
             Added on {date}
           </Typography>
-          <Typography style={{
+          <Typography display="inline" style={{
             margin: '16px',
             fontSize: '12px'
 
-          }} sx={{ mb: 1.5 }} color="text.secondary">
+          }}  color="text.secondary">
             {time}
           </Typography>
 
@@ -100,7 +106,7 @@ export default function Note({highlightedText, pageNumber, date, time, bookName,
 
       </CardContent>
       <center>
-      <CategoriesMenu style={{
+      <CategoriesMenu categoriesList={categoriesList} addCategory= {addCategory} style={{
         alignItems:'center'
       }}/>
       </center>
