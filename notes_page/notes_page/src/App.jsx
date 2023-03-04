@@ -17,7 +17,7 @@ const arrs = [{"id":1,
 function App() {
   
   return (
-    <div className="App">
+    <div className="App" style={{ width: '95vh' }}>
     {arrs.map(snippetList)}
      
     </div>
@@ -27,11 +27,13 @@ function App() {
 
 function snippetList(arr){
   return (<>
+  
     <Snippet 
           source={arr.source}
           title={arr.title}
           content={arr.content}
           date={arr.date}/>
+  
   </>)
 }
 
@@ -46,21 +48,21 @@ function Snippet(props){
   //   </>
   // )
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
-
+    <Card shadow="sm" padding="lg" radius="md" withBorder
+       style={{ marginBottom: '2rem' }}>
       <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>title</Text>
-        <Badge color="pink" variant="light">
-          date
+        <Text weight={500}>{props.title}</Text>
+        <Badge color="green" variant="light">
+          {props.date}
         </Badge>
       </Group>
 
       <Text size="sm" color="dimmed">
-     content
+     {props.content}
       </Text>
 
-      <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-        link
+      <Button variant="light" color="pink" fullWidth mt="md" radius="md">
+        {props.source}
       </Button>
     </Card>
   );
