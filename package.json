@@ -3,5 +3,10 @@
     "popup",
     "notes_page",
     "extension"
-  ]
+  ],
+  "dependencies": {
+    "@mantine/ds": "^6.0.0",
+    "@tabler/icons": "^2.7.0",
+    "@tabler/icons-react": "^2.7.0"
+  }
 }
