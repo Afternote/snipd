@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 
 import Typography from '@mui/material/Typography';
-import  "../App.css";
+import "../App.css";
 import { height } from '@mui/system';
 import { Chip, Stack } from '@mui/material';
 
@@ -21,97 +21,102 @@ const bull = (
 );
 
 export default function Note() {
-    return (
-      <Card style={{
-        width: '100%',
-        height:'100%',
-        
-      }}>
-        <CardContent>
+
+  const [highlightedText, setHighlightedText] = React.useState([])
+  const [bookName, setBookName] = React.useState([])
+  const [pageNumber, setPageNumber] = React.useState([])
+  const [date, setDate] = React.useState([])
+  const [time, setTime] = React.useState([])
+
+  return (
+    <Card style={{
+      width: '100%',
+      height: '100%',
+
+    }}>
+      <CardContent>
+        <Typography style={{
+          margin: '16px',
+          textAlign: 'center'
+        }} variant='h2' component="div"  >
+          Selected Highlight
+        </Typography>
+        <br></br>
+
+        <Divider variant="middle" >
+          <Chip label={bookName} />
+        </Divider>
+
+        <br></br>
+
+        <Stack direction="row" justifyContent="space-evenly"
+          alignItems="center"
+          spacing={0}>
           <Typography style={{
-            margin:'16px',
-            textAlign:'center'
-          }} variant='h2'  component="div"  >
-           Selected Highlight
+            margin: '16px',
+            fontSize: '24px'
+          }}
+            sx={{ mb: 3.0 }} color="text.secondary">
+            Your Highlight on page {pageNumber}
           </Typography>
-          <br></br>
-          
-          <Divider variant="middle" >
-            <Chip label="The Brain: The Story of You" />
-          </Divider>
-
-          <br></br>
-
-          <Stack direction="row" justifyContent="space-evenly"
-  alignItems="center"
-  spacing={0}>
-          <Typography style={{
-            margin:'16px',
-            fontSize:'24px'
-          }} 
-          sx={{ mb: 3.0 }} color="text.secondary">
-            Your Highlight on page 18
-          </Typography>
 
 
           <Typography style={{
-            margin:'16px',
-            fontSize:'24px'
+            margin: '16px',
+            fontSize: '24px'
 
-          }}sx={{ mb: 1.5 }} color="text.secondary">
+          }} sx={{ mb: 1.5 }} color="text.secondary">
             Location 264 - 265
           </Typography>
 
           <Typography style={{
-            margin:'16px',
-            fontSize:'24px'
+            margin: '16px',
+            fontSize: '24px'
 
-          }}sx={{ mb: 1.5 }} color="text.secondary">
-            Added on Monday, February 8, 2021
+          }} sx={{ mb: 1.5 }} color="text.secondary">
+            Added on {date}
           </Typography>
           <Typography style={{
-            margin:'16px',
-            fontSize:'24px'
+            margin: '16px',
+            fontSize: '24px'
 
-          }}sx={{ mb: 1.5 }} color="text.secondary">
-            4:14:01 PM
+          }} sx={{ mb: 1.5 }} color="text.secondary">
+            {time}
           </Typography>
 
-          </Stack>
-          
+        </Stack>
 
-          <Typography style={{
-            margin:'16px',
-            fontSize:'24px',
-            textAlign:'center'
-          }}sx={{ mb: 1.5 }} >
-            ======================
-          </Typography>
-          <Typography style={{
-            margin:'16px',
-            fontSize:'24px',
-          }}variant="body2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni in, tempora vel, labore excepturi aperiam voluptate ducimus, dolorem cum aliquid sit? Est voluptates hic voluptatibus maiores fugit enim sunt illo!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, doloremque blanditiis aperiam labore possimus fugit minus facere repellendus corrupti quae eaque ab sint officiis deserunt. Magni voluptatum modi sapiente porro!
-            <br />
-            {'"a benevolent smile"'}
-          </Typography>
 
-          <Typography style={{
-            margin:'16px',
-            fontSize:'24px',
-            textAlign:'center'
-          }}sx={{ mb: 1.5 }} >
-            ======================
-          </Typography>
-        </CardContent>
-        <CardActions style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <Button variant="outlined" >Central Page</Button>
-        </CardActions>
-      </Card>
-    );
-  }
+        <Typography style={{
+          margin: '16px',
+          fontSize: '24px',
+          textAlign: 'center'
+        }} sx={{ mb: 1.5 }} >
+          ======================
+        </Typography>
+        <Typography style={{
+          margin: '16px',
+          fontSize: '24px',
+        }} variant="body2">
+          {highlightedText}
+          <br />
+        </Typography>
+
+        <Typography style={{
+          margin: '16px',
+          fontSize: '24px',
+          textAlign: 'center'
+        }} sx={{ mb: 1.5 }} >
+          ======================
+        </Typography>
+      </CardContent>
+      <CardActions style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <Button variant="outlined" >Central Page</Button>
+      </CardActions>
+    </Card>
+  );
+}
