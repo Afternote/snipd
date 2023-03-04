@@ -5,7 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-
+import CategoriesMenu from './CategoriesMenu';
 import Typography from '@mui/material/Typography';
 import "../App.css";
 import { height } from '@mui/system';
@@ -99,6 +99,11 @@ export default function Note({highlightedText, pageNumber, date, time, bookName,
         <hr />
 
       </CardContent>
+      <center>
+      <CategoriesMenu style={{
+        alignItems:'center'
+      }}/>
+      </center>
       <CardActions style={{
         display: 'flex',
         alignItems: 'center',
