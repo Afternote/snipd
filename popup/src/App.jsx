@@ -46,19 +46,11 @@ async function getSnipObjectFromCurrentSelection() {
 }
 
 function App() {
-  const [title, setTitle] = useState("");
-  const [source, setSource] = useState("");
-  const [content, setContent] = useState("");
-  const [date, setDate] = useState("");
   const [snipd, setSnipd] = useState();
 
   useEffect(() => {
     getSnipObjectFromCurrentSelection().then((selection) => {
       setSnipd(selection);
-      setTitle(selection.title);
-      setSource(selection.source);
-      setContent(selection.content);
-      setDate(selection.date);
     });
   }, []);
 
@@ -69,13 +61,8 @@ function App() {
         width: "100%",
         height: "100%",
       }}>
-      {content !== "" ? (
+      {snipd?.content !== null || undefined || "" ? (
         <Note
-          bookName={title}
-          highlightedText={content}
-          pageNumber={""}
-          date={new Date(date).toLocaleDateString()}
-          time={new Date(date).toLocaleTimeString()}
           snipd={snipd}
           style={{
             width: "100%",

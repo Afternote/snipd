@@ -18,7 +18,7 @@ const bull = (
   </Box>
 );
 
-export default function Note({ highlightedText, pageNumber, date, time, bookName, snipd }) {
+export default function Note({ snipd }) {
   const [categoriesList, setCategoriesList] = React.useState([]);
   const addCategory = (newCategory) => {
     setCategoriesList((old) => [...old, newCategory]);
@@ -33,61 +33,28 @@ export default function Note({ highlightedText, pageNumber, date, time, bookName
       <CardContent>
         <Typography
           style={{
-            margin: "16px",
+            margin: "8px",
             textAlign: "center",
           }}
-          variant="h4"
-          component="div">
+          fontSize={24}
+          variant="h4">
           Selected Highlight
         </Typography>
-        <br></br>
 
         <Divider variant="middle">
-          <Chip label={bookName} />
+          <Chip label={snipd?.title} />
         </Divider>
-
-        <br></br>
 
         <Stack direction="row" justifyContent="space-evenly" alignItems="center">
           <Typography
             display="inline"
             style={{
-              margin: "16px",
-              width: "50px",
+              margin: "8px",
               fontSize: "12px",
             }}
             color="text.secondary">
-            Your Highlight on page {pageNumber}
-          </Typography>
-
-          <Typography
-            display="inline"
-            style={{
-              margin: "16px",
-              fontSize: "12px",
-              display: "inline",
-            }}
-            color="text.secondary">
-            Location 264 - 265
-          </Typography>
-
-          <Typography
-            display="inline"
-            style={{
-              margin: "16px",
-              fontSize: "12px",
-            }}
-            color="text.secondary">
-            Added on {date}
-          </Typography>
-          <Typography
-            display="inline"
-            style={{
-              margin: "16px",
-              fontSize: "12px",
-            }}
-            color="text.secondary">
-            {time}
+            on {new Date(snipd?.date).toLocaleDateString()}{" "}
+            {new Date(snipd?.date).toLocaleTimeString()}
           </Typography>
         </Stack>
 
@@ -99,7 +66,7 @@ export default function Note({ highlightedText, pageNumber, date, time, bookName
             fontSize: "12px",
           }}
           variant="body2">
-          {highlightedText}
+          {snipd?.content}
           <br />
         </Typography>
 
