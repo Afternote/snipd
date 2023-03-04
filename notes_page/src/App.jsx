@@ -54,50 +54,19 @@ const arrs = [
   },
 ];
 
+function filterSnipds(searchQuery, snipds) {
+  return snipds.filter((a)=>{if(a.content.includes(searchQuery.toLowerCase())){return a}});
+}
+
 function App() {
-  const [snipds, setSnipds] = useState([]);
-  useEffect(() => {
-    // chrome.storage.local.get(["snipd_store"]).then(store_obj => {
-    //   setSnipds(store_obj.snipd_store);
-    // });
-    setSnipds(arrs);
-  }, []);
-
   return (
-    <AppShell
-      padding="md"
-      navbar={
-        <Navbar
-          width={{ base: 280 }}
-          fixed
-          p={10}
-          style={{ backgroundColor: "white" }}
-        >
-          <Center>
-            <img src={reactLogo} width="100px" />
-          </Center>
-
-          <Title order={2} align="left" color={"green"} mt={10}>
-            Collections
-          </Title>
-          <Divider mb={5} mt={5} />
-          <Stack spacing={"xs"} color={"black"}>
-            <NavLink label="History Research" />
-            <NavLink label="Interesting Reddit Collection" />
-            <NavLink label="Cats" />
-          </Stack>
-        </Navbar>
-      }
-    >
-      <div className="App" style={{ width: "95vh", margin: "auto" }}>
-        <Group position="apart" mb={"lg"}>
-          <Title order={2}>Snipd</Title>
-          <MantineSearchBar />
-        </Group>
-        <Stack>
-          <Divider />
-          {snipds.map(snippetList)}
-        </Stack>
+    <>
+      
+      <div className="App" style={{ width: "95vh", margin:"auto" }}>
+      
+        <img src={reactLogo} width="70vh"/>
+        <MantineSearchBar/>
+        {arrs.map(snippetList)}
       </div>
     </AppShell>
   );

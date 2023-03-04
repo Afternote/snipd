@@ -1,15 +1,29 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
 import Note from './components/Note'
-import Skeleton from '@mui/material/Skeleton';
 import { EmptySelecion } from './components/EmptySelecion';
 
 async function getCurrentSelection() {
     const [currentTab] = await chrome.tabs.query({active: true, currentWindow: true});
     let [{ result }] = await chrome.scripting.executeScript({
         target: { tabId: currentTab.id },
-        func: () => window.getSelection().toString(),
+        func: async () => {
+            if (!window.location.href.endsWith('.pdf')) {
+                return window.getSelection().toString();
+            } else {
+                let selectionPromise = {
+                    then(resolve, _) {
+                        chrome.storage.local.get(["selectionText"]).then(obj => {
+                            resolve(obj.selectionText);
+                        });
+                    }
+                };
+
+                let selectionText = await selectionPromise;
+                return selectionText;
+            }
+        },
     });
+    console.log(result);
     return result
 }
 
