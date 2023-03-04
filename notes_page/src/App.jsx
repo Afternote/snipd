@@ -8,8 +8,11 @@ import {
   Group,
   Stack,
   Divider,
+  Navbar,
   Title,
+  AppShell,
   Center,
+  NavLink,
 } from "@mantine/core";
 import MantineSearchBar from "./components/searchBar";
 import { useEffect, useState } from "react";
@@ -61,9 +64,32 @@ function App() {
   }, []);
 
   return (
-    <>
+    <AppShell
+      padding="md"
+      navbar={
+        <Navbar
+          width={{ base: 280 }}
+          fixed
+          p={10}
+          style={{ backgroundColor: "white" }}
+        >
+          <Center>
+            <img src={reactLogo} width="100px" />
+          </Center>
+
+          <Title order={2} align="left" color={"green"} mt={10}>
+            Collections
+          </Title>
+          <Divider mb={5} mt={5} />
+          <Stack spacing={"xs"} color={"black"}>
+            <NavLink label="History Research" />
+            <NavLink label="Interesting Reddit Collection" />
+            <NavLink label="Cats" />
+          </Stack>
+        </Navbar>
+      }
+    >
       <div className="App" style={{ width: "95vh", margin: "auto" }}>
-        <img src={reactLogo} width="70vh" />
         <Group position="apart" mb={"lg"}>
           <Title order={2}>Snipd</Title>
           <MantineSearchBar />
@@ -73,7 +99,7 @@ function App() {
           {snipds.map(snippetList)}
         </Stack>
       </div>
-    </>
+    </AppShell>
   );
 }
 
