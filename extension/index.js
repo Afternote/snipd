@@ -17,7 +17,13 @@ ext_api.contextMenus.onClicked.addListener((info, tab) => {
 });
 
 // Make a storage array if it doesn't exist
-ext_api.storage.local.get(["snipd_store"]).then(e => {
-    if (!e.snipd_store);
-        ext_api.storage.local.set({snipd_store: []});
+ext_api.storage.local.get(["snipd_store"]).then((e) => {
+  if (!e.snipd_store);
+  ext_api.storage.local.set({ snipd_store: [] });
+});
+
+chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+  chrome.tabs.sendMessage(tab.id, "getPdfSelection", (sel) => {
+    console.log(sel);
+  });
 });
