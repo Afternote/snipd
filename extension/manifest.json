@@ -1,6 +1,6 @@
 {
   "description": "WIP",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "snipd",
   "version": "1.0",
   "homepage_url": "https://github.com/PDFilez/snipd",
