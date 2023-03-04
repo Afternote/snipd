@@ -17,19 +17,5 @@
   "options_ui": {
     "page": "notes_page/index.html",
     "open_in_tab": true
-  },
-  "content_scripts": [
-    {
-      "matches": ["file:///*"],
-      "js": ["pdf_inject.js"],
-      "run_at": "document_start"
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["query_pdf.js"],
-      "matches": ["file:///*"],
-      "use_dynamic_url": true
-    }
-  ]
+  }
 }

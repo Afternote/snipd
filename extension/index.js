@@ -10,8 +10,13 @@ ext_api.contextMenus.create({
   id: ID_ADD_SELECTED_TEXT_TO_COLLECTION,
 });
 
-ext_api.contextMenus.onClicked.addListener((info, tab) => {
+ext_api.contextMenus.onClicked.addListener((info, _) => {
   if (info.menuItemId === ID_ADD_SELECTED_TEXT_TO_COLLECTION) {
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+      if (tabs[0].url.endsWith('.pdf')) {
+        chrome.storage.local.set({selectionText: info.selectionText});
+      }
+    });
     chrome.action.openPopup();
   }
 });
@@ -20,10 +25,4 @@ ext_api.contextMenus.onClicked.addListener((info, tab) => {
 ext_api.storage.local.get(["snipd_store"]).then((e) => {
   if (!e.snipd_store);
   ext_api.storage.local.set({ snipd_store: [] });
-});
-
-chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
-  chrome.tabs.sendMessage(tab.id, "getPdfSelection", (sel) => {
-    console.log(sel);
-  });
 });
