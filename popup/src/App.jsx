@@ -9,7 +9,13 @@ function App() {
     <div className="App" style={{
       width:'100%', height:'100%'
     }}>
-      <Note style={{
+      <Note 
+      bookName={"The Brain"}
+      highlightedText={"fasdfasdfsdf"}
+      pageNumber={"25"}
+      date={"Monday 25th March, 2023"}
+      time={"12:00 PM"}
+      style={{
         width:'100%', height:'100%'
       }}/>
     </div>

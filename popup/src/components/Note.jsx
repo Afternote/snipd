@@ -20,13 +20,9 @@ const bull = (
   </Box>
 );
 
-export default function Note() {
+export default function Note({highlightedText, pageNumber, date, time, bookName}) {
 
-  const [highlightedText, setHighlightedText] = React.useState([])
-  const [bookName, setBookName] = React.useState([])
-  const [pageNumber, setPageNumber] = React.useState([])
-  const [date, setDate] = React.useState([])
-  const [time, setTime] = React.useState([])
+ 
 
   return (
     <Card style={{
