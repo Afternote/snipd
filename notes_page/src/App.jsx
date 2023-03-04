@@ -55,14 +55,18 @@ const arrs = [
 ];
 
 function filterSnipds(searchQuery, snipds) {
-  return snipds.filter((a)=>{if(a.content.includes(searchQuery.toLowerCase())){return a}});
+  return snipds.filter((a) => {
+    if (a.content.includes(searchQuery.toLowerCase())) {
+      return a;
+    }
+  });
 }
 
 function App() {
   const [snipds, setSnipds] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
-    chrome.storage.local.get(["snipd_store"]).then(store_obj => {
+    chrome.storage.local.get(["snipd_store"]).then((store_obj) => {
       setSnipds(store_obj.snipd_store);
     });
     // setSnipds(arrs);
@@ -72,12 +76,7 @@ function App() {
     <AppShell
       padding="md"
       navbar={
-        <Navbar
-          width={{ base: 280 }}
-          fixed
-          p={10}
-          style={{ backgroundColor: "white" }}
-        >
+        <Navbar width={{ base: 280 }} fixed p={10} style={{ backgroundColor: "white" }}>
           <Center>
             <img src={reactLogo} width="100px" />
           </Center>
@@ -92,14 +91,15 @@ function App() {
             <NavLink label="Cats" />
           </Stack>
         </Navbar>
-      }
-    >
+      }>
       <div className="App" style={{ width: "95vh", margin: "auto" }}>
         <Group position="apart" mb={"lg"}>
           <Title order={2}>Snipd</Title>
-          <MantineSearchBar onSearch={(searchQuery) => {
-            setSearchQuery(searchQuery);
-          }}/>
+          <MantineSearchBar
+            onSearch={(searchQuery) => {
+              setSearchQuery(searchQuery);
+            }}
+          />
         </Group>
         <Stack>
           <Divider />
@@ -111,14 +111,7 @@ function App() {
 }
 
 function snippetList(arr) {
-  return (
-    <Snippet
-      source={arr.source}
-      title={arr.title}
-      content={arr.content}
-      date={arr.date}
-    />
-  );
+  return <Snippet source={arr.source} title={arr.title} content={arr.content} date={arr.date} />;
 }
 
 function Snippet(props) {

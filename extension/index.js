@@ -12,9 +12,9 @@ ext_api.contextMenus.create({
 
 ext_api.contextMenus.onClicked.addListener((info, _) => {
   if (info.menuItemId === ID_ADD_SELECTED_TEXT_TO_COLLECTION) {
-    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
-      if (tabs[0].url.endsWith('.pdf')) {
-        chrome.storage.local.set({selectionText: info.selectionText});
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+      if (tabs[0].url.endsWith(".pdf")) {
+        chrome.storage.local.set({ selectionText: info.selectionText });
       }
     });
     chrome.action.openPopup();

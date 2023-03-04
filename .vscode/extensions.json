@@ -1,6 +1,3 @@
 {
-  "recommendations": [
-    "esbenp.prettier-vscode",
-    "visualstudioexptteam.vscodeintellicode"
-  ]
+  "recommendations": ["esbenp.prettier-vscode", "visualstudioexptteam.vscodeintellicode"]
 }
