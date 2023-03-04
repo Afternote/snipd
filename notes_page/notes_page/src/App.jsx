@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import { Card, Text, Badge, Button, Group } from '@mantine/core';
 
 const arrs = [{"id":1,
               "source":"link1",
@@ -35,15 +36,34 @@ function snippetList(arr){
 }
 
 function Snippet(props){
-  return(
-    <><div>
-      <h1>{props.source}</h1>
-      <h1>{props.title}</h1>
-      <h1>{props.content}</h1>
-      <h1>{props.date}</h1>
-      </div>
-    </>
-  )
+  // return(
+  //   <><div>
+  //     <h1>{props.source}</h1>
+  //     <h1>{props.title}</h1>
+  //     <h1>{props.content}</h1>
+  //     <h1>{props.date}</h1>
+  //     </div>
+  //   </>
+  // )
+  return (
+    <Card shadow="sm" padding="lg" radius="md" withBorder>
+
+      <Group position="apart" mt="md" mb="xs">
+        <Text weight={500}>title</Text>
+        <Badge color="pink" variant="light">
+          date
+        </Badge>
+      </Group>
+
+      <Text size="sm" color="dimmed">
+     content
+      </Text>
+
+      <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+        link
+      </Button>
+    </Card>
+  );
 }
 
 
