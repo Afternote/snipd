@@ -1,5 +1,4 @@
 import reactLogo from "./assets/snipdLogo.jpg";
-import "./App.css";
 import {
   Card,
   Text,
@@ -58,9 +57,10 @@ const arrs = [
 function App() {
   const [snipds, setSnipds] = useState([]);
   useEffect(() => {
-    chrome.storage.local.get(["snipd_store"]).then(store_obj => {
-      setSnipds(store_obj.snipd_store);
-    });
+    // chrome.storage.local.get(["snipd_store"]).then(store_obj => {
+    //   setSnipds(store_obj.snipd_store);
+    // });
+    setSnipds(arrs);
   }, []);
 
   return (
