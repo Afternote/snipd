@@ -7,17 +7,13 @@
   "icons": {},
   "permissions": ["tabs", "activeTab", "contextMenus", "scripting"],
 
-  "browser_action": {
+  "action": {
     "default_title": "snipd",
     "default_popup": "popup/index.html"
   },
-
   "web_accessible_resources": [],
   "content_scripts": [],
   "background": {
-    "scripts": [
-      "node_modules/webextension-polyfill/dist/browser-polyfill.js",
-      "index.js"
-    ]
+    "service_worker": "index.js"
   }
 }
