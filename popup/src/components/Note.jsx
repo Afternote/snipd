@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import "../App.css";
 import { height } from '@mui/system';
 import { Chip, Stack } from '@mui/material';
-import { saveSnipd } from '../utils/snippitUtils';
+import { openAllSnipdPage, saveSnipd } from '../utils/snippitUtils';
 
 const bull = (
   <Box
@@ -113,7 +113,7 @@ export default function Note({highlightedText, pageNumber, date, time, bookName,
             }
           }
         }>Save Snippet</Button>
-        <Button variant="outlined" >Central Page</Button>
+        <Button variant="outlined" onClick={() => openAllSnipdPage()}>Central Page</Button>
       </CardActions>
     </Card>
   );

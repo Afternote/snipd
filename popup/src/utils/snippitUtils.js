@@ -7,4 +7,8 @@ function saveSnipd(snipd) {
     });
 }
 
-export { saveSnipd };
+function openAllSnipdPage() {
+    chrome.runtime.openOptionsPage();
+}
+
+export { saveSnipd, openAllSnipdPage };
