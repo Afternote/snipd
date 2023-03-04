@@ -15,5 +15,9 @@
   "content_scripts": [],
   "background": {
     "service_worker": "index.js"
+  },
+  "options_ui": {
+    "page": "notes_page/index.html",
+    "open_in_tab": true
   }
 }
