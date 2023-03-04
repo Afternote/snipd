@@ -108,6 +108,9 @@ export default function Note({highlightedText, pageNumber, date, time, bookName,
           () => {
             console.log(snipd);
             saveSnipd(snipd);
+            if(snipd){
+              window.close();
+            }
           }
         }>Save Snippet</Button>
         <Button variant="outlined" >Central Page</Button>
