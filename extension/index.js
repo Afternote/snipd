@@ -10,14 +10,38 @@ ext_api.contextMenus.create({
   id: ID_ADD_SELECTED_TEXT_TO_COLLECTION,
 });
 
+//context menu item for image
+ext_api.contextMenus.create({
+  title: "Add Image to Collection",
+  contexts: ["image"],
+  id: "add_image_to_collection",
+});
+
 ext_api.contextMenus.onClicked.addListener((info, _) => {
-  if (info.menuItemId === ID_ADD_SELECTED_TEXT_TO_COLLECTION) {
-    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-      if (tabs[0].url.endsWith(".pdf")) {
-        chrome.storage.local.set({ selectionText: info.selectionText });
-      }
-    });
-    chrome.action.openPopup();
+  switch (info.menuItemId) {
+    case "add_image_to_collection":
+      chrome.storage.local.set({
+        snip_time: new Date(),
+        snip_type: "image",
+        snip_content: info.srcUrl,
+        selectionText: info.srcUrl,
+      });
+      chrome.action.openPopup();
+      break;
+
+    case "add_selected_text_to_collection":
+      chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        if (tabs[0].url.endsWith(".pdf")) {
+          chrome.storage.local.set({
+            snip_time: new Date(),
+            snip_type: "text",
+            snip_content: info.selectionText,
+            selectionText: info.selectionText,
+          });
+        }
+      });
+      chrome.action.openPopup();
+      break;
   }
 });
 
