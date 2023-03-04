@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TextInput, Button, Container, Flex } from "@mantine/core";
 
-const MantineSearchBar = () => {
-  const [searchQuery, setSearchQuery] = useState("");
 
+const MantineSearchBar = ({someProp}) => {
+    // console.log(someProp);
+  const [searchQuery, setSearchQuery] = useState("");  
+     
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
   const handleSearchClick = () => {
     console.log(`Searching for "${searchQuery}"...`);
+
+    let x = someProp.filter((a)=>{if(a.content.includes(searchQuery.toLowerCase())){return a}});
+    
+    console.log(x);
   };
 
   return (
