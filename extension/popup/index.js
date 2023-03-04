@@ -1,14 +1,20 @@
-(async () => {
-    const [tab] = await browser.tabs.query({active: true, currentWindow: true});
-    let result;
-    try {
-    [{result}] = await browser.scripting.executeScript({
-        target: {tabId: tab.id},
+async function getCurrentSelection() {
+    const [currentTab] = await browser.tabs.query({active: true, currentWindow: true});
+    let [{ result }] = await browser.scripting.executeScript({
+        target: { tabId: currentTab.id },
         func: () => window.getSelection().toString(),
-        });
-    } catch (e) {
-        document.body.append('error\n');
-    }
-    document.body.append('Selection: ' + result);
-    document.body.append((new Date()).toString());
-})();
+    });
+    return result
+}
+
+async function getSnipObjectFromCurrentSelection() {
+    const [currentTab] = await browser.tabs.query({active: true, currentWindow: true});
+    let currentSelection = await getCurrentSelection();
+
+    return {
+        "source": currentTab.url,
+        "title": currentTab.title,
+        "content": currentSelection,
+        "date": (new Date()).toString()
+    };
+}
