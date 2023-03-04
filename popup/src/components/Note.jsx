@@ -84,13 +84,16 @@ export default function Note({highlightedText, pageNumber, date, time, bookName}
 
         <hr />
 
-        <Typography style={{
+        
+         <Typography style={{
           margin: '16px',
           fontSize: '12px',
         }} variant="body2">
           {highlightedText}
           <br />
-        </Typography>
+        </Typography> 
+        
+
 
         <hr />
 

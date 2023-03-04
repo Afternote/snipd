@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import Note from './components/Note'
+import Skeleton from '@mui/material/Skeleton';
+import { EmptySelecion } from './components/EmptySelecion';
 
 async function getCurrentSelection() {
     const [currentTab] = await chrome.tabs.query({active: true, currentWindow: true});
@@ -42,7 +44,7 @@ function App() {
     <div className="App" style={{
       width:'100%', height:'100%'
     }}>
-      <Note 
+      {(content !== "" ? <Note 
       bookName={title}
       highlightedText={content}
       pageNumber={""}
@@ -50,7 +52,7 @@ function App() {
       time={(new Date(date)).toLocaleTimeString()}
       style={{
         width:'100%', height:'100%'
-      }}/>
+      }}/> : <EmptySelecion />)}
     </div>
   )
 }
