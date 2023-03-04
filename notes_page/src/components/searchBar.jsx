@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Input, Button, Container, Flex } from "@mantine/core";
+import { TextInput, Button, Container, Flex } from "@mantine/core";
 
 const MantineSearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,21 +14,14 @@ const MantineSearchBar = () => {
 
   return (
     <>
-      <Container  mt={120}>
-        <Flex
-          direction={{ base: "column", sm: "row" }}
-          gap="sm"
-          align="center"
-        >
-          <Input
+      <Container m={10}>
+        <Flex direction={{ base: "column", sm: "row" }} gap="sm" align="center">
+          <TextInput
             placeholder="Search"
             value={searchQuery}
             onChange={handleSearchInputChange}
-            radius="xl"
           />
-          <Button onClick={handleSearchClick}  size="xs" radius="xl">
-            Search
-          </Button>
+          <Button onClick={handleSearchClick}>Search</Button>
         </Flex>
       </Container>
     </>

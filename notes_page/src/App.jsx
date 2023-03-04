@@ -1,6 +1,16 @@
 import reactLogo from "./assets/snipdLogo.jpg";
 import "./App.css";
-import { Card, Text, Badge, Button, Group } from "@mantine/core";
+import {
+  Card,
+  Text,
+  Badge,
+  Button,
+  Group,
+  Stack,
+  Divider,
+  Title,
+  Center,
+} from "@mantine/core";
 import MantineSearchBar from "./components/searchBar";
 import { useEffect, useState } from "react";
 
@@ -8,7 +18,7 @@ const arrs = [
   {
     id: 1,
     source: "link1",
-    title: "this is the title1",
+    title: "This is the title1",
     content: "this is the content1",
     date: "this is the date1",
   },
@@ -49,15 +59,19 @@ function App() {
       setSnipds(store_obj.snipd_store);
     });
   }, []);
-  
+
   return (
     <>
-      
-      <div className="App" style={{ width: "95vh", margin:"auto" }}>
-      
-        <img src={reactLogo} width="70vh"/>
-        <MantineSearchBar/>
-        {snipds.map(snippetList)}
+      <div className="App" style={{ width: "95vh", margin: "auto" }}>
+        <img src={reactLogo} width="70vh" />
+        <Group position="apart" mb={"lg"}>
+          <Title order={2}>Snipd</Title>
+          <MantineSearchBar />
+        </Group>
+        <Stack>
+          <Divider />
+          {snipds.map(snippetList)}
+        </Stack>
       </div>
     </>
   );
@@ -65,14 +79,12 @@ function App() {
 
 function snippetList(arr) {
   return (
-    <>
-      <Snippet
-        source={arr.source}
-        title={arr.title}
-        content={arr.content}
-        date={arr.date}
-      />
-    </>
+    <Snippet
+      source={arr.source}
+      title={arr.title}
+      content={arr.content}
+      date={arr.date}
+    />
   );
 }
 
@@ -87,28 +99,30 @@ function Snippet(props) {
   //   </>
   // )
   return (
-    <Card
-      shadow="sm"
-      padding="lg"
-      radius="md"
-      withBorder
-      style={{ marginBottom: "2rem" }}
-    >
-      <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>{props.title}</Text>
-        <Badge color="green" variant="light">
-          {props.date}
-        </Badge>
+    <Stack>
+      <Group position="apart">
+        <Group>
+          <Title order={3}>{props.title}</Title>
+          <Badge color="gray" size="sm" radius="sm" variant="outline">
+            {props.date}
+          </Badge>
+        </Group>
+
+        <Button variant="light" color="pink" mt="md">
+          {props.source}
+        </Button>
       </Group>
 
-      <Text size="sm" color="dimmed">
-        {props.content}
-      </Text>
+      <Center>
+        <Card w={"90%"}>
+          <Text size="sm" color="dimmed">
+            {props.content}
+          </Text>
+        </Card>
+      </Center>
 
-      <Button variant="light" color="pink" fullWidth mt="md" radius="md">
-        {props.source}
-      </Button>
-    </Card>
+      <Divider />
+    </Stack>
   );
 }
 
