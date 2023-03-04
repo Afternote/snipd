@@ -54,8 +54,13 @@ const arrs = [
   },
 ];
 
+function filterSnipds(searchQuery, snipds) {
+  return snipds.filter((a)=>{if(a.content.includes(searchQuery.toLowerCase())){return a}});
+}
+
 function App() {
   const [snipds, setSnipds] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     chrome.storage.local.get(["snipd_store"]).then(store_obj => {
       setSnipds(store_obj.snipd_store);
@@ -92,11 +97,13 @@ function App() {
       <div className="App" style={{ width: "95vh", margin: "auto" }}>
         <Group position="apart" mb={"lg"}>
           <Title order={2}>Snipd</Title>
-          <MantineSearchBar someProp={snipds}/>
+          <MantineSearchBar onSearch={(searchQuery) => {
+            setSearchQuery(searchQuery);
+          }}/>
         </Group>
         <Stack>
           <Divider />
-          {snipds.map(snippetList)}
+          {filterSnipds(searchQuery, snipds).map(snippetList)}
         </Stack>
       </div>
     </AppShell>
