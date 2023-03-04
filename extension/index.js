@@ -1,1 +1,3 @@
-console.log(browser.tabs);
+async function test() {
+    const currentWindow = browser.windows.getCurrent()
+}
