@@ -1,6 +1,9 @@
 {
+  "name": "snipd",
   "scripts": {
-    "build_notes": "npx vite build ./notes_page --outDir=../extension/notes_page"
+    "build_notes": "npx vite build ./notes_page --outDir=../extension/notes_page",
+    "build_popup": "npx vite build ./popup --outDir=../extension/popup",
+    "buildall": "npm run build_notes && npm run build_popup"
   },
   "workspaces": [
     "popup",
