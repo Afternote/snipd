@@ -34,7 +34,7 @@ export default function Note({highlightedText, pageNumber, date, time, bookName}
         <Typography style={{
           margin: '16px',
           textAlign: 'center'
-        }} variant='h2' component="div"  >
+        }} variant='h4' component="div"  >
           Selected Highlight
         </Typography>
         <br></br>
@@ -50,7 +50,7 @@ export default function Note({highlightedText, pageNumber, date, time, bookName}
           spacing={0}>
           <Typography style={{
             margin: '16px',
-            fontSize: '24px'
+            fontSize: '12px'
           }}
             sx={{ mb: 3.0 }} color="text.secondary">
             Your Highlight on page {pageNumber}
@@ -59,7 +59,7 @@ export default function Note({highlightedText, pageNumber, date, time, bookName}
 
           <Typography style={{
             margin: '16px',
-            fontSize: '24px'
+            fontSize: '12px'
 
           }} sx={{ mb: 1.5 }} color="text.secondary">
             Location 264 - 265
@@ -67,14 +67,14 @@ export default function Note({highlightedText, pageNumber, date, time, bookName}
 
           <Typography style={{
             margin: '16px',
-            fontSize: '24px'
+            fontSize: '12px'
 
           }} sx={{ mb: 1.5 }} color="text.secondary">
             Added on {date}
           </Typography>
           <Typography style={{
             margin: '16px',
-            fontSize: '24px'
+            fontSize: '12px'
 
           }} sx={{ mb: 1.5 }} color="text.secondary">
             {time}
@@ -82,29 +82,18 @@ export default function Note({highlightedText, pageNumber, date, time, bookName}
 
         </Stack>
 
+        <hr />
 
         <Typography style={{
           margin: '16px',
-          fontSize: '24px',
-          textAlign: 'center'
-        }} sx={{ mb: 1.5 }} >
-          ======================
-        </Typography>
-        <Typography style={{
-          margin: '16px',
-          fontSize: '24px',
+          fontSize: '12px',
         }} variant="body2">
           {highlightedText}
           <br />
         </Typography>
 
-        <Typography style={{
-          margin: '16px',
-          fontSize: '24px',
-          textAlign: 'center'
-        }} sx={{ mb: 1.5 }} >
-          ======================
-        </Typography>
+        <hr />
+
       </CardContent>
       <CardActions style={{
         display: 'flex',
