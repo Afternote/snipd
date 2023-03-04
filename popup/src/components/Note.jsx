@@ -103,6 +103,7 @@ export default function Note({highlightedText, pageNumber, date, time, bookName}
         alignItems: 'center',
         justifyContent: 'center'
       }}>
+        <Button variant="outlined" style={{margin:'16px'}}>Save Snippet</Button>
         <Button variant="outlined" >Central Page</Button>
       </CardActions>
     </Card>
