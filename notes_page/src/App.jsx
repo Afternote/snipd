@@ -2,6 +2,7 @@ import reactLogo from "./assets/snipdLogo.jpg";
 import "./App.css";
 import { Card, Text, Badge, Button, Group } from "@mantine/core";
 import MantineSearchBar from "./components/searchBar";
+import { useEffect, useState } from "react";
 
 const arrs = [
   {
@@ -42,6 +43,13 @@ const arrs = [
 ];
 
 function App() {
+  const [snipds, setSnipds] = useState([]);
+  useEffect(() => {
+    chrome.storage.local.get(["snipd_store"]).then(store_obj => {
+      setSnipds(store_obj.snipd_store);
+    });
+  }, []);
+  
   return (
     <>
       
@@ -49,7 +57,7 @@ function App() {
       
         <img src={reactLogo} width="70vh"/>
         <MantineSearchBar/>
-        {arrs.map(snippetList)}
+        {snipds.map(snippetList)}
       </div>
     </>
   );
