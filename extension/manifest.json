@@ -1,0 +1,25 @@
+{
+
+  "description": "WIP",
+  "manifest_version": 2,
+  "name": "snipd",
+  "version": "1.0",
+  "homepage_url": "https://github.com/PDFilez/snipd",
+  "icons": {
+  },
+  "permissions": [
+  ],
+
+  "browser_action": {
+    "default_title": "snipd",
+    "default_popup": "popup/index.html"
+  },
+
+  "web_accessible_resources": [
+  ],
+  "content_scripts": [
+  ],
+  "background": {
+      "scripts": ["index.js"]
+  }
+}
