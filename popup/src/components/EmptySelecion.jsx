@@ -1,5 +1,6 @@
 import { Card, Typography } from '@mui/material'
 import confused from '../assets/confused.png'
+import {Button} from '@mui/material'
 
 export function EmptySelecion() {
   return (
@@ -31,6 +32,10 @@ export function EmptySelecion() {
           Try selecting the text you want to Highlight
           <br />
         </Typography>
+
+        <center>
+        <Button style={{margin:"16px"}}variant="outlined" onClick={() => openAllSnipdPage()}>Central Page</Button>
+        </center>
         
       </Card>
     </div>
