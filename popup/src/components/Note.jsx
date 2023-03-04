@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import CategoriesMenu from "./CategoriesMenu";
 import Typography from "@mui/material/Typography";
-import "../App.css";
 import { height } from "@mui/system";
 import { Chip, Stack } from "@mui/material";
 import { openAllSnipdPage, saveSnipd } from "../utils/snippitUtils";
