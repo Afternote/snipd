@@ -6,7 +6,7 @@
   "homepage_url": "https://github.com/PDFilez/snipd",
   "icons": {},
   "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage"],
-
+  "host_permissions": ["file:///*"],
   "action": {
     "default_title": "snipd",
     "default_popup": "popup/index.html"
