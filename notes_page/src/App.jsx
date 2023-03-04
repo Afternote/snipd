@@ -57,10 +57,10 @@ const arrs = [
 function App() {
   const [snipds, setSnipds] = useState([]);
   useEffect(() => {
-    // chrome.storage.local.get(["snipd_store"]).then(store_obj => {
-    //   setSnipds(store_obj.snipd_store);
-    // });
-    setSnipds(arrs);
+    chrome.storage.local.get(["snipd_store"]).then(store_obj => {
+      setSnipds(store_obj.snipd_store);
+    });
+    // setSnipds(arrs);
   }, []);
 
   return (
@@ -92,7 +92,7 @@ function App() {
       <div className="App" style={{ width: "95vh", margin: "auto" }}>
         <Group position="apart" mb={"lg"}>
           <Title order={2}>Snipd</Title>
-          <MantineSearchBar />
+          <MantineSearchBar someProp={snipds}/>
         </Group>
         <Stack>
           <Divider />
