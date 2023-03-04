@@ -4,7 +4,12 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+
 import Typography from '@mui/material/Typography';
+import  "../App.css";
+import { height } from '@mui/system';
+import { Chip, Stack } from '@mui/material';
 
 const bull = (
   <Box
@@ -17,25 +22,95 @@ const bull = (
 
 export default function Note() {
     return (
-      <Card sx={{ minWidth: 275 }}>
+      <Card style={{
+        width: '100%',
+        height:'100%',
+        
+      }}>
         <CardContent>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Word of the Day
+          <Typography style={{
+            margin:'16px',
+            textAlign:'center'
+          }} variant='h2'  component="div"  >
+           Selected Highlight
           </Typography>
-          <Typography variant="h5" component="div">
-            be{bull}nev{bull}o{bull}lent
+          <br></br>
+          
+          <Divider variant="middle" >
+            <Chip label="The Brain: The Story of You" />
+          </Divider>
+
+          <br></br>
+
+          <Stack direction="row" justifyContent="space-evenly"
+  alignItems="center"
+  spacing={0}>
+          <Typography style={{
+            margin:'16px',
+            fontSize:'24px'
+          }} 
+          sx={{ mb: 3.0 }} color="text.secondary">
+            Your Highlight on page 18
           </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            adjective
+
+
+          <Typography style={{
+            margin:'16px',
+            fontSize:'24px'
+
+          }}sx={{ mb: 1.5 }} color="text.secondary">
+            Location 264 - 265
           </Typography>
-          <Typography variant="body2">
-            well meaning and kindly.
+
+          <Typography style={{
+            margin:'16px',
+            fontSize:'24px'
+
+          }}sx={{ mb: 1.5 }} color="text.secondary">
+            Added on Monday, February 8, 2021
+          </Typography>
+          <Typography style={{
+            margin:'16px',
+            fontSize:'24px'
+
+          }}sx={{ mb: 1.5 }} color="text.secondary">
+            4:14:01 PM
+          </Typography>
+
+          </Stack>
+          
+
+          <Typography style={{
+            margin:'16px',
+            fontSize:'24px',
+            textAlign:'center'
+          }}sx={{ mb: 1.5 }} >
+            ======================
+          </Typography>
+          <Typography style={{
+            margin:'16px',
+            fontSize:'24px',
+          }}variant="body2">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni in, tempora vel, labore excepturi aperiam voluptate ducimus, dolorem cum aliquid sit? Est voluptates hic voluptatibus maiores fugit enim sunt illo!
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, doloremque blanditiis aperiam labore possimus fugit minus facere repellendus corrupti quae eaque ab sint officiis deserunt. Magni voluptatum modi sapiente porro!
             <br />
             {'"a benevolent smile"'}
           </Typography>
+
+          <Typography style={{
+            margin:'16px',
+            fontSize:'24px',
+            textAlign:'center'
+          }}sx={{ mb: 1.5 }} >
+            ======================
+          </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
+        <CardActions style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <Button variant="outlined" >Central Page</Button>
         </CardActions>
       </Card>
     );
