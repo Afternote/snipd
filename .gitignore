@@ -1,2 +1,3 @@
 node_modules
 extension/popup
+**/package-lock.json
