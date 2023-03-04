@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "build_notes": "npx vite build ./notes_page --outDir=../extension/notes_page"
+  },
   "workspaces": [
     "popup",
     "notes_page",

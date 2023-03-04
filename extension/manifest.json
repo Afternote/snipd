@@ -5,7 +5,7 @@
   "version": "1.0",
   "homepage_url": "https://github.com/PDFilez/snipd",
   "icons": {},
-  "permissions": ["tabs", "activeTab", "contextMenus", "scripting"],
+  "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage"],
 
   "action": {
     "default_title": "snipd",
@@ -15,5 +15,9 @@
   "content_scripts": [],
   "background": {
     "service_worker": "index.js"
+  },
+  "options_ui": {
+    "page": "notes_page/index.html",
+    "open_in_tab": true
   }
 }

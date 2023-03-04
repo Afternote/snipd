@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import Note from './components/Note'
+import Skeleton from '@mui/material/Skeleton';
+import { EmptySelecion } from './components/EmptySelecion';
 
 async function getCurrentSelection() {
     const [currentTab] = await chrome.tabs.query({active: true, currentWindow: true});
@@ -28,9 +30,12 @@ function App() {
   const [source, setSource] = useState("");
   const [content, setContent] = useState("");
   const [date, setDate] = useState("");
+  const [snipd, setSnipd] = useState();
 
   useEffect(() => {
+
      getSnipObjectFromCurrentSelection().then(selection => {
+         setSnipd(selection);
          setTitle(selection.title);
          setSource(selection.source);
          setContent(selection.content);
@@ -42,15 +47,16 @@ function App() {
     <div className="App" style={{
       width:'100%', height:'100%'
     }}>
-      <Note 
+      {(content !== "" ? <Note 
       bookName={title}
       highlightedText={content}
       pageNumber={""}
       date={(new Date(date)).toLocaleDateString()}
       time={(new Date(date)).toLocaleTimeString()}
+      snipd={snipd}
       style={{
         width:'100%', height:'100%'
-      }}/>
+      }}/> : <EmptySelecion />)}
     </div>
   )
 }

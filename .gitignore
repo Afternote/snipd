@@ -1,3 +1,4 @@
 node_modules
 extension/popup
+extension/notes_page
 **/package-lock.json

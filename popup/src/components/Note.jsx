@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import "../App.css";
 import { height } from '@mui/system';
 import { Chip, Stack } from '@mui/material';
+import { openAllSnipdPage, saveSnipd } from '../utils/snippitUtils';
 
 const bull = (
   <Box
@@ -20,7 +21,7 @@ const bull = (
   </Box>
 );
 
-export default function Note({highlightedText, pageNumber, date, time, bookName}) {
+export default function Note({highlightedText, pageNumber, date, time, bookName, snipd}) {
 
  
 
@@ -84,13 +85,16 @@ export default function Note({highlightedText, pageNumber, date, time, bookName}
 
         <hr />
 
-        <Typography style={{
+        
+         <Typography style={{
           margin: '16px',
           fontSize: '12px',
         }} variant="body2">
           {highlightedText}
           <br />
-        </Typography>
+        </Typography> 
+        
+
 
         <hr />
 
@@ -100,7 +104,16 @@ export default function Note({highlightedText, pageNumber, date, time, bookName}
         alignItems: 'center',
         justifyContent: 'center'
       }}>
-        <Button variant="outlined" >Central Page</Button>
+        <Button variant="outlined" style={{margin:'16px'}} onClick={
+          () => {
+            console.log(snipd);
+            saveSnipd(snipd);
+            if(snipd){
+              window.close();
+            }
+          }
+        }>Save Snippet</Button>
+        <Button variant="outlined" onClick={() => openAllSnipdPage()}>Central Page</Button>
       </CardActions>
     </Card>
   );
