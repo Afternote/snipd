@@ -30,9 +30,12 @@ function App() {
   const [source, setSource] = useState("");
   const [content, setContent] = useState("");
   const [date, setDate] = useState("");
+  const [snipd, setSnipd] = useState();
 
   useEffect(() => {
+
      getSnipObjectFromCurrentSelection().then(selection => {
+         setSnipd(selection);
          setTitle(selection.title);
          setSource(selection.source);
          setContent(selection.content);
@@ -50,6 +53,7 @@ function App() {
       pageNumber={""}
       date={(new Date(date)).toLocaleDateString()}
       time={(new Date(date)).toLocaleTimeString()}
+      snipd={snipd}
       style={{
         width:'100%', height:'100%'
       }}/> : <EmptySelecion />)}

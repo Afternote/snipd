@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import "../App.css";
 import { height } from '@mui/system';
 import { Chip, Stack } from '@mui/material';
+import { saveSnipd } from '../utils/snippitUtils';
 
 const bull = (
   <Box
@@ -20,7 +21,7 @@ const bull = (
   </Box>
 );
 
-export default function Note({highlightedText, pageNumber, date, time, bookName}) {
+export default function Note({highlightedText, pageNumber, date, time, bookName, snipd}) {
 
  
 
@@ -103,7 +104,12 @@ export default function Note({highlightedText, pageNumber, date, time, bookName}
         alignItems: 'center',
         justifyContent: 'center'
       }}>
-        <Button variant="outlined" style={{margin:'16px'}}>Save Snippet</Button>
+        <Button variant="outlined" style={{margin:'16px'}} onClick={
+          () => {
+            console.log(snipd);
+            saveSnipd(snipd);
+          }
+        }>Save Snippet</Button>
         <Button variant="outlined" >Central Page</Button>
       </CardActions>
     </Card>
