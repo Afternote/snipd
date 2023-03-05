@@ -9,7 +9,7 @@ import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
 import SchoolIcon from "@mui/icons-material/School";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -76,7 +76,7 @@ export default function CategoriesMenu({ addCategory, categoriesList }) {
         endIcon={<KeyboardArrowDownIcon />}>
         Categories
       </Button>
-      <StyledMenu
+      <StyledMenu onKeyDown={(e) => e.stopPropagation()}
         id="demo-customized-menu"
         MenuListProps={{
           "aria-labelledby": "demo-customized-button",
@@ -84,33 +84,37 @@ export default function CategoriesMenu({ addCategory, categoriesList }) {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}>
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem onKeyDown={(e) => e.stopPropagation()} onClick={handleClose} disableRipple>
           <StarRateIcon />
           Default
         </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem onKeyDown={(e) => e.stopPropagation()} onClick={handleClose} disableRipple>
           <SchoolIcon />
           Exam Notes
         </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem onKeyDown={(e) => e.stopPropagation()} onClick={handleClose} disableRipple>
           <FormatQuoteIcon />
           Quotes
         </MenuItem>
         {categoriesList.map((category) => {
           return (
-            <MenuItem key={category} onClick={handleClose} disableRipple>
-              <FormatQuoteIcon />
+            <MenuItem onKeyDown={(e) => e.stopPropagation()} key={category} onClick={handleClose} disableRipple>
+              <StarBorderIcon />
               {category}
             </MenuItem>
           );
         })}
         {!custom ? (
-          <MenuItem onClick={handleCustomClose} disableRipple>
+          <MenuItem onKeyDown={(e) => e.stopPropagation()} onClick={handleCustomClose} disableRipple>
             <DashboardCustomizeIcon />
             Custom Category
           </MenuItem>
         ) : (
-          <NewCategory addCategory={addCategory} style={{ margin: "8px" }} />
+          <MenuItem onKeyDown={(e) => e.stopPropagation()}  disableRipple
+          >
+            
+            <NewCategory addCategory={addCategory} style={{ margin: "8px" }} />
+          </MenuItem>
         )}
       </StyledMenu>
     </div>

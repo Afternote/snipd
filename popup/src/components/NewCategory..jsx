@@ -22,7 +22,10 @@ function NewCategory({ addCategory }) {
           id="Outlined-basic"
           label="New Category"
           variant="outlined"
-          onChange={setNewCategoryName}
+          onChange={(event) => {
+            event.target.focus();
+            setNewCategoryName(event.target.value)
+        }}
         />
 
         <Button
