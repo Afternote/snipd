@@ -12,7 +12,15 @@
   ],
   "dependencies": {
     "@mantine/ds": "^6.0.0",
+    "@mui/icons-material": "^5.11.11",
     "@tabler/icons": "^2.7.0",
     "@tabler/icons-react": "^2.7.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.4"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "bracketSameLine": true
   }
 }
