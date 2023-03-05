@@ -17,6 +17,7 @@ import MantineSearchBar from "./components/searchBar";
 import { useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
 import { SettingsInputAntennaOutlined } from "@mui/icons-material";
+import { useHover } from "@mantine/hooks";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
@@ -26,13 +27,13 @@ import "./assets/print.css";
 function filterSnipds(searchQuery, category, snipds) {
   return snipds.filter((a) => {
     if (!category) {
-        if (a.content.includes(searchQuery.toLowerCase())) {
-          return a;
-        }
+      if (a.content.includes(searchQuery.toLowerCase())) {
+        return a;
+      }
     } else {
-        if (a.content.includes(searchQuery.toLowerCase()) && a.category === category) {
-          return a;
-        }
+      if (a.content.includes(searchQuery.toLowerCase()) && a.category === category) {
+        return a;
+      }
     }
   });
 }
@@ -89,7 +90,16 @@ function App() {
         </Group>
         <Stack>
           <Divider />
-          {(selectedCategory !== "") && <Button variant="outline" color="error" onClick={() => { setSelectedCategory("") }}>Show all snipds</Button>}
+          {selectedCategory !== "" && (
+            <Button
+              variant="outline"
+              color="error"
+              onClick={() => {
+                setSelectedCategory("");
+              }}>
+              Show all snipds
+            </Button>
+          )}
           {filterSnipds(searchQuery, selectedCategory, snipds).map((arr, idx) => {
             return (
               <Snippet
@@ -111,55 +121,79 @@ function App() {
 }
 
 function Snippet(props) {
+  const { hovered, ref } = useHover();
   return (
     <div
+      ref={ref}
       style={{
+        marginRight: "24px",
         display: "flex",
+        alignItems: "center",
       }}>
+      {/* Item Controls - up, down, delete */}
       <Card
         className="printHide"
+        radius={8}
         style={{
-          margin: "0 16px",
-          padding: "8px",
+          margin: "0 8px",
+          padding: "4px",
+          opacity: hovered ? 1 : 0,
+          height: "90%",
         }}>
         <Stack style={{ height: "100%" }} align="center" justify="space-around">
-          <ArrowCircleUpIcon style={{ cursor: 'pointer' }} onClick={() => { 
+          <ArrowCircleUpIcon
+            style={{ cursor: "pointer" }}
+            onClick={() => {
               moveSnipdUp(props.index).then(() => {
-                  props.refetch();
+                props.refetch();
               });
-          }}/>
-          <DeleteForeverIcon style={{ cursor: 'pointer' }} onClick={() => {
+            }}
+          />
+          <DeleteForeverIcon
+            style={{ cursor: "pointer" }}
+            onClick={() => {
               deleteSnipd(props.index).then(() => {
-                  props.refetch();
+                props.refetch();
               });
-          }} />
-          <ArrowCircleDownIcon style={{ cursor: 'pointer' }} onClick={() => { 
+            }}
+          />
+          <ArrowCircleDownIcon
+            style={{ cursor: "pointer" }}
+            onClick={() => {
               moveSnipdDown(props.index).then(() => {
-                  props.refetch();
+                props.refetch();
               });
-          }}/>
+            }}
+          />
         </Stack>
       </Card>
 
+      {/* Item Title, Date, Source */}
       <Stack style={{ width: "100%" }}>
-        {props.type !== "link" && (
-          <Stack>
-          <Group position="apart">
-            <Title order={3}>{props.title}</Title>
-            <Badge style={{marginRight:'16px'}}color="gray" size="sm" radius="sm" variant="outline">
+        {props.type !== "link" && props.type !== "note" && (
+          <Stack align={"flex-start"}>
+            <Badge
+              style={{ marginRight: "16px" }}
+              color="gray"
+              size="sm"
+              radius="sm"
+              variant="outline">
               {props.date}
             </Badge>
-            
-          </Group>
-          <Button component="button" variant="light" href={props.source}>
-              {props.source}
-            </Button>
+            <Group position="apart">
+              <Title order={3}>{props.title}</Title>
+              {hovered && (
+                <Button compact variant="light" href={props.source} w={80}>
+                  Source
+                </Button>
+              )}
+            </Group>
           </Stack>
-          
         )}
 
+        {/* Item Content */}
         <Center>
-          <Card style={{ width: "100%", padding:'8px' }}>
+          <Card style={{ width: "90%", padding: "8px" }}>
             {props.type === "image" && (
               <Center>
                 <img src={props.content} loading="lazy" />
@@ -171,22 +205,21 @@ function Snippet(props) {
               </Text>
             )}
             {props.type === "link" && (
-              <div style={{marginTop:'16px', marginBottom:'16px'}}>
-              <Anchor style={{ width: "100%" }} href={props.content}>
-                <Stack style={{ width: "100%" }} spacing={"xs"}>
-                  <Group position="apart">
-                  <Text lineClamp={1}>{props.title}</Text>
+              <div style={{ marginTop: "16px", marginBottom: "16px" }}>
+                <Anchor style={{ width: "100%" }} href={props.content}>
+                  <Stack style={{ width: "100%" }} spacing={"xs"}>
+                    <Group position="apart">
+                      <Text lineClamp={1}>{props.title}</Text>
 
-                  <Badge color="gray" size="sm" radius="sm" variant="outline">
-              {props.date}
-            </Badge>
-                  </Group>
-                  <Text size="sm" color="dimmed" lineClamp={1}>
-                    {props.content}
-                  </Text>
-                  
-                </Stack>
-              </Anchor>
+                      <Badge color="gray" size="sm" radius="sm" variant="outline">
+                        {props.date}
+                      </Badge>
+                    </Group>
+                    <Text size="sm" color="dimmed" lineClamp={1}>
+                      {props.content}
+                    </Text>
+                  </Stack>
+                </Anchor>
               </div>
             )}
           </Card>

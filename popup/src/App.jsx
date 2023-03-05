@@ -29,7 +29,7 @@ async function getCurrentSelectionData() {
     title: currentTab.title,
     type: result.snip_type,
     content: result.snip_content,
-    date: new Date().toString(),
+    date: new Date().toUTCString(),
   };
 }
 
@@ -48,9 +48,9 @@ function App() {
       style={{
         width: "100%",
         height: "100%",
-        minWidth: "350px"
+        minWidth: "350px",
       }}>
-      {!(!snipd?.content) ? (
+      {!!snipd?.content ? (
         <Note
           snipd={snipd}
           style={{

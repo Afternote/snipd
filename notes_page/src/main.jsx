@@ -5,7 +5,10 @@ import App from "./App";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme: "dark", primaryColor: "green" }}>
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={{ colorScheme: "dark", primaryColor: "green" }}>
       <App />
     </MantineProvider>
   </React.StrictMode>
