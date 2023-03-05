@@ -34,7 +34,7 @@ exported via PDF.
 
 - The first step would be to highlight the required text from the pdf/website.
 For images and links, an option to add the selected item to collection is available.
-- After selecting the text, rightt click and select <b>"Add Selected Text to Collection"</b>. A Popup will appear from where you can click on "save snippet". This will save the Highlight to your central page. 
+- After selecting the text, click on the extension button and a pop-up will appear with the following options.
 ![](./assets/popupSS.png)
 
 - On clicking the central page, you will be led to the page where all the text,images,links and notes are saved.
@@ -42,6 +42,7 @@ For images and links, an option to add the selected item to collection is availa
 
 
 
+## Timeline of the project 
 
 ## License
 
