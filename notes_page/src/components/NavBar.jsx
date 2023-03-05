@@ -1,9 +1,10 @@
 import reactLogo from "../assets/snipdLogo.jpg";
 import { Stack, Divider, Title, Center, NavLink, Navbar, Button } from "@mantine/core";
+import "../assets/print.css";
 
 export default function ({categoryList, setSelectedCategory}) {
   return (
-    <Navbar width={{ base: 280 }} fixed p={10} style={{ backgroundColor: "white" }}>
+    <Navbar className="nav-bar" width={{ base: 280 }} fixed p={10} style={{ backgroundColor: "white" }}>
       <Center>
         <img src={reactLogo} width="100px" />
       </Center>
