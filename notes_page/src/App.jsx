@@ -33,15 +33,22 @@ function App() {
   const [snipds, setSnipds] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const [categoryList, setCategoryList] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
   useEffect(() => {
     chrome.storage.local.get(["snipd_store"]).then((store_obj) => {
       setSnipds(store_obj.snipd_store);
+    });
+
+    chrome.storage.local.get(["snipd_categories"]).then((store_obj) => {
+      setCategoryList(store_obj.snipd_categories);
     });
     // setSnipds(arrs);
   }, []);
 
   return (
-    <AppShell padding="md" navbar={<NavBar />}>
+    <AppShell padding="md" navbar={<NavBar categoryList={categoryList} setSelectedCategories={setSelectedCategories} />}>
       <div className="App" style={{ margin: "48px" }}>
         <Group style={{ marginTop: "16px" }} position="apart" mb={"lg"}>
           <Title order={2}>Snipd</Title>
