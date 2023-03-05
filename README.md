@@ -27,6 +27,23 @@ Snipd, A note collecting browser extension which supports storing all the highli
 - Easily arrange the snippets based on their categories so it becomes personalised.
 - Useful meta data in the save snippets will help you revisit the files or pages from where you initially highlighted the text/image.
 
+## Build
+
+Firstly, clone the repo 
+```
+git clone https://github.com/PDFilez/snipd.git
+```
+and then cd into the folder and do :
+```
+npm install
+```
+followed by to build up the `popup` and `notes_page` and forward the output to extension directory (all commands are run in root directory and works because npm workspaces)
+```
+npm run buildall
+```
+When the first build is done, Open `chrome://extensions` in your chrome browser and set the developer mode as on, Install the extension by `Loading Unpacked` and selecting the `./extension` directory. This process can be skipped in subsequent builds and Just use reload btn in the extension page for each new subsequent build.
+
+
 ## How to use
 
 - Highlight the required text from the pdf/website and for images and links, Use context menu option to add the selected item to collection.
@@ -53,21 +70,6 @@ Snipd, A note collecting browser extension which supports storing all the highli
 - Finally, few polishing and quality-of-life enhancements were made.
 
 
-## Build
-
-Firstly, clone the repo 
-```
-git clone https://github.com/PDFilez/snipd.git
-```
-and then cd into the folder and do :
-```
-npm install
-```
-followed by to build up the `popup` and `notes_page` and forward the output to extension directory (all commands are run in root directory and works because npm workspaces)
-```
-npm run buildall
-```
-When the first build is done, Open `chrome://extensions` in your chrome browser and set the developer mode as on, Install the extension by `Loading Unpacked` and selecting the `./extension` directory. This process can be skipped in subsequent builds and Just use reload btn in the extension page for each new subsequent build.
 
 ## License
 
