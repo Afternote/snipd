@@ -45,9 +45,14 @@ For images and links, an option to add the selected item to collection is availa
   2 corresponds to the various category collections. Exam category could have snippets having important notes saved by the user for a particular exam, etc.
 
 
-
 ## Timeline of the project 
 
+
+## Build
+
+```
+npm run buildall
+```
 ## License
 
 MIT
