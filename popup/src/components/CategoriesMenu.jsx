@@ -47,7 +47,7 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function CategoriesMenu({ addCategory, categoriesList }) {
+export default function CategoriesMenu({ addCategory, categoriesList, setCategory }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [custom, setCustom] = React.useState(false);
@@ -59,7 +59,7 @@ export default function CategoriesMenu({ addCategory, categoriesList }) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (event) => {
     setAnchorEl(null);
   };
 
@@ -84,21 +84,12 @@ export default function CategoriesMenu({ addCategory, categoriesList }) {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}>
-        <MenuItem onKeyDown={(e) => e.stopPropagation()} onClick={handleClose} disableRipple>
-          <StarRateIcon />
-          Default
-        </MenuItem>
-        <MenuItem onKeyDown={(e) => e.stopPropagation()} onClick={handleClose} disableRipple>
-          <SchoolIcon />
-          Exam Notes
-        </MenuItem>
-        <MenuItem onKeyDown={(e) => e.stopPropagation()} onClick={handleClose} disableRipple>
-          <FormatQuoteIcon />
-          Quotes
-        </MenuItem>
         {categoriesList.map((category) => {
           return (
-            <MenuItem onKeyDown={(e) => e.stopPropagation()} key={category} onClick={handleClose} disableRipple>
+            <MenuItem onKeyDown={(e) => e.stopPropagation()} key={category} onClick={(e) => {
+                setCategory(category);
+                handleClose(e);
+            }} disableRipple>
               <StarBorderIcon />
               {category}
             </MenuItem>

@@ -19,9 +19,30 @@ const bull = (
 
 export default function Note({ snipd }) {
   const [categoriesList, setCategoriesList] = React.useState([]);
-  const addCategory = (newCategory) => {
+  const [category, setCategory] = React.useState("Default");
+
+  const populateCategory = (newCategory) => {
     setCategoriesList((old) => [...old, newCategory]);
   };
+
+  const addCategory = (newCategory) => {
+      chrome.storage.local.get(["snipd_categories"]).then(obj => {
+          const new_category_list = [...obj.snipd_categories, newCategory];
+          chrome.storage.local.set({snipd_categories: new_category_list}).then(() => {
+              populateCategory(newCategory);
+          });
+      });
+  };
+
+  React.useEffect(() => {
+      chrome.storage.local.get(["snipd_categories"]).then(obj => {
+          if (obj.snipd_categories) {
+              obj.snipd_categories.forEach(category => {
+                  populateCategory(category);
+              });
+          }
+      });
+  }, []);
 
   return (
     <Card
@@ -77,12 +98,14 @@ export default function Note({ snipd }) {
         <hr />
       </CardContent>
       <center>
+        <p>Current category: {category}</p>
         <CategoriesMenu
           categoriesList={categoriesList}
           addCategory={addCategory}
           style={{
             alignItems: "center",
           }}
+          setCategory={setCategory}
         />
       </center>
       <CardActions
@@ -96,6 +119,7 @@ export default function Note({ snipd }) {
           style={{ margin: "16px" }}
           onClick={() => {
             console.log(snipd);
+            snipd.category = category;
             saveSnipd(snipd).then(() => {
                 if (snipd) {
                   window.close();

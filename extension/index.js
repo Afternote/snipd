@@ -48,3 +48,9 @@ ext_api.storage.local.get(["snipd_store"]).then((e) => {
   if (!e.snipd_store)
       ext_api.storage.local.set({ snipd_store: [] });
 });
+
+// Make a storage array if it doesn't exist
+ext_api.storage.local.get(["snipd_categories"]).then((e) => {
+  if (!e.snipd_categories)
+      ext_api.storage.local.set({ snipd_categories: ["Default"] });
+});
