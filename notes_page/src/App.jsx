@@ -98,19 +98,23 @@ function Snippet(props) {
 
       <Stack style={{ width: "100%" }}>
         {props.type !== "link" && (
-          <Group position="left">
+          <Stack>
+          <Group position="apart">
             <Title order={3}>{props.title}</Title>
-            <Badge color="gray" size="sm" radius="sm" variant="outline">
+            <Badge style={{marginRight:'16px'}}color="gray" size="sm" radius="sm" variant="outline">
               {props.date}
             </Badge>
-            <Anchor component="button" variant="light" href={props.source}>
-              Source
-            </Anchor>
+            
           </Group>
+          <Button component="button" variant="light" href={props.source}>
+              {props.source}
+            </Button>
+          </Stack>
+          
         )}
 
         <Center>
-          <Card w={"95%"}>
+          <Card style={{ width: "100%" }}>
             {props.type === "image" && (
               <Center>
                 <img src={props.content} loading="lazy" />
@@ -122,12 +126,19 @@ function Snippet(props) {
               </Text>
             )}
             {props.type === "link" && (
-              <Anchor href={props.content}>
-                <Stack spacing={"xs"}>
+              <Anchor style={{ width: "100%" }} href={props.content}>
+                <Stack style={{ width: "100%" }} spacing={"xs"}>
+                  <Group position="apart">
                   <Text lineClamp={1}>{props.title}</Text>
+
+                  <Badge color="gray" size="sm" radius="sm" variant="outline">
+              {props.date}
+            </Badge>
+                  </Group>
                   <Text size="sm" color="dimmed" lineClamp={1}>
                     {props.content}
                   </Text>
+                  
                 </Stack>
               </Anchor>
             )}
