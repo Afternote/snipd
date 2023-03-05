@@ -48,8 +48,9 @@ function App() {
       style={{
         width: "100%",
         height: "100%",
+        minWidth: "350px"
       }}>
-      {snipd?.content !== null || undefined || "" ? (
+      {!(!snipd?.content) ? (
         <Note
           snipd={snipd}
           style={{
