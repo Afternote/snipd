@@ -45,6 +45,6 @@ ext_api.contextMenus.onClicked.addListener((info, _) => {
 
 // Make a storage array if it doesn't exist
 ext_api.storage.local.get(["snipd_store"]).then((e) => {
-  if (!e.snipd_store);
-  ext_api.storage.local.set({ snipd_store: [] });
+  if (!e.snipd_store)
+      ext_api.storage.local.set({ snipd_store: [] });
 });
