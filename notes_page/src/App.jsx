@@ -15,43 +15,6 @@ import MantineSearchBar from "./components/searchBar";
 import { useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
 
-const arrs = [
-  {
-    id: 1,
-    source: "link1",
-    title: "This is the title1",
-    content: "this is the content1",
-    date: "this is the date1",
-  },
-  {
-    id: 2,
-    source: "link2",
-    title: "this is the title2",
-    content: "this is the content2",
-    date: "this is the date2",
-  },
-  {
-    id: 3,
-    source: "link1",
-    title: "this is the title1",
-    content: "this is the content1",
-    date: "this is the date1",
-  },
-  {
-    id: 4,
-    source: "link1",
-    title: "this is the title1",
-    content: "this is the content1",
-    date: "this is the date1",
-  },
-  {
-    id: 5,
-    source: "link1",
-    title: "this is the title1",
-    content: "this is the content1",
-    date: "this is the date1",
-  },
-];
 
 function filterSnipds(searchQuery, snipds) {
   return snipds.filter((a) => {
