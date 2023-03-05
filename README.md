@@ -46,6 +46,16 @@ For images and links, an option to add the selected item to collection is availa
 
 
 ## Timeline of the project 
+- Initial idea was to keep track of annotations/snippets across PDF files, but later extended to web pages too. This project was built from scratch using the Browser Extension API and React for UI.
+- At the moment, all the core features are implemented which acts as a base for further improvements, althought they require some polishing, as well as more improvements via user feedback.
+- Initial goal was for the extension to be compatible with all mordern browsers (Chromium based browsers, Firefox) but later realized that they were all incompatible with eachother, with Chrome being the most feature rich, hence Chrome(Manifest v3) was alone choosen, with future plans of cross browser compatibility.
+- For development conviniences, `npm workspaces` were used for a shared build system and packages. For `react`, `vite` was choosed as the bundler, for its faster debug compilation speeds.
+- From here on, the project was divided into three sub-projects which were parallely worked upon
+  - the core extension
+  - popup UI (main flow of making a new snippet)
+  - options page (central collection and management of all snippets)
+- Intergration between these components required a central source of truth, and `chrome.storage` was used. This resulted into first working prototype, which acted as a base for all future enhancements.
+- Finally, few polishing and quality-of-life enhancements were made.
 
 
 ## Build
