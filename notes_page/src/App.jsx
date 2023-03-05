@@ -20,6 +20,7 @@ import { SettingsInputAntennaOutlined } from "@mui/icons-material";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
+import { moveSnipdDown, moveSnipdUp } from "./utils/snipUtils";
 
 function filterSnipds(searchQuery, category, snipds) {
   return snipds.filter((a) => {
@@ -53,6 +54,16 @@ function App() {
     // setSnipds(arrs);
   }, []);
 
+  const refetch = () => {
+    chrome.storage.local.get(["snipd_store"]).then((store_obj) => {
+      setSnipds(store_obj.snipd_store);
+    });
+
+    chrome.storage.local.get(["snipd_categories"]).then((store_obj) => {
+      setCategoryList(store_obj.snipd_categories);
+    });
+  };
+
   return (
     <AppShell padding="md" navbar={<NavBar categoryList={categoryList} setSelectedCategory={setSelectedCategory} />}>
       <div className="App" style={{ margin: "48px" }}>
@@ -71,6 +82,8 @@ function App() {
             return (
               <Snippet
                 key={idx}
+                index={idx}
+                refetch={refetch}
                 source={arr.source}
                 title={arr.title}
                 content={arr.content}
@@ -97,9 +110,17 @@ function Snippet(props) {
           padding: "8px",
         }}>
         <Stack style={{ height: "100%" }} align="center" justify="space-around">
-          <ArrowCircleUpIcon />
+          <ArrowCircleUpIcon style={{ cursor: 'pointer' }} onClick={() => { 
+              moveSnipdUp(props.index).then(() => {
+                  props.refetch();
+              });
+          }}/>
           <DeleteForeverIcon />
-          <ArrowCircleDownIcon />
+          <ArrowCircleDownIcon style={{ cursor: 'pointer' }} onClick={() => { 
+              moveSnipdDown(props.index).then(() => {
+                  props.refetch();
+              });
+          }}/>
         </Stack>
       </Card>
 
