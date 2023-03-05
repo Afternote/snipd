@@ -121,7 +121,7 @@ function Snippet(props) {
         )}
 
         <Center>
-          <Card style={{ width: "100%" }}>
+          <Card style={{ width: "100%", padding:'8px' }}>
             {props.type === "image" && (
               <Center>
                 <img src={props.content} loading="lazy" />
@@ -133,6 +133,7 @@ function Snippet(props) {
               </Text>
             )}
             {props.type === "link" && (
+              <div style={{marginTop:'16px', marginBottom:'16px'}}>
               <Anchor style={{ width: "100%" }} href={props.content}>
                 <Stack style={{ width: "100%" }} spacing={"xs"}>
                   <Group position="apart">
@@ -148,6 +149,7 @@ function Snippet(props) {
                   
                 </Stack>
               </Anchor>
+              </div>
             )}
           </Card>
         </Center>
