@@ -21,6 +21,7 @@ import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 import { deleteSnipd, moveSnipdDown, moveSnipdUp } from "./utils/snipUtils";
+import "./assets/print.css";
 
 function filterSnipds(searchQuery, category, snipds) {
   return snipds.filter((a) => {
@@ -42,6 +43,16 @@ function App() {
 
   const [categoryList, setCategoryList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  const [isPrinting, setPrinting] = useState(false);
+
+  const print = () => {
+      setPrinting(true);
+      setTimeout(() => { 
+          window.print();
+          setPrinting(false);
+      }, 200);
+  };
 
   useEffect(() => {
     chrome.storage.local.get(["snipd_store"]).then((store_obj) => {
@@ -65,14 +76,15 @@ function App() {
   };
 
   return (
-    <AppShell padding="md" navbar={<NavBar categoryList={categoryList} setSelectedCategory={setSelectedCategory} />}>
+    <AppShell padding="md" navbar={isPrinting ? null : <NavBar categoryList={categoryList} setSelectedCategory={setSelectedCategory} />}>
       <div className="App" style={{ margin: "48px" }}>
-        <Group style={{ marginTop: "16px" }} position="apart" mb={"lg"}>
+        <Group className="printHide" style={{ marginTop: "16px" }} position="apart" mb={"lg"}>
           <Title order={2}>Snipd</Title>
           <MantineSearchBar
             onSearch={(searchQuery) => {
               setSearchQuery(searchQuery);
             }}
+            print={print}
           />
         </Group>
         <Stack>
@@ -105,6 +117,7 @@ function Snippet(props) {
         display: "flex",
       }}>
       <Card
+        className="printHide"
         style={{
           margin: "0 16px",
           padding: "8px",
