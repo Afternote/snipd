@@ -11,15 +11,8 @@ There is currently no centralized system that stores highlights, links, images, 
 
 ## _Annoting and storing text, images and links made easier_
 
-Snipd is a note collecting browser extension which supports highlighting of texts from PDFs/websites, images by URL, links and notes. Once a collection is done, it can be exported via PDF. Additionally you will be able to manage all the collections on a dedicated central page - where all the snippets are stored.
-
-## Use cases
-
-- Useful while studying and making notes when you're having multiple resources to read from.
-- Storing interesting quotes or dialogues while reading.
-- Easily arrange the snippets based on their categories so it becomes personalised.
-- Useful meta data in the save snippets will help you revisit the files or pages from where you initially highlighted the text/image.
-
+Snipd is a note collecting browser extension which supports highlighting of texts from PDFs/websites, images by URL, links and notes. Once a collection is done. You will be able to manage all the collections on a dedicated central page - where all the snippets are stored. Additionally, it can be 
+exported via PDF.
 
 ## Features
 
@@ -29,6 +22,25 @@ Snipd is a note collecting browser extension which supports highlighting of text
 - Search through the saved snippets.
 - Records all the other meta data about the snippet that might come handy later.
 - Export documents as PDF
+
+## Use cases
+
+- Useful while studying and making notes when you're having multiple resources to read from.
+- Storing interesting quotes or dialogues while reading.
+- Easily arrange the snippets based on their categories so it becomes personalised.
+- Useful meta data in the save snippets will help you revisit the files or pages from where you initially highlighted the text/image.
+
+## How to use
+
+- The first step would be to highlight the required text from the pdf/website.
+For images and links, an option to add the selected item to collection is available.
+- After selecting the text, click on the extension button and a pop-up will appear with the following options.
+![](./assets/popupSS.png)
+
+- On clicking the central page, you will be led to the page where all the text,images,links and notes are saved.
+
+
+
 
 
 ## License
