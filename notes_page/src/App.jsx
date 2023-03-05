@@ -14,7 +14,10 @@ import {
 import MantineSearchBar from "./components/searchBar";
 import { useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
-
+import { SettingsInputAntennaOutlined } from "@mui/icons-material";
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 
 function filterSnipds(searchQuery, snipds) {
   return snipds.filter((a) => {
@@ -37,8 +40,9 @@ function App() {
 
   return (
     <AppShell padding="md" navbar={<NavBar />}>
-      <div className="App" style={{ width: "95vh", margin: "auto" }}>
-        <Group position="apart" mb={"lg"}>
+
+      <div className="App" style={{  margin: "48px" }}>
+        <Group style={{ marginTop: '16px' }} position="apart" mb={"lg"}>
           <Title order={2}>Snipd</Title>
           <MantineSearchBar
             onSearch={(searchQuery) => {
@@ -49,7 +53,7 @@ function App() {
         <Stack>
           <Divider />
           {filterSnipds(searchQuery, snipds).map((arr, idx) => {
-              return <Snippet key={idx} source={arr.source} title={arr.title} content={arr.content} date={arr.date} type={arr.type} />;
+            return <Snippet key={idx} source={arr.source} title={arr.title} content={arr.content} date={arr.date} type={arr.type} />;
           })}
         </Stack>
       </div>
@@ -59,35 +63,47 @@ function App() {
 
 function Snippet(props) {
   return (
-    <Stack>
-      <Group position="apart">
-        <Group>
-          <Title order={3}>{props.title}</Title>
-          <Badge color="gray" size="sm" radius="sm" variant="outline">
+    <div style={{
+      display:'flex',
+    }}>
+              <Card style={{
+                margin:'16px', padding:'16px'
+              }}>
+
+      <Stack style={{height:'100%'}} align="center" justify="space-around" >
+        <ArrowCircleUpIcon />
+        <DeleteForeverIcon/>
+        <ArrowCircleDownIcon />
+        
+      </Stack>
+      </Card>
+      <Stack>
+        <Group position="apart">
+          <Title >{props.title}</Title>
+          <Badge color="gray" size="md" radius="sm" variant="outline">
             {props.date}
           </Badge>
         </Group>
-
-        <Button variant="light" color="pink" mt="md">
+        <Button variant="light" color="pink">
           {props.source}
         </Button>
-      </Group>
 
-      <Center>
-        <Card w={"90%"}>
-          { props.type === "image" ? 
+        <Center>
+          <Card >
+            {props.type === "image" ?
               <Center>
-                  <img src={props.content} loading="lazy" />
+                <img src={props.content} loading="lazy" />
               </Center> :
               <Text size="sm" color="dimmed">
                 {props.content}
               </Text>
-          }
-        </Card>
-      </Center>
+            }
+          </Card>
+        </Center>
 
-      <Divider />
-    </Stack>
+        <Divider />
+      </Stack>
+    </div>
   );
 }
 
