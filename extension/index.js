@@ -17,11 +17,16 @@ ext_api.contextMenus.create({
   id: "add_image_to_collection",
 });
 
+ext_api.contextMenus.create({
+  title: "Add Link to Collection",
+  contexts: ["page"],
+  id: "add_link_to_collection",
+});
+
 ext_api.contextMenus.onClicked.addListener((info, _) => {
   switch (info.menuItemId) {
     case "add_image_to_collection":
       chrome.storage.local.set({
-        snip_time: new Date(),
         snip_type: "image",
         snip_content: info.srcUrl,
       });
@@ -32,11 +37,18 @@ ext_api.contextMenus.onClicked.addListener((info, _) => {
       chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
         if (tabs[0].url.endsWith(".pdf")) {
           chrome.storage.local.set({
-            snip_time: new Date(),
             snip_type: "text",
             snip_content: info.selectionText,
           });
         }
+      });
+      chrome.action.openPopup();
+      break;
+
+    case "add_link_to_collection":
+      chrome.storage.local.set({
+        snip_type: "link",
+        snip_content: info.pageUrl,
       });
       chrome.action.openPopup();
       break;
@@ -45,12 +57,10 @@ ext_api.contextMenus.onClicked.addListener((info, _) => {
 
 // Make a storage array if it doesn't exist
 ext_api.storage.local.get(["snipd_store"]).then((e) => {
-  if (!e.snipd_store)
-      ext_api.storage.local.set({ snipd_store: [] });
+  if (!e.snipd_store) ext_api.storage.local.set({ snipd_store: [] });
 });
 
 // Make a storage array if it doesn't exist
 ext_api.storage.local.get(["snipd_categories"]).then((e) => {
-  if (!e.snipd_categories)
-      ext_api.storage.local.set({ snipd_categories: ["Default"] });
+  if (!e.snipd_categories) ext_api.storage.local.set({ snipd_categories: ["Default"] });
 });

@@ -3,6 +3,7 @@ import {
   Text,
   Badge,
   Button,
+  Anchor,
   Group,
   Stack,
   Divider,
@@ -10,14 +11,15 @@ import {
   AppShell,
   Center,
   Image,
+  Tooltip,
 } from "@mantine/core";
 import MantineSearchBar from "./components/searchBar";
 import { useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
 import { SettingsInputAntennaOutlined } from "@mui/icons-material";
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
+import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 
 function filterSnipds(searchQuery, snipds) {
   return snipds.filter((a) => {
@@ -40,9 +42,8 @@ function App() {
 
   return (
     <AppShell padding="md" navbar={<NavBar />}>
-
-      <div className="App" style={{  margin: "48px" }}>
-        <Group style={{ marginTop: '16px' }} position="apart" mb={"lg"}>
+      <div className="App" style={{ margin: "48px" }}>
+        <Group style={{ marginTop: "16px" }} position="apart" mb={"lg"}>
           <Title order={2}>Snipd</Title>
           <MantineSearchBar
             onSearch={(searchQuery) => {
@@ -53,7 +54,16 @@ function App() {
         <Stack>
           <Divider />
           {filterSnipds(searchQuery, snipds).map((arr, idx) => {
-            return <Snippet key={idx} source={arr.source} title={arr.title} content={arr.content} date={arr.date} type={arr.type} />;
+            return (
+              <Snippet
+                key={idx}
+                source={arr.source}
+                title={arr.title}
+                content={arr.content}
+                date={arr.date}
+                type={arr.type}
+              />
+            );
           })}
         </Stack>
       </div>
@@ -63,41 +73,57 @@ function App() {
 
 function Snippet(props) {
   return (
-    <div style={{
-      display:'flex',
-    }}>
-              <Card style={{
-                margin:'16px', padding:'16px'
-              }}>
-
-      <Stack style={{height:'100%'}} align="center" justify="space-around" >
-        <ArrowCircleUpIcon />
-        <DeleteForeverIcon/>
-        <ArrowCircleDownIcon />
-        
-      </Stack>
+    <div
+      style={{
+        display: "flex",
+      }}>
+      <Card
+        style={{
+          margin: "0 16px",
+          padding: "8px",
+        }}>
+        <Stack style={{ height: "100%" }} align="center" justify="space-around">
+          <ArrowCircleUpIcon />
+          <DeleteForeverIcon />
+          <ArrowCircleDownIcon />
+        </Stack>
       </Card>
-      <Stack style={{width:'100%'}}>
-        <Group position="apart">
-          <Title >{props.title}</Title>
-          <Badge color="gray" size="md" radius="sm" variant="outline">
-            {props.date}
-          </Badge>
-        </Group>
-        <Button variant="light" color="pink">
-          {props.source}
-        </Button>
+
+      <Stack style={{ width: "100%" }}>
+        {props.type !== "link" && (
+          <Group position="left">
+            <Title order={3}>{props.title}</Title>
+            <Badge color="gray" size="sm" radius="sm" variant="outline">
+              {props.date}
+            </Badge>
+            <Anchor component="button" variant="light" href={props.source}>
+              Source
+            </Anchor>
+          </Group>
+        )}
 
         <Center>
-          <Card >
-            {props.type === "image" ?
+          <Card w={"95%"}>
+            {props.type === "image" && (
               <Center>
                 <img src={props.content} loading="lazy" />
-              </Center> :
+              </Center>
+            )}
+            {props.type === "text" && (
               <Text size="sm" color="dimmed">
                 {props.content}
               </Text>
-            }
+            )}
+            {props.type === "link" && (
+              <Anchor href={props.content}>
+                <Stack spacing={"xs"}>
+                  <Text lineClamp={1}>{props.title}</Text>
+                  <Text size="sm" color="dimmed" lineClamp={1}>
+                    {props.content}
+                  </Text>
+                </Stack>
+              </Anchor>
+            )}
           </Card>
         </Center>
 

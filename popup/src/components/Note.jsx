@@ -60,11 +60,9 @@ export default function Note({ snipd }) {
           variant="h4">
           Selected Highlight
         </Typography>
-
         <Divider variant="middle">
           <Chip label={snipd?.title} />
         </Divider>
-
         <Stack direction="row" justifyContent="space-evenly" alignItems="center">
           <Typography
             display="inline"
@@ -77,24 +75,35 @@ export default function Note({ snipd }) {
             {new Date(snipd?.date).toLocaleTimeString()}
           </Typography>
         </Stack>
-
         <hr />
-
-        {
-            snipd?.type !== "image" ? 
-            <Typography
-                style={{
-                    margin: "16px",
-                    fontSize: "12px",
-                }}
-                variant="body2">
+        {snipd?.type === "image" && (
+          <img
+            src={snipd?.content}
+            style={{ minWidth: "100%", maxWidth: "350px", maxHeight: "200px", objectFit: "cover" }}
+          />
+        )}
+        {snipd?.type === "text" && (
+          <Typography
+            style={{
+              margin: "16px",
+              fontSize: "12px",
+            }}
+            variant="body2">
             {snipd?.content}
             <br />
-            </Typography> :
-            <img src={snipd?.content} style={{ minWidth: "100%", maxWidth: "350px", maxHeight: "200px", objectFit: "cover" }} />
-
-        }
-
+          </Typography>
+        )}
+        {snipd?.type === "link" && (
+          <Typography
+            style={{
+              margin: "16px",
+              fontSize: "12px",
+            }}
+            variant="body2">
+            {snipd?.content}
+            <br />
+          </Typography>
+        )}
         <hr />
       </CardContent>
       <center>
@@ -121,9 +130,9 @@ export default function Note({ snipd }) {
             console.log(snipd);
             snipd.category = category;
             saveSnipd(snipd).then(() => {
-                if (snipd) {
-                  window.close();
-                }
+              if (snipd) {
+                window.close();
+              }
             });
           }}>
           Save Snippet
