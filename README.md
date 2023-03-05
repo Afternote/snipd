@@ -49,7 +49,7 @@ For images and links, an option to add the selected item to collection is availa
 - Initial idea was to keep track of annotations/snippets across PDF files, but later extended to web pages too. This project was built from scratch using the Browser Extension API and React for UI.
 - At the moment, all the core features are implemented which acts as a base for further improvements, althought they require some polishing, as well as more improvements via user feedback.
 - Initial goal was for the extension to be compatible with all mordern browsers (Chromium based browsers, Firefox) but later realized that they were all incompatible with eachother, with Chrome being the most feature rich, hence Chrome(Manifest v3) was alone choosen, with future plans of cross browser compatibility.
-- For development conviniences, `npm workspaces` were used for a shared build system and packages. For `react`, `vite` was choosed as the bundler, for its faster debug compilation speeds.
+- For development conviniences, `npm workspaces` were used for a shared build system and packages. For `react`- `vite` was chosen as the bundler, for its faster debug compilation speeds.
 - From here on, the project was divided into three sub-projects which were parallely worked upon
   - the core extension
   - popup UI (main flow of making a new snippet)
@@ -60,9 +60,21 @@ For images and links, an option to add the selected item to collection is availa
 
 ## Build
 
+Firstly, clone the repo 
+```
+git clone https://github.com/PDFilez/snipd.git
+```
+and then cd into the folder and do :
+```
+npm install
+```
+followed by :
 ```
 npm run buildall
 ```
+When the build finishes. Open 'chrome://extensions/' and set the developer mode as on.
+
+After which you will be able to try and test the extension.
 ## License
 
 MIT
