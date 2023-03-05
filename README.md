@@ -5,11 +5,11 @@
 With all the browsers and internet, information access is all available through mostly websites and ebooks (in browser readable PDF format). To keep track of collective information buried in parts across multiple websites and documents can be challenging, especially when researching a topic. However, as the number of highlights increases, it can become cluttered and challenging to keep track of them, while also staying focused.
 
 #### User Story
- > While preparing for our Semester Exams by studying from multiple sources like PDFs, Websites, etc, Making notes, Highlighting important points, maintaining track of all sources  and share is all done manually and can be bit over work, but we have to do it because it's easier to revise if everything is in one place.
+ > While preparing for our semester-end exams by studying from multiple sources like PDFs, websites, etc- making notes, highlighting important points, maintaining track of all sources  and share is all done manually and can be a bit of an over-work, but we still end up doing it because its easier to revise if everything is in one place.
 
 ## _Annoting and storing text, images and links made easier_
 
-Snipd, A note collecting browser extension which supports storing all the highlighted texts, images from PDFs/websites, links, and notes. All these snippets are stored within multiple collections with each collection be focused for a specific topic. Through a central collection page, They can be managed and quickly browsed with support for exporting to PDFs.
+Snipd is a note collecting browser extension which stores all the highlighted texts, images from PDFs/websites, links, and notes. All these snippets are stored within multiple collections where each collection is focused for a specific topic. Through a central collection page, They can be managed and quickly browsed with support for exporting to PDFs.
 
 ## Features
 
@@ -18,7 +18,7 @@ Snipd, A note collecting browser extension which supports storing all the highli
 - Categorise them and arrange them.
 - Search through the saved snippets.
 - Records all the other meta data about the snippet that might come handy later.
-- Export documents as PDF
+- Export documents as PDF.
 
 ## Use cases
 
@@ -41,7 +41,7 @@ followed by to build up the `popup` and `notes_page` and forward the output to e
 ```
 npm run buildall
 ```
-When the first build is done, Open `chrome://extensions` in your chrome browser and set the developer mode as on, Install the extension by `Loading Unpacked` and selecting the `./extension` directory. This process can be skipped in subsequent builds and Just use reload btn in the extension page for each new subsequent build.
+When the first build is done, Open `chrome://extensions` in your chrome browser and set the developer mode as on, Install the extension by `Loading Unpacked` and selecting the `./extension` directory. This process can be skipped in subsequent builds and Just use reload button in the extension page for each new subsequent build.
 
 
 ## How to use
@@ -68,7 +68,6 @@ When the first build is done, Open `chrome://extensions` in your chrome browser 
   - options page (central collection and management of all snippets)
 - Intergration between these components required a central source of truth, and `chrome.storage` was used. This resulted into first working prototype, which acted as a base for all future enhancements.
 - Finally, few polishing and quality-of-life enhancements were made.
-
 
 
 ## License
