@@ -1,7 +1,9 @@
 # Snipd 🔫
 ## _Annoting and storing text, images and links made easier_
 
-Snipd is a note collecting browser extension which supports highlighting of texts from PDFs/websites, images by URL, links and notes. Once a collection is done, it can be exported via PDF. Additionally you will be able to manage all the collections on a dedicated central page - where all the snippets are stored.
+Snipd is a note collecting browser extension which supports highlighting of texts from PDFs/websites, images by URL, links and notes. Once a collection is done. You will be able to manage all the collections on a dedicated central page - where all the snippets are stored. Additionally, it can be 
+exported via PDF.
+
 
 ## Use cases
 
