@@ -41,8 +41,8 @@ For images and links, an option to add the selected item to collection is availa
 ![](./assets/centralPage.png)
 
 - In the screenshot above:
-- - 1 corresponds to the **search bar** feature through which the user can easily search for the content via just typing the query.
-- - 2 corresponds to the various category collections. Exam category could have snippets having important notes saved by the user for a particular exam, etc.
+- 1 corresponds to the **search bar** feature through which the user can easily search for the content via just typing the query.
+- 2 corresponds to the various category collections. Exam category could have snippets having important notes saved by the user for a particular exam, etc.
 
 
 
