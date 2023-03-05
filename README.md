@@ -25,7 +25,7 @@ exported via PDF.
 - The first step would be to highlight the required text from the pdf/website.
 For images and links, an option to add the selected item to collection is available.
 - After selecting the text, click on the extension button and a pop-up will appear with the following options.
-![alt text](https://github.com/yat2k/PDFilez/blob/main/assets/popupSS.png?raw=true)
+![](./assets/popupSS.png)
 
 - On clicking the central page, you will be led to the page where all the text,images,links and notes are saved.
 
