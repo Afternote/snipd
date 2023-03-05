@@ -25,4 +25,15 @@ async function moveSnipdDown(id) {
     }
 }
 
-export { moveSnipdUp, moveSnipdDown };
+async function deleteSnipd(id) {
+    let obj = await chrome.storage.local.get(["snipd_store"]);
+    const len = obj.snipd_store.length;
+
+    if (id >= 0 && id <= len - 1) {
+        let new_store = [...obj.snipd_store];
+        new_store.splice(id, 1);
+        await chrome.storage.local.set({ snipd_store: new_store });
+    }
+}
+
+export { moveSnipdUp, moveSnipdDown, deleteSnipd };

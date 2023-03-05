@@ -20,7 +20,7 @@ import { SettingsInputAntennaOutlined } from "@mui/icons-material";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
-import { moveSnipdDown, moveSnipdUp } from "./utils/snipUtils";
+import { deleteSnipd, moveSnipdDown, moveSnipdUp } from "./utils/snipUtils";
 
 function filterSnipds(searchQuery, category, snipds) {
   return snipds.filter((a) => {
@@ -115,7 +115,11 @@ function Snippet(props) {
                   props.refetch();
               });
           }}/>
-          <DeleteForeverIcon />
+          <DeleteForeverIcon style={{ cursor: 'pointer' }} onClick={() => {
+              deleteSnipd(props.index).then(() => {
+                  props.refetch();
+              });
+          }} />
           <ArrowCircleDownIcon style={{ cursor: 'pointer' }} onClick={() => { 
               moveSnipdDown(props.index).then(() => {
                   props.refetch();
