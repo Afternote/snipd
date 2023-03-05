@@ -2,17 +2,14 @@
 
 ## Problem Statement / Motivation
 
-In today's digital age, we have access to vast amounts of information that are available in the form of PDFs, articles, and web pages. However, keeping track of important information buried within lengthy documents can be challenging. Many people often read and highlight important lines and quotes while reading PDFs or articles online. However, as the number of highlights increases, it can become cluttered and challenging to keep track of them. 
+With all the browsers and internet, information access is all available through mostly websites and ebooks (in browser readable PDF format). To keep track of collective information buried in parts across multiple websites and documents can be challenging, especially when researching a topic. However, as the number of highlights increases, it can become cluttered and challenging to keep track of them, while also staying focused.
 
-#### Real life scenario
- > We were preparing for our Semester end Exams and studying from multiple sources like PDFs, Websites, etc. To make notes, We used to highlight useful information and then write them down in our notebooks. It's a very tedious process, but we have to do it because it's easier to revise if everything is in one place. What if there was an app that stores all the highlights from different sources in a centralized system 🤔. 
-
-There is currently no centralized system that stores highlights, links, images, and other information from various sources in one place. Therefore, there is a need for a platform that can compile and organize these highlights into a single page, making it easier for users to navigate through their highlighted content. The solution should be designed to improve productivity and efficiency for individuals who rely on reading and extracting essential information from various sources.
+#### User Story
+ > While preparing for our Semester Exams by studying from multiple sources like PDFs, Websites, etc, Making notes, Highlighting important points, maintaining track of all sources  and share is all done manually and can be bit over work, but we have to do it because it's easier to revise if everything is in one place.
 
 ## _Annoting and storing text, images and links made easier_
 
-Snipd is a note collecting browser extension which supports highlighting of texts from PDFs/websites, images by URL, links and notes. Once a collection is done. You will be able to manage all the collections on a dedicated central page - where all the snippets are stored. Additionally, it can be 
-exported via PDF.
+Snipd, A note collecting browser extension which supports storing all the highlighted texts, images from PDFs/websites, links, and notes. All these snippets are stored within multiple collections with each collection be focused for a specific topic. Through a central collection page, They can be managed and quickly browsed with support for exporting to PDFs.
 
 ## Features
 
@@ -32,17 +29,15 @@ exported via PDF.
 
 ## How to use
 
-- The first step would be to highlight the required text from the pdf/website.
-For images and links, an option to add the selected item to collection is available.
-- After selecting the text, click on the extension button and a pop-up will appear with the following options.
+- Highlight the required text from the pdf/website and for images and links, Use context menu option to add the selected item to collection.
+- Use the popup that appears to customize the snippet.
 ![](./assets/popupSS.png)
-
-- On clicking the central page, you will be led to the page where all the text,images,links and notes are saved.
+- In the "Central page" which can be accessed from extension context menu > options or Selecting Central Page in popup, which is the place where collections and its snippets are managed
 ![](./assets/centralPage.png)
 
 - In the screenshot above:
-    - 1 corresponds to the **search bar** feature through which the user can easily search for the content via just typing the query.
-    - 2 corresponds to the various category collections. Exam category could have snippets having important notes saved by the user for a particular exam, etc.
+    - `1` corresponds to the **search bar** feature through which the user can easily search for the content via just typing the query.
+    - `2` corresponds to the various category collections. Exam category could have snippets having important notes saved by the user for a particular exam, etc.
 
 
 ## Timeline of the project 
@@ -68,15 +63,14 @@ and then cd into the folder and do :
 ```
 npm install
 ```
-followed by :
+followed by to build up the `popup` and `notes_page` and forward the output to extension directory (all commands are run in root directory and works because npm workspaces)
 ```
 npm run buildall
 ```
-When the build finishes. Open `chrome://extensions` in your chrome browser and set the developer mode as on.
+When the first build is done, Open `chrome://extensions` in your chrome browser and set the developer mode as on, Install the extension by `Loading Unpacked` and selecting the `./extension` directory. This process can be skipped in subsequent builds and Just use reload btn in the extension page for each new subsequent build.
 
-After which you will be able to try and test the extension.
 ## License
 
-MIT
+MIT License.
 
 **Free Software, Hell Yeah!**
