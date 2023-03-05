@@ -116,7 +116,7 @@ function Snippet(props) {
                 <img src={props.content} loading="lazy" />
               </Center>
             )}
-            {props.type === "text" && (
+            {(props.type === "text" || props.type === "note") && (
               <Text size="sm" color="dimmed">
                 {props.content}
               </Text>
