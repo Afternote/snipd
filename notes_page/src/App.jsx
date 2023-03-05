@@ -77,7 +77,7 @@ function Snippet(props) {
         
       </Stack>
       </Card>
-      <Stack>
+      <Stack style={{width:'100%'}}>
         <Group position="apart">
           <Title >{props.title}</Title>
           <Badge color="gray" size="md" radius="sm" variant="outline">
