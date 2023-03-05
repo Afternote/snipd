@@ -38,6 +38,7 @@ For images and links, an option to add the selected item to collection is availa
 ![](./assets/popupSS.png)
 
 - On clicking the central page, you will be led to the page where all the text,images,links and notes are saved.
+![](./assets/centralPage.png)
 
 
 
