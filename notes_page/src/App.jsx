@@ -1,4 +1,3 @@
-import reactLogo from "./assets/snipdLogo.jpg";
 import {
   Card,
   Text,
@@ -7,14 +6,13 @@ import {
   Group,
   Stack,
   Divider,
-  Navbar,
   Title,
   AppShell,
   Center,
-  NavLink,
 } from "@mantine/core";
 import MantineSearchBar from "./components/searchBar";
 import { useEffect, useState } from "react";
+import NavBar from "./components/NavBar";
 
 const arrs = [
   {
@@ -65,6 +63,7 @@ function filterSnipds(searchQuery, snipds) {
 function App() {
   const [snipds, setSnipds] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
     chrome.storage.local.get(["snipd_store"]).then((store_obj) => {
       setSnipds(store_obj.snipd_store);
@@ -73,25 +72,7 @@ function App() {
   }, []);
 
   return (
-    <AppShell
-      padding="md"
-      navbar={
-        <Navbar width={{ base: 280 }} fixed p={10} style={{ backgroundColor: "white" }}>
-          <Center>
-            <img src={reactLogo} width="100px" />
-          </Center>
-
-          <Title order={2} align="left" color={"green"} mt={10}>
-            Collections
-          </Title>
-          <Divider mb={5} mt={5} />
-          <Stack spacing={"xs"} color={"black"}>
-            <NavLink label="History Research" />
-            <NavLink label="Interesting Reddit Collection" />
-            <NavLink label="Cats" />
-          </Stack>
-        </Navbar>
-      }>
+    <AppShell padding="md" navbar={<NavBar />}>
       <div className="App" style={{ width: "95vh", margin: "auto" }}>
         <Group position="apart" mb={"lg"}>
           <Title order={2}>Snipd</Title>
@@ -115,15 +96,6 @@ function snippetList(arr) {
 }
 
 function Snippet(props) {
-  // return(
-  //   <><div>
-  //     <h1>{props.source}</h1>
-  //     <h1>{props.title}</h1>
-  //     <h1>{props.content}</h1>
-  //     <h1>{props.date}</h1>
-  //     </div>
-  //   </>
-  // )
   return (
     <Stack>
       <Group position="apart">
