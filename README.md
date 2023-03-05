@@ -72,7 +72,7 @@ followed by :
 ```
 npm run buildall
 ```
-When the build finishes. Open ['chrome extension page'](chrome://extensions) and set the developer mode as on.
+When the build finishes. Open `chrome://extensions` in your chrome browser and set the developer mode as on.
 
 After which you will be able to try and test the extension.
 ## License
