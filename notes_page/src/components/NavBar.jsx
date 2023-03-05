@@ -1,7 +1,7 @@
 import reactLogo from "../assets/snipdLogo.jpg";
 import { Stack, Divider, Title, Center, NavLink, Navbar, Button } from "@mantine/core";
 
-export default function ({categoryList, setSelectedCategories}) {
+export default function ({categoryList, setSelectedCategory}) {
   return (
     <Navbar width={{ base: 280 }} fixed p={10} style={{ backgroundColor: "white" }}>
       <Center>
@@ -14,7 +14,7 @@ export default function ({categoryList, setSelectedCategories}) {
       <Divider mb={5} mt={5} />
       <Stack spacing={"xs"} color={"black"}>
       {categoryList.map(category => {
-          return (<Button variant="subtle" color="dark">{category}</Button>);
+          return (<Button variant="subtle" color="dark" onClick={() => { setSelectedCategory(category) }}>{category}</Button>);
       })} 
       </Stack>
     </Navbar>

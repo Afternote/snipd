@@ -21,10 +21,16 @@ import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 
-function filterSnipds(searchQuery, snipds) {
+function filterSnipds(searchQuery, category, snipds) {
   return snipds.filter((a) => {
-    if (a.content.includes(searchQuery.toLowerCase())) {
-      return a;
+    if (!category) {
+        if (a.content.includes(searchQuery.toLowerCase())) {
+          return a;
+        }
+    } else {
+        if (a.content.includes(searchQuery.toLowerCase()) && a.category === category) {
+          return a;
+        }
     }
   });
 }
@@ -34,7 +40,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [categoryList, setCategoryList] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     chrome.storage.local.get(["snipd_store"]).then((store_obj) => {
@@ -48,7 +54,7 @@ function App() {
   }, []);
 
   return (
-    <AppShell padding="md" navbar={<NavBar categoryList={categoryList} setSelectedCategories={setSelectedCategories} />}>
+    <AppShell padding="md" navbar={<NavBar categoryList={categoryList} setSelectedCategory={setSelectedCategory} />}>
       <div className="App" style={{ margin: "48px" }}>
         <Group style={{ marginTop: "16px" }} position="apart" mb={"lg"}>
           <Title order={2}>Snipd</Title>
@@ -60,7 +66,8 @@ function App() {
         </Group>
         <Stack>
           <Divider />
-          {filterSnipds(searchQuery, snipds).map((arr, idx) => {
+          {(selectedCategory !== "") && <Button variant="outline" color="error" onClick={() => { setSelectedCategory("") }}>Show all snipds</Button>}
+          {filterSnipds(searchQuery, selectedCategory, snipds).map((arr, idx) => {
             return (
               <Snippet
                 key={idx}
