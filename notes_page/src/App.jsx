@@ -9,6 +9,7 @@ import {
   Title,
   AppShell,
   Center,
+  Image,
 } from "@mantine/core";
 import MantineSearchBar from "./components/searchBar";
 import { useEffect, useState } from "react";
@@ -92,7 +93,7 @@ function App() {
 }
 
 function snippetList(arr) {
-  return <Snippet source={arr.source} title={arr.title} content={arr.content} date={arr.date} />;
+  return <Snippet source={arr.source} title={arr.title} content={arr.content} date={arr.date} type={arr.type} />;
 }
 
 function Snippet(props) {
@@ -113,9 +114,14 @@ function Snippet(props) {
 
       <Center>
         <Card w={"90%"}>
-          <Text size="sm" color="dimmed">
-            {props.content}
-          </Text>
+          { props.type !== "image" ? 
+              <Text size="sm" color="dimmed">
+                {props.content}
+              </Text> :
+              <Center>
+                  <img src={props.content} loading="lazy" />
+              </Center>
+          }
         </Card>
       </Center>
 

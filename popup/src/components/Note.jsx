@@ -59,15 +59,20 @@ export default function Note({ snipd }) {
 
         <hr />
 
-        <Typography
-          style={{
-            margin: "16px",
-            fontSize: "12px",
-          }}
-          variant="body2">
-          {snipd?.content}
-          <br />
-        </Typography>
+        {
+            snipd?.type !== "image" ? 
+            <Typography
+                style={{
+                    margin: "16px",
+                    fontSize: "12px",
+                }}
+                variant="body2">
+            {snipd?.content}
+            <br />
+            </Typography> :
+            <img src={snipd?.content} style={{ minWidth: "100%", maxWidth: "350px", maxHeight: "200px", objectFit: "cover" }} />
+
+        }
 
         <hr />
       </CardContent>
