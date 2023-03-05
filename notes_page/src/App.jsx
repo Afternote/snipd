@@ -48,15 +48,13 @@ function App() {
         </Group>
         <Stack>
           <Divider />
-          {filterSnipds(searchQuery, snipds).map(snippetList)}
+          {filterSnipds(searchQuery, snipds).map((arr, idx) => {
+              return <Snippet key={idx} source={arr.source} title={arr.title} content={arr.content} date={arr.date} type={arr.type} />;
+          })}
         </Stack>
       </div>
     </AppShell>
   );
-}
-
-function snippetList(arr) {
-  return <Snippet source={arr.source} title={arr.title} content={arr.content} date={arr.date} type={arr.type} />;
 }
 
 function Snippet(props) {
@@ -77,13 +75,13 @@ function Snippet(props) {
 
       <Center>
         <Card w={"90%"}>
-          { props.type !== "image" ? 
-              <Text size="sm" color="dimmed">
-                {props.content}
-              </Text> :
+          { props.type === "image" ? 
               <Center>
                   <img src={props.content} loading="lazy" />
-              </Center>
+              </Center> :
+              <Text size="sm" color="dimmed">
+                {props.content}
+              </Text>
           }
         </Card>
       </Center>

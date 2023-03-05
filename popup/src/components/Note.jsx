@@ -96,10 +96,11 @@ export default function Note({ snipd }) {
           style={{ margin: "16px" }}
           onClick={() => {
             console.log(snipd);
-            saveSnipd(snipd);
-            if (snipd) {
-              window.close();
-            }
+            saveSnipd(snipd).then(() => {
+                if (snipd) {
+                  window.close();
+                }
+            });
           }}>
           Save Snippet
         </Button>
