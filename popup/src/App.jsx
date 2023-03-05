@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Note from "./components/Note";
 import { EmptySelecion } from "./components/EmptySelecion";
 
-async function getCurrentSelection() {
+async function getCurrentSelectionData() {
   const [currentTab] = await chrome.tabs.query({
     active: true,
     currentWindow: true,
@@ -10,37 +10,25 @@ async function getCurrentSelection() {
   let [{ result }] = await chrome.scripting.executeScript({
     target: { tabId: currentTab.id },
     func: async () => {
-      if (!window.location.href.endsWith(".pdf")) {
-        return window.getSelection().toString();
-      } else {
-        let selectionPromise = {
-          then(resolve, _) {
-            chrome.storage.local.get(["selectionText"]).then((obj) => {
-              resolve(obj.selectionText);
-            });
-          },
-        };
+      let selectionText = await chrome.storage.local.get(["snip_content", "snip_type"]);
+      await chrome.storage.local.remove(["snip_content", "snip_type"]);
 
-        let selectionText = await selectionPromise;
+      if (!window.location.href.endsWith(".pdf") && selectionText.snip_content === undefined) {
+        return {
+          snip_content: window.getSelection().toString(),
+          snip_type: "text",
+        };
+      } else {
         return selectionText;
       }
     },
   });
-  console.log(result);
-  return result;
-}
-
-async function getSnipObjectFromCurrentSelection() {
-  const [currentTab] = await chrome.tabs.query({
-    active: true,
-    currentWindow: true,
-  });
-  let currentSelection = await getCurrentSelection();
 
   return {
     source: currentTab.url,
     title: currentTab.title,
-    content: currentSelection,
+    type: result.snip_type,
+    content: result.snip_content,
     date: new Date().toString(),
   };
 }
@@ -49,7 +37,7 @@ function App() {
   const [snipd, setSnipd] = useState();
 
   useEffect(() => {
-    getSnipObjectFromCurrentSelection().then((selection) => {
+    getCurrentSelectionData().then((selection) => {
       setSnipd(selection);
     });
   }, []);

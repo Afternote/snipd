@@ -24,7 +24,6 @@ ext_api.contextMenus.onClicked.addListener((info, _) => {
         snip_time: new Date(),
         snip_type: "image",
         snip_content: info.srcUrl,
-        selectionText: info.srcUrl,
       });
       chrome.action.openPopup();
       break;
@@ -36,7 +35,6 @@ ext_api.contextMenus.onClicked.addListener((info, _) => {
             snip_time: new Date(),
             snip_type: "text",
             snip_content: info.selectionText,
-            selectionText: info.selectionText,
           });
         }
       });
