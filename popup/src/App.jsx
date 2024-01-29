@@ -29,7 +29,7 @@ async function getCurrentSelectionData() {
     title: currentTab.title,
     type: result.snip_type,
     content: result.snip_content,
-    date: new Date().toUTCString(),
+    date: new Date().toLocaleDateString() + ", " + new Date().toLocaleTimeString() ,
   };
 }
 
