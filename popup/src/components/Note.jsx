@@ -26,12 +26,24 @@ export default function Note({ snipd }) {
   };
 
   const addCategory = (newCategory) => {
-      chrome.storage.local.get(["snipd_categories"]).then(obj => {
-          const new_category_list = [...obj.snipd_categories, newCategory];
-          chrome.storage.local.set({snipd_categories: new_category_list}).then(() => {
-              populateCategory(newCategory);
-          });
+    if (!newCategory.trim()) {
+      console.error("Category cannot be empty");
+      return;
+    }
+
+    chrome.storage.local.get(["snipd_categories"]).then((obj) => {
+      const existingCategories = obj.snipd_categories || [];
+
+      if (existingCategories.includes(newCategory)) {
+        console.error("Category already exists");
+        return;
+      }
+
+      const new_category_list = [...existingCategories, newCategory];
+      chrome.storage.local.set({ snipd_categories: new_category_list }).then(() => {
+        populateCategory(newCategory);
       });
+    });
   };
 
   React.useEffect(() => {
