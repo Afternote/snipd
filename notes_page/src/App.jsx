@@ -122,6 +122,9 @@ function App() {
 
 function Snippet(props) {
   const { hovered, ref } = useHover();
+  const handleSourceButtonClick = () => {
+    window.location.href = props.source;
+  };
   return (
     <div
       ref={ref}
@@ -183,7 +186,7 @@ function Snippet(props) {
             <Group position="apart">
               <Title order={3}>{props.title}</Title>
               {hovered && (
-                <Button compact variant="light" href={props.source} w={80}>
+                <Button compact variant="light" onClick={handleSourceButtonClick} w={80}>
                   Source
                 </Button>
               )}
