@@ -27,11 +27,11 @@ import "./assets/print.css";
 function filterSnipds(searchQuery, category, snipds) {
   return snipds.filter((a) => {
     if (!category) {
-      if (a.content.includes(searchQuery.toLowerCase())) {
+      if (a.content.toLowerCase().includes(searchQuery.toLowerCase()) || a.title.toLowerCase().includes(searchQuery.toLowerCase())) {
         return a;
       }
     } else {
-      if (a.content.includes(searchQuery.toLowerCase()) && a.category === category) {
+      if (a.content.toLowerCase().includes(searchQuery.toLowerCase()) && a.category === category || a.title.toLowerCase().includes(searchQuery.toLowerCase())) {
         return a;
       }
     }
