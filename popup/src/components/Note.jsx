@@ -3,13 +3,17 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import CategoriesMenu from "./CategoriesMenu";
 import Typography from "@mui/material/Typography";
 import { height } from "@mui/system";
 import { Chip, Stack } from "@mui/material";
 import { openAllSnipdPage, saveSnipd } from "../utils/snippitUtils";
+import {
+  Button,
+  Title,
+  
+} from "@mantine/core";
 
 const bull = (
   <Box component="span" sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}>
@@ -45,11 +49,7 @@ export default function Note({ snipd }) {
   }, []);
 
   return (
-    <Card
-      style={{
-        width: "100%",
-        height: "100%",
-      }}>
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent:'space-evenly'}}>
       <CardContent>
         <Typography
           style={{
@@ -58,9 +58,15 @@ export default function Note({ snipd }) {
           }}
           fontSize={24}
           variant="h4">
-          Selected Highlight
+          <Title order={2}>Selected Highlight</Title>
+
+          
         </Typography>
-        <Divider variant="middle">
+        
+        
+      </CardContent>
+      <div style={{ margin: '16px'}}>
+      <Divider variant="middle">
           <Chip label={snipd?.title} />
         </Divider>
         <Stack direction="row" justifyContent="space-evenly" alignItems="center">
@@ -75,7 +81,7 @@ export default function Note({ snipd }) {
             {new Date(snipd?.date).toLocaleTimeString()}
           </Typography>
         </Stack>
-        <hr />
+      <hr />
         {snipd?.type === "image" && (
           <img
             src={snipd?.content}
@@ -105,8 +111,8 @@ export default function Note({ snipd }) {
           </Typography>
         )}
         <hr />
-      </CardContent>
-      <center>
+      </div>
+      <div><center>
         <p>Current category: {category}</p>
         <CategoriesMenu
           categoriesList={categoriesList}
@@ -124,7 +130,7 @@ export default function Note({ snipd }) {
           justifyContent: "center",
         }}>
         <Button
-          variant="outlined"
+           
           style={{ margin: "16px" }}
           onClick={() => {
             console.log(snipd);
@@ -137,10 +143,10 @@ export default function Note({ snipd }) {
           }}>
           Save Snippet
         </Button>
-        <Button variant="outlined" onClick={() => openAllSnipdPage()}>
+        <Button  onClick={() => openAllSnipdPage()}>
           Central Page
         </Button>
-      </CardActions>
-    </Card>
+      </CardActions></div>
+    </div>
   );
 }

@@ -9,11 +9,7 @@ export function EmptySelecion() {
 
   const NoSelect = () => {
       return (
-          <Card
-            style={{
-              width: "100%",
-              height: "100%",
-            }}>
+          <div>
             <center>
               <img
                 style={{ width: "150px", height: "150px", paddingTop: "16px" }}
@@ -48,7 +44,7 @@ export function EmptySelecion() {
                 Central Page
               </Button>
             </CardActions>
-          </Card>
+          </div>
       );
   };
 

@@ -45,11 +45,7 @@ function App() {
   return (
     <div
       className="App"
-      style={{
-        width: "100%",
-        height: "100%",
-        minWidth: "350px",
-      }}>
+      >
       {!!snipd?.content ? (
         <Note
           snipd={snipd}
