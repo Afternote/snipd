@@ -10,7 +10,6 @@ ext_api.contextMenus.create({
   id: ID_ADD_SELECTED_TEXT_TO_COLLECTION,
 });
 
-
 //context menu item for image
 ext_api.contextMenus.create({
   title: "Add Image to Collection",
@@ -31,8 +30,9 @@ ext_api.contextMenus.onClicked.addListener((info, tab) => {
         snip_type: "image",
         snip_content: info.srcUrl,
       });
-    
-      ext_api.sidePanel.open({windowId: tab.windowId});
+      console.log(tab)
+
+      ext_api.sidePanel.open({ tabId: tab.id });
       break;
 
     case "add_selected_text_to_collection":
@@ -42,8 +42,12 @@ ext_api.contextMenus.onClicked.addListener((info, tab) => {
             snip_type: "text",
             snip_content: info.selectionText,
           });
-          ext_api.sidePanel.open({windowId: tabs[0].windowId});
+          console.log(ext_api.sidePanel);
+          console.log(tabs[0]);
 
+          chrome.sidePanel.open({ tabId: tabs[0].id });
+
+          
         }
       });
       break;
@@ -53,7 +57,7 @@ ext_api.contextMenus.onClicked.addListener((info, tab) => {
         snip_type: "link",
         snip_content: info.pageUrl,
       });
-      ext_api.sidePanel.open({windowId: tab.windowId});
+      ext_api.sidePanel.open({ windowId: tab.windowId });
       break;
   }
 });

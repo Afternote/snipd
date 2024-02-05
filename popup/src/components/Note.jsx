@@ -137,6 +137,9 @@ export default function Note({ snipd }) {
             snipd.category = category;
             saveSnipd(snipd).then(() => {
               if (snipd) {
+                chrome.windows.getCurrent(function(window) {
+                  chrome.windows.remove(window.id);
+              });
                 window.close();
               }
             });
