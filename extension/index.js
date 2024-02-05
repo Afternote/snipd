@@ -10,6 +10,7 @@ ext_api.contextMenus.create({
   id: ID_ADD_SELECTED_TEXT_TO_COLLECTION,
 });
 
+
 //context menu item for image
 ext_api.contextMenus.create({
   title: "Add Image to Collection",
@@ -23,14 +24,15 @@ ext_api.contextMenus.create({
   id: "add_link_to_collection",
 });
 
-ext_api.contextMenus.onClicked.addListener((info, _) => {
+ext_api.contextMenus.onClicked.addListener((info, tab) => {
   switch (info.menuItemId) {
     case "add_image_to_collection":
       chrome.storage.local.set({
         snip_type: "image",
         snip_content: info.srcUrl,
       });
-      chrome.action.openPopup();
+    
+      ext_api.sidePanel.open({windowId: tab.windowId});
       break;
 
     case "add_selected_text_to_collection":
@@ -40,9 +42,10 @@ ext_api.contextMenus.onClicked.addListener((info, _) => {
             snip_type: "text",
             snip_content: info.selectionText,
           });
+          ext_api.sidePanel.open({windowId: tabs[0].windowId});
+
         }
       });
-      chrome.action.openPopup();
       break;
 
     case "add_link_to_collection":
@@ -50,7 +53,7 @@ ext_api.contextMenus.onClicked.addListener((info, _) => {
         snip_type: "link",
         snip_content: info.pageUrl,
       });
-      chrome.action.openPopup();
+      ext_api.sidePanel.open({windowId: tab.windowId});
       break;
   }
 });

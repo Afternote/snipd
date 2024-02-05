@@ -4,8 +4,10 @@
   "name": "snipd",
   "version": "1.0",
   "homepage_url": "https://github.com/PDFilez/snipd",
-  "icons": {},
-  "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage"],
+  "icons": {
+    "48": "images/snipdLogo.png"
+  },
+  "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage", "action", "notifications", "sidePanel"],
   "host_permissions": ["file:///*"],
   "action": {
     "default_title": "snipd",
@@ -17,5 +19,8 @@
   "options_ui": {
     "page": "notes_page/index.html",
     "open_in_tab": true
+  },
+  "side_panel": {
+    "default_path": "popup/index.html"
   }
 }
