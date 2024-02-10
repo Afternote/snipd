@@ -7,12 +7,9 @@
   "icons": {
     "48": "images/snipdLogo.png"
   },
-  "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage", "action", "notifications", "sidePanel"],
-  "host_permissions": ["file:///*"],
-  "action": {
-    "default_title": "snipd",
-    "default_popup": "popup/index.html"
-  },
+  "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage", "notifications", "sidePanel"],
+  "host_permissions": ["file:///*", "https://*/*"],
+ 
   "background": {
     "service_worker": "index.js",
     "persistent": false
