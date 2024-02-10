@@ -1,6 +1,6 @@
 import { Card, CardActions, TextField, Typography } from "@mui/material";
-import confused from "../assets/confused.png";
-import { Button } from "@mui/material";
+import astronautUfo from "../assets/ufo_ast.png";
+import { Button } from "@mantine/core";
 import { openAllSnipdPage, saveNote } from "../utils/snippitUtils";
 import { useState } from "react";
 
@@ -8,71 +8,82 @@ export function EmptySelecion() {
   const [isNewNote, setIsNewNote] = useState(false);
 
   const NoSelect = () => {
-      return (
-          <div>
-            <center>
-              <img
-                style={{ width: "150px", height: "150px", paddingTop: "16px" }}
-                src={confused}
-                alt="Logo"
-              />
-            </center>
-            <Typography
-              style={{
-                margin: "16px",
-                fontSize: "15px",
-                textAlign: "center",
-              }}
-              variant="body2">
-              Umm... Feels like you didn't select anything!! ☹️
-              <br />
-              <br />
-              Try selecting the text you want to Highlight
-              <br />
-            </Typography>
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-evenly",
+          height: "100vh",
+        }}>
+        <center>
+          <img style={{ width: "100%", padding: "16px" }} src={astronautUfo} alt="Logo" />
+          <Typography
+          style={{
+            margin: "8px",
+            textAlign: "center",
+            fontSize: "12px",
+          }}
+          variant="h6">
+          <b>
+            To save a snippet, please make a selection. <hr/>
+            It appears that no text/image/link has been selected.
+          </b>
+          <br />
+        </Typography>
+        </center>
 
-            <CardActions style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-            }}>
-              <Button style={{ margin: "16px" }} variant="outlined" onClick={() => setIsNewNote(true)}>
-                Make note
-              </Button>
+        
 
-              <Button style={{ margin: "16px" }} variant="outlined" onClick={() => openAllSnipdPage()}>
-                Central Page
-              </Button>
-            </CardActions>
-          </div>
-      );
+        <CardActions
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}>
+          <Button style={{ margin: "16px" }} onClick={() => setIsNewNote(true)}>
+            Make note
+          </Button>
+
+          <Button style={{ margin: "16px" }} onClick={() => openAllSnipdPage()}>
+            Central Page
+          </Button>
+        </CardActions>
+      </div>
+    );
   };
 
   const NewNote = () => {
-      const [noteContent, setNoteContent] = useState("");
-      return (
-          <>
-          <TextField label="Note content" variant="outlined" multiline={true} rows={8} fullWidth onChange={e => setNoteContent(e.target.value)} />
-          <CardActions style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+    const [noteContent, setNoteContent] = useState("");
+    return (
+      <>
+        <TextField
+          label="Note content"
+          variant="outlined"
+          multiline={true}
+          rows={8}
+          fullWidth
+          onChange={(e) => setNoteContent(e.target.value)}
+        />
+        <CardActions
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}>
-            <Button style={{ margin: "16px" }} variant="outlined" onClick={() => {
-              saveNote(noteContent).then(() => { 
-                  window.close();
+          <Button
+            style={{ margin: "16px" }}
+            onClick={() => {
+              saveNote(noteContent).then(() => {
+                window.close();
               });
             }}>
-              Make note
-            </Button>
-          </CardActions>
-          </>
-      );
+            Make note
+          </Button>
+        </CardActions>
+      </>
+    );
   };
 
-  return (
-    <div>
-      { isNewNote ? <NewNote /> : <NoSelect /> }
-    </div>
-  );
+  return <div>{isNewNote ? <NewNote /> : <NoSelect />}</div>;
 }

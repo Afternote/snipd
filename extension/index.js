@@ -10,8 +10,17 @@ chrome.tabs.onActivated.addListener(async function(activeInfo) {
   });
 });
 
+chrome.action.onClicked.addListener(function(){
+  chrome.sidePanel.setOptions({
+    enabled: true
+  })
+
+}
+)
 chrome.sidePanel
-  .setPanelBehavior({ openPanelOnActionClick: true })
+  .setPanelBehavior({  
+    
+    openPanelOnActionClick: true })
   .catch((error) => console.error(error));
 
 ext_api.contextMenus.create({
@@ -48,14 +57,13 @@ ext_api.contextMenus.onClicked.addListener((info, tab) => {
 
     case "add_selected_text_to_collection":
       chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-        if (tabs[0].url.endsWith(".pdf")) {
           chrome.storage.local.set({
             snip_type: "text",
             snip_content: info.selectionText,
           });
 
           chrome.sidePanel.open({ windowId: tabs[0].windowId });
-        }
+        
       });
       break;
 
