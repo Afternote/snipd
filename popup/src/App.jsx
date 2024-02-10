@@ -37,10 +37,8 @@ function App() {
   const [snipd, setSnipd] = useState();
 
   useEffect(() => {
-    console.log("jdkzasdgfjksdhgfkjsdgh")
 
     getCurrentSelectionData().then((selection) => {
-      console.log(selection)
       setSnipd(selection);
     });
   }, []);

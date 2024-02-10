@@ -14,6 +14,9 @@
     "service_worker": "index.js",
     "persistent": false
   },
+  "action": {
+    "default_title": "Click to open panel"
+  },
   "options_ui": {
     "page": "notes_page/index.html",
     "open_in_tab": true

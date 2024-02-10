@@ -10,6 +10,10 @@ chrome.tabs.onActivated.addListener(async function(activeInfo) {
   });
 });
 
+chrome.sidePanel
+  .setPanelBehavior({ openPanelOnActionClick: true })
+  .catch((error) => console.error(error));
+
 ext_api.contextMenus.create({
   title: "Add Selected Text to Collection",
   contexts: ["selection"],
