@@ -67,7 +67,7 @@ export default function Note({ snipd }) {
       </CardContent>
       <div style={{ margin: '16px'}}>
       <Divider variant="middle">
-          <Chip label={snipd?.title} />
+      <Chip label={snipd?.title.length > 10 ? `${snipd.title.substring(0, 10)}...` : snipd.title} />
         </Divider>
         <Stack direction="row" justifyContent="space-evenly" alignItems="center">
           <Typography
@@ -82,12 +82,14 @@ export default function Note({ snipd }) {
           </Typography>
         </Stack>
       <hr />
+      <div>
         {snipd?.type === "image" && (
           <img
             src={snipd?.content}
-            style={{ minWidth: "100%", maxWidth: "350px", maxHeight: "200px", objectFit: "cover" }}
+            style={{  width:"100%", maxHeight: "200px", objectFit: "scale-down" }}
           />
         )}
+        </div>
         {snipd?.type === "text" && (
           <Typography
             style={{

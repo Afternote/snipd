@@ -11,8 +11,7 @@
   "host_permissions": ["file:///*", "https://*/*"],
  
   "background": {
-    "service_worker": "index.js",
-    "persistent": false
+    "service_worker": "index.js"
   },
   "action": {
     "default_title": "Click to open panel"
