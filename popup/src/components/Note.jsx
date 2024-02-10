@@ -26,8 +26,25 @@ export default function Note({ snipd }) {
   };
 
   const addCategory = (newCategory) => {
+<<<<<<< HEAD
     chrome.storage.local.get(["snipd_categories"]).then((obj) => {
       const new_category_list = [...obj.snipd_categories, newCategory];
+=======
+    if (!newCategory.trim()) {
+      console.error("Category cannot be empty");
+      return;
+    }
+
+    chrome.storage.local.get(["snipd_categories"]).then((obj) => {
+      const existingCategories = obj.snipd_categories || [];
+
+      if (existingCategories.includes(newCategory)) {
+        console.error("Category already exists");
+        return;
+      }
+
+      const new_category_list = [...existingCategories, newCategory];
+>>>>>>> c4c4c6914557e9852cdbc809d30a66a9a241ba2e
       chrome.storage.local.set({ snipd_categories: new_category_list }).then(() => {
         populateCategory(newCategory);
       });
