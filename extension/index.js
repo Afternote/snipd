@@ -43,8 +43,6 @@ ext_api.contextMenus.onClicked.addListener((info, tab) => {
         snip_type: "image",
         snip_content: info.srcUrl,
       });
-      console.log(tab)
-
       ext_api.sidePanel.open({ windowId: tab.windowId });
       break;
 
