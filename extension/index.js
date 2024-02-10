@@ -4,6 +4,12 @@
 let ext_api = chrome;
 const ID_ADD_SELECTED_TEXT_TO_COLLECTION = "add_selected_text_to_collection";
 
+chrome.tabs.onActivated.addListener(async function(activeInfo) {
+  await chrome.sidePanel.setOptions({
+    enabled: false
+  });
+});
+
 ext_api.contextMenus.create({
   title: "Add Selected Text to Collection",
   contexts: ["selection"],
@@ -24,6 +30,9 @@ ext_api.contextMenus.create({
 });
 
 ext_api.contextMenus.onClicked.addListener((info, tab) => {
+  chrome.sidePanel.setOptions({
+    enabled: true
+  });
   switch (info.menuItemId) {
     case "add_image_to_collection":
       chrome.storage.local.set({
@@ -32,7 +41,7 @@ ext_api.contextMenus.onClicked.addListener((info, tab) => {
       });
       console.log(tab)
 
-      ext_api.sidePanel.open({ tabId: tab.id });
+      ext_api.sidePanel.open({ windowId: tab.windowId });
       break;
 
     case "add_selected_text_to_collection":
@@ -42,12 +51,8 @@ ext_api.contextMenus.onClicked.addListener((info, tab) => {
             snip_type: "text",
             snip_content: info.selectionText,
           });
-          console.log(ext_api.sidePanel);
-          console.log(tabs[0]);
 
-          chrome.sidePanel.open({ tabId: tabs[0].id });
-
-          
+          chrome.sidePanel.open({ windowId: tabs[0].windowId });
         }
       });
       break;
