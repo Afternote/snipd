@@ -4,18 +4,23 @@
   "name": "snipd",
   "version": "1.0",
   "homepage_url": "https://github.com/PDFilez/snipd",
-  "icons": {},
-  "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage"],
-  "host_permissions": ["file:///*"],
-  "action": {
-    "default_title": "snipd",
-    "default_popup": "popup/index.html"
+  "icons": {
+    "48": "images/snipdLogo.png"
   },
+  "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage", "notifications", "sidePanel"],
+  "host_permissions": ["file:///*", "https://*/*"],
+ 
   "background": {
     "service_worker": "index.js"
+  },
+  "action": {
+    "default_title": "Click to open panel"
   },
   "options_ui": {
     "page": "notes_page/index.html",
     "open_in_tab": true
+  },
+  "side_panel": {
+    "default_path": "popup/index.html"
   }
 }

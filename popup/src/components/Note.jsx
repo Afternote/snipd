@@ -3,13 +3,13 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import CategoriesMenu from "./CategoriesMenu";
 import Typography from "@mui/material/Typography";
 import { height } from "@mui/system";
 import { Chip, Stack } from "@mui/material";
 import { openAllSnipdPage, saveSnipd } from "../utils/snippitUtils";
+import { Button, Title } from "@mantine/core";
 
 const bull = (
   <Box component="span" sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}>
@@ -26,6 +26,10 @@ export default function Note({ snipd }) {
   };
 
   const addCategory = (newCategory) => {
+<<<<<<< HEAD
+    chrome.storage.local.get(["snipd_categories"]).then((obj) => {
+      const new_category_list = [...obj.snipd_categories, newCategory];
+=======
     if (!newCategory.trim()) {
       console.error("Category cannot be empty");
       return;
@@ -40,6 +44,7 @@ export default function Note({ snipd }) {
       }
 
       const new_category_list = [...existingCategories, newCategory];
+>>>>>>> c4c4c6914557e9852cdbc809d30a66a9a241ba2e
       chrome.storage.local.set({ snipd_categories: new_category_list }).then(() => {
         populateCategory(newCategory);
       });
@@ -47,20 +52,22 @@ export default function Note({ snipd }) {
   };
 
   React.useEffect(() => {
-      chrome.storage.local.get(["snipd_categories"]).then(obj => {
-          if (obj.snipd_categories) {
-              obj.snipd_categories.forEach(category => {
-                  populateCategory(category);
-              });
-          }
-      });
+    chrome.storage.local.get(["snipd_categories"]).then((obj) => {
+      if (obj.snipd_categories) {
+        obj.snipd_categories.forEach((category) => {
+          populateCategory(category);
+        });
+      }
+    });
   }, []);
 
   return (
-    <Card
+    <div
       style={{
-        width: "100%",
-        height: "100%",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
       }}>
       <CardContent>
         <Typography
@@ -70,10 +77,14 @@ export default function Note({ snipd }) {
           }}
           fontSize={24}
           variant="h4">
-          Selected Highlight
+          <Title order={2}>Selected Highlight</Title>
         </Typography>
+      </CardContent>
+      <div style={{ margin: "16px" }}>
         <Divider variant="middle">
-          <Chip label={snipd?.title} />
+          <Chip
+            label={snipd?.title.length > 30 ? `${snipd.title.substring(0, 30)}...` : snipd.title}
+          />
         </Divider>
         <Stack direction="row" justifyContent="space-evenly" alignItems="center">
           <Typography
@@ -88,12 +99,14 @@ export default function Note({ snipd }) {
           </Typography>
         </Stack>
         <hr />
-        {snipd?.type === "image" && (
-          <img
-            src={snipd?.content}
-            style={{ minWidth: "100%", maxWidth: "350px", maxHeight: "200px", objectFit: "cover" }}
-          />
-        )}
+        <div>
+          {snipd?.type === "image" && (
+            <img
+              src={snipd?.content}
+              style={{ width: "100%", maxHeight: "200px", objectFit: "scale-down" }}
+            />
+          )}
+        </div>
         {snipd?.type === "text" && (
           <Typography
             style={{
@@ -112,47 +125,49 @@ export default function Note({ snipd }) {
               fontSize: "12px",
             }}
             variant="body2">
-            {snipd?.content}
+            {snipd?.content.length > 40 ? `${snipd.content.substring(0, 40)}...` : snipd.content}
             <br />
           </Typography>
         )}
         <hr />
-      </CardContent>
-      <center>
-        <p>Current category: {category}</p>
-        <CategoriesMenu
-          categoriesList={categoriesList}
-          addCategory={addCategory}
+      </div>
+      <div>
+        <center>
+          <p>Current category: {category}</p>
+          <CategoriesMenu
+            categoriesList={categoriesList}
+            addCategory={addCategory}
+            style={{
+              alignItems: "center",
+            }}
+            setCategory={setCategory}
+          />
+        </center>
+        <CardActions
           style={{
+            display: "flex",
             alignItems: "center",
-          }}
-          setCategory={setCategory}
-        />
-      </center>
-      <CardActions
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}>
-        <Button
-          variant="outlined"
-          style={{ margin: "16px" }}
-          onClick={() => {
-            console.log(snipd);
-            snipd.category = category;
-            saveSnipd(snipd).then(() => {
-              if (snipd) {
-                window.close();
-              }
-            });
+            justifyContent: "center",
           }}>
-          Save Snippet
-        </Button>
-        <Button variant="outlined" onClick={() => openAllSnipdPage()}>
-          Central Page
-        </Button>
-      </CardActions>
-    </Card>
+          <Button
+            style={{ margin: "16px" }}
+            onClick={() => {
+              console.log(snipd);
+              snipd.category = category;
+              saveSnipd(snipd).then(() => {
+                if (snipd) {
+                  chrome.windows.getCurrent(function (window) {
+                    chrome.windows.remove(window.id);
+                  });
+                  window.close();
+                }
+              });
+            }}>
+            Save Snippet
+          </Button>
+          <Button onClick={() => openAllSnipdPage()}>Central Page</Button>
+        </CardActions>
+      </div>
+    </div>
   );
 }
