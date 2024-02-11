@@ -1,9 +1,10 @@
-import { Card, CardActions, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Card, CardActions, Typography } from "@mui/material";
 import astronautUfo from "../assets/ufo_ast.png";
 import { Button } from "@mantine/core";
-import { openAllSnipdPage, saveNote } from "../utils/snippitUtils";
-import { useState } from "react";
+import { openAllSnipdPage } from "../utils/snippitUtils";
 import "../styles/EmptySelection.css";
+import { NewNote } from "./NewNote";
 
 export function EmptySelection() {
   const [isNewNote, setIsNewNote] = useState(false);
@@ -13,10 +14,7 @@ export function EmptySelection() {
       <div className="emptySelectionDiv">
         <center>
           <img className="astronautUfoImage" src={astronautUfo} alt="Logo" />
-          <Typography
-            className="margin16"
-            variant="h6"
-          >
+          <Typography className="margin16" variant="h6">
             <b>
               To save a snippet, please make a selection. <hr />
               It appears that no text/image/link has been selected.
@@ -38,33 +36,5 @@ export function EmptySelection() {
     );
   };
 
-  const NewNote = () => {
-    const [noteContent, setNoteContent] = useState("");
-    return (
-      <>
-        <TextField
-          label="Note content"
-          variant="outlined"
-          multiline={true}
-          rows={8}
-          fullWidth
-          onChange={(e) => setNoteContent(e.target.value)}
-        />
-        <CardActions className="cardActions">
-          <Button
-            className="margin16"
-            onClick={() => {
-              saveNote(noteContent).then(() => {
-                window.close();
-              });
-            }}
-          >
-            Make note
-          </Button>
-        </CardActions>
-      </>
-    );
-  };
-
-  return <div>{isNewNote ? <NewNote /> : <NoSelect />}</div>;
+  return <div>{isNewNote ? <NewNote onClose={() => setIsNewNote(false)} /> : <NoSelect />}</div>;
 }
