@@ -15,6 +15,9 @@ const Note = ({ snipd }) => {
   const truncatedTitle = truncateString(snipd?.title, 30);
   const truncatedContent = truncateString(snipd?.content, 40);
 
+  const formattedDate = new Date(snipd?.date).toLocaleDateString();
+  const formattedTime = new Date(snipd?.date).toLocaleTimeString();
+
   const fetchSnipdCategories = async () => {
     try {
       const { snipd_categories } = await chrome.storage.local.get([STORAGE_KEYS.SNIPD_CATEGORIES]);
@@ -43,6 +46,19 @@ const Note = ({ snipd }) => {
     setSnipdCategories((old) => [...old, newCategory]);
   };
 
+  const handleSaveSnippet = () => {
+    console.log(snipd);
+    snipd.category = category;
+    saveSnipd(snipd).then(() => {
+      if (snipd) {
+        chrome.windows.getCurrent(function (window) {
+          chrome.windows.remove(window.id);
+        });
+        window.close();
+      }
+    });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,8 +85,7 @@ const Note = ({ snipd }) => {
         </Divider>
         <Stack direction="row" justifyContent="space-evenly" alignItems="center">
           <Typography display="inline" className="date-typography" color="text.secondary">
-            on {new Date(snipd?.date).toLocaleDateString()}{" "}
-            {new Date(snipd?.date).toLocaleTimeString()}
+            on {formattedDate} {formattedTime}
           </Typography>
         </Stack>
         <hr />
@@ -104,23 +119,10 @@ const Note = ({ snipd }) => {
           />
         </center>
         <CardActions className="categories-card">
-          <Button
-            className="margin-16"
-            onClick={() => {
-              console.log(snipd);
-              snipd.category = category;
-              saveSnipd(snipd).then(() => {
-                if (snipd) {
-                  chrome.windows.getCurrent(function (window) {
-                    chrome.windows.remove(window.id);
-                  });
-                  window.close();
-                }
-              });
-            }}>
+          <Button className="margin-16" onClick={handleSaveSnippet}>
             Save Snippet
           </Button>
-          <Button onClick={() => openAllSnipdPage()}>Central Page</Button>
+          <Button onClick={openAllSnipdPage}>Central Page</Button>
         </CardActions>
       </div>
     </div>
