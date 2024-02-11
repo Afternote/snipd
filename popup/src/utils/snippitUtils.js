@@ -1,3 +1,6 @@
+import { ERROR_MESSAGES } from "./errorMessages";
+
+
 function saveSnipd(snipd) {
   return new Promise((res, _) => {
       chrome.storage.local.get(["snipd_store"]).then((old_snipd_store) => {
@@ -34,4 +37,17 @@ function openAllSnipdPage() {
   chrome.runtime.openOptionsPage();
 }
 
-export { saveSnipd, saveNote, openAllSnipdPage };
+const validateCategory = (newCategory, snipdCategories) => {
+  if (!newCategory.trim()) {
+    throw new Error(ERROR_MESSAGES.EMPTY_CATEGORY);
+  }
+
+  if (snipdCategories.includes(newCategory)) {
+    throw new Error(ERROR_MESSAGES.DUPLICATE_CATEGORY);
+  }
+};
+
+const truncateString = (str, maxLength) => (str.length > maxLength ? `${str.substring(0, maxLength)}...` : str);
+
+
+export { saveSnipd, saveNote, openAllSnipdPage, truncateString, validateCategory };

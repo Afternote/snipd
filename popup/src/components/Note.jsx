@@ -1,131 +1,108 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Divider from "@mui/material/Divider";
+import React, { useEffect, useState } from "react";
+import { CardActions, CardContent, Divider, Typography, Chip, Stack } from "@mui/material";
 import CategoriesMenu from "./CategoriesMenu";
-import Typography from "@mui/material/Typography";
-import { height } from "@mui/system";
-import { Chip, Stack } from "@mui/material";
-import { openAllSnipdPage, saveSnipd } from "../utils/snippitUtils";
+import { openAllSnipdPage, saveSnipd, truncateString, validateCategory } from "../utils/snippitUtils";
 import { Button, Title } from "@mantine/core";
+import { ERROR_MESSAGES } from "../utils/errorMessages";
+import { STORAGE_KEYS } from "../utils/localStorageKeys";
+import "../styles/Notes.css";
 
-const bull = (
-  <Box component="span" sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}>
-    •
-  </Box>
-);
+const Note = ({ snipd }) => {
 
-export default function Note({ snipd }) {
-  const [categoriesList, setCategoriesList] = React.useState([]);
-  const [category, setCategory] = React.useState("Default");
+  const [snipdCategories, setSnipdCategories] = useState([]);
+  const [category, setCategory] = useState("Default");
+
+  const truncatedTitle = truncateString(snipd?.title, 30);
+  const truncatedContent = truncateString(snipd?.content, 40);
+
+  const formattedDate = new Date(snipd?.date).toLocaleDateString();
+  const formattedTime = new Date(snipd?.date).toLocaleTimeString();
+
+  const fetchSnipdCategories = async () => {
+    try {
+      const { snipd_categories } = await chrome.storage.local.get([STORAGE_KEYS.SNIPD_CATEGORIES]);
+      return snipd_categories || [];
+    } catch (error) {
+      throw new Error(ERROR_MESSAGES.DATA_FETCH_ERROR + error);
+    }
+  };
+
+ 
+  const addCategory = async (newCategory) => {
+    try {
+
+      validateCategory(newCategory, snipdCategories);
+      
+      const newCategoryList = [...snipdCategories, newCategory];
+      await chrome.storage.local.set({ snipd_categories: newCategoryList });
+
+      populateCategory(newCategory);
+    } catch (error) {
+      throw new Error(ERROR_MESSAGES.ERROR_CATEGORIES);
+    }
+  };
 
   const populateCategory = (newCategory) => {
-    setCategoriesList((old) => [...old, newCategory]);
+    setSnipdCategories((old) => [...old, newCategory]);
   };
 
-  const addCategory = (newCategory) => {
-<<<<<<< HEAD
-    chrome.storage.local.get(["snipd_categories"]).then((obj) => {
-      const new_category_list = [...obj.snipd_categories, newCategory];
-=======
-    if (!newCategory.trim()) {
-      console.error("Category cannot be empty");
-      return;
-    }
-
-    chrome.storage.local.get(["snipd_categories"]).then((obj) => {
-      const existingCategories = obj.snipd_categories || [];
-
-      if (existingCategories.includes(newCategory)) {
-        console.error("Category already exists");
-        return;
-      }
-
-      const new_category_list = [...existingCategories, newCategory];
->>>>>>> c4c4c6914557e9852cdbc809d30a66a9a241ba2e
-      chrome.storage.local.set({ snipd_categories: new_category_list }).then(() => {
-        populateCategory(newCategory);
-      });
-    });
-  };
-
-  React.useEffect(() => {
-    chrome.storage.local.get(["snipd_categories"]).then((obj) => {
-      if (obj.snipd_categories) {
-        obj.snipd_categories.forEach((category) => {
-          populateCategory(category);
+  const handleSaveSnippet = () => {
+    console.log(snipd);
+    snipd.category = category;
+    saveSnipd(snipd).then(() => {
+      if (snipd) {
+        chrome.windows.getCurrent(function (window) {
+          chrome.windows.remove(window.id);
         });
+        window.close();
       }
     });
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categories = await fetchSnipdCategories();
+        setSnipdCategories(categories);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-evenly",
-      }}>
+    <div className="notes-root-div">
       <CardContent>
-        <Typography
-          style={{
-            margin: "8px",
-            textAlign: "center",
-          }}
-          fontSize={24}
-          variant="h4">
+        <Typography className="selected-highlight-heading" variant="h4">
           <Title order={2}>Selected Highlight</Title>
         </Typography>
       </CardContent>
-      <div style={{ margin: "16px" }}>
+      <div className="margin-16">
         <Divider variant="middle">
-          <Chip
-            label={snipd?.title.length > 30 ? `${snipd.title.substring(0, 30)}...` : snipd.title}
-          />
+          <Chip label={truncatedTitle} />
         </Divider>
         <Stack direction="row" justifyContent="space-evenly" alignItems="center">
-          <Typography
-            display="inline"
-            style={{
-              margin: "8px",
-              fontSize: "12px",
-            }}
-            color="text.secondary">
-            on {new Date(snipd?.date).toLocaleDateString()}{" "}
-            {new Date(snipd?.date).toLocaleTimeString()}
+          <Typography display="inline" className="date-typography" color="text.secondary">
+            on {formattedDate} {formattedTime}
           </Typography>
         </Stack>
         <hr />
         <div>
           {snipd?.type === "image" && (
-            <img
-              src={snipd?.content}
-              style={{ width: "100%", maxHeight: "200px", objectFit: "scale-down" }}
-            />
+            <img className="selected-image" src={snipd?.content} alt="selected image" />
           )}
         </div>
         {snipd?.type === "text" && (
-          <Typography
-            style={{
-              margin: "16px",
-              fontSize: "12px",
-            }}
-            variant="body2">
+          <Typography className="selected-text-typography" variant="body2">
             {snipd?.content}
             <br />
           </Typography>
         )}
         {snipd?.type === "link" && (
-          <Typography
-            style={{
-              margin: "16px",
-              fontSize: "12px",
-            }}
-            variant="body2">
-            {snipd?.content.length > 40 ? `${snipd.content.substring(0, 40)}...` : snipd.content}
+          <Typography className="selected-link-typography" variant="body2">
+            {truncatedContent}
             <br />
           </Typography>
         )}
@@ -135,39 +112,21 @@ export default function Note({ snipd }) {
         <center>
           <p>Current category: {category}</p>
           <CategoriesMenu
-            categoriesList={categoriesList}
+            className="categories-menu"
+            categoriesList={snipdCategories}
             addCategory={addCategory}
-            style={{
-              alignItems: "center",
-            }}
             setCategory={setCategory}
           />
         </center>
-        <CardActions
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}>
-          <Button
-            style={{ margin: "16px" }}
-            onClick={() => {
-              console.log(snipd);
-              snipd.category = category;
-              saveSnipd(snipd).then(() => {
-                if (snipd) {
-                  chrome.windows.getCurrent(function (window) {
-                    chrome.windows.remove(window.id);
-                  });
-                  window.close();
-                }
-              });
-            }}>
+        <CardActions className="categories-card">
+          <Button className="margin-16" onClick={handleSaveSnippet}>
             Save Snippet
           </Button>
-          <Button onClick={() => openAllSnipdPage()}>Central Page</Button>
+          <Button onClick={openAllSnipdPage}>Central Page</Button>
         </CardActions>
       </div>
     </div>
   );
 }
+
+export default Note;

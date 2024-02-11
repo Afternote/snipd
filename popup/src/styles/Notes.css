@@ -1,0 +1,58 @@
+/* Common styles */
+
+.margin-16 {
+  margin: 16px;
+}
+
+.font-size-12 {
+  font-size: 12px;
+}
+
+/* Component-specific styles */
+.notes-root-div {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.selected-highlight-heading {
+  margin: 8px;
+  text-align: center;
+  font-size: 24px;
+}
+
+
+.date-typography {
+  margin: 8px;
+  font-size: 12px;
+}
+
+.selected-image {
+  width: 100%;
+  max-height: 200px;
+  object-fit: scale-down;
+}
+
+.selected-text-typography {
+  margin: 16px;
+  font-size: 12px;
+}
+
+.selected-link-typography {
+  margin: 16px;
+  font-size: 12px;
+}
+
+.categories-menu {
+  display: flex;
+  align-items: center;
+}
+
+.categories-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
