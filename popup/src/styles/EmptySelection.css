@@ -1,0 +1,21 @@
+.emptySelectionDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100vh;
+}
+
+.astronautUfoImage {
+  width: 100%;
+  padding: 16px;
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.margin16 {
+  margin: 16px;
+}

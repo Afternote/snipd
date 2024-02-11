@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Note from "./components/Note";
-import { EmptySelecion } from "./components/EmptySelecion";
+import { EmptySelection } from "./components/EmptySelection";
 
 async function getCurrentSelectionData() {
   const [currentTab] = await chrome.tabs.query({
@@ -56,7 +56,7 @@ function App() {
           }}
         />
       ) : (
-        <EmptySelecion />
+        <EmptySelection />
       )}
     </div>
   );
