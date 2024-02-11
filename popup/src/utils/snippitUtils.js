@@ -34,4 +34,7 @@ function openAllSnipdPage() {
   chrome.runtime.openOptionsPage();
 }
 
-export { saveSnipd, saveNote, openAllSnipdPage };
+const truncateString = (str, maxLength) => (str.length > maxLength ? `${str.substring(0, maxLength)}...` : str);
+
+
+export { saveSnipd, saveNote, openAllSnipdPage, truncateString };
