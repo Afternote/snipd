@@ -1,17 +1,16 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CardActions, CardContent, Divider, Typography, Chip, Stack } from "@mui/material";
 import CategoriesMenu from "./CategoriesMenu";
-import { openAllSnipdPage, saveSnipd, truncateString } from "../utils/snippitUtils";
+import { openAllSnipdPage, saveSnipd, truncateString, validateCategory } from "../utils/snippitUtils";
 import { Button, Title } from "@mantine/core";
 import { ERROR_MESSAGES } from "../utils/errorMessages";
 import { STORAGE_KEYS } from "../utils/localStorageKeys";
 import "../styles/Notes.css";
 
-export default function Note({ snipd }) {
+const Note = ({ snipd }) => {
 
   const [snipdCategories, setSnipdCategories] = useState([]);
-  const [category, setCategory] = React.useState("Default");
+  const [category, setCategory] = useState("Default");
 
   const truncatedTitle = truncateString(snipd?.title, 30);
   const truncatedContent = truncateString(snipd?.content, 40);
@@ -25,27 +24,23 @@ export default function Note({ snipd }) {
     }
   };
 
-  const populateCategory = (newCategory) => {
-    setSnipdCategories((old) => [...old, newCategory]);
-  };
-
+ 
   const addCategory = async (newCategory) => {
     try {
-      if (!newCategory.trim()) {
-        throw new Error(ERROR_MESSAGES.EMPTY_CATEGORY);
-      }
 
-      if (snipdCategories.includes(newCategory)) {
-        throw new Error(ERROR_MESSAGES.DUPLICATE_CATEGORY);
-      }
-
+      validateCategory(newCategory, snipdCategories);
+      
       const newCategoryList = [...snipdCategories, newCategory];
       await chrome.storage.local.set({ snipd_categories: newCategoryList });
 
       populateCategory(newCategory);
     } catch (error) {
-      console.error(error.message);
+      throw new Error(ERROR_MESSAGES.ERROR_CATEGORIES);
     }
+  };
+
+  const populateCategory = (newCategory) => {
+    setSnipdCategories((old) => [...old, newCategory]);
   };
 
   useEffect(() => {
@@ -131,3 +126,5 @@ export default function Note({ snipd }) {
     </div>
   );
 }
+
+export default Note;
