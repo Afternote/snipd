@@ -4,12 +4,11 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import NewCategory from "./NewCategory.";
-import StarRateIcon from "@mui/icons-material/StarRate";
-import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
-import SchoolIcon from "@mui/icons-material/School";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+
+
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -111,7 +110,3 @@ export default function CategoriesMenu({ addCategory, categoriesList, setCategor
     </div>
   );
 }
-// (!custom) ? (<MenuItem onClick={handleCustomClose} disableRipple>
-//   <DashboardCustomizeIcon />
-//   Custom Category
-// </MenuItem>) : (<NewCategory addCategory={addCategory} style={{margin:'8px'}}/>)

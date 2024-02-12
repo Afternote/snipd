@@ -1,40 +1,38 @@
 import React, { useState } from "react";
-import { TextField } from "@mui/material";
-import { Button } from "@mui/material";
+import { TextField, Button, Box } from "@mui/material";
+import "../styles/Categories.css";
 
 function NewCategory({ addCategory }) {
-  const [newCategoryName, setNewCategoryName] = useState("");
-  const handleClick = (newCategory) => {
-    addCategory(newCategory);
-  };
-  return (
-    <div
-      style={{
-        alignItems: "center",
-        alignContent: "center",
-        display: "flex",
-      }}>
-      <center>
-        <TextField
-          style={{
-            margin: "8px",
-          }}
-          id="Outlined-basic"
-          label="New Category"
-          variant="outlined"
-          onChange={(event) => {
-            event.target.focus();
-            setNewCategoryName(event.target.value)
-        }}
-        />
 
-        <Button
-          style={{ margin: "8px", justifyContent: "center" }}
-          variant="contained"
-          onClick={() => handleClick(newCategoryName)}>
-          Add
-        </Button>
-      </center>
+  const [newCategoryName, setNewCategoryName] = useState("");
+
+  const handleChange = (event) => {
+    setNewCategoryName(event.target.value);
+  };
+
+  const handleAddCategory = () => {
+    addCategory(newCategoryName);
+  };
+
+  return (
+    <div className="new-category-div" textAlign="center">
+      <TextField
+        className="margin-8"
+        id="outlined-basic"
+        label="New Category"
+        variant="outlined"
+        value={newCategoryName}
+        onChange={handleChange}
+      />
+
+      <Button
+        variant="contained"
+        className="add-category-button"
+        onClick={handleAddCategory}
+        disabled={!newCategoryName.trim()} // Disable button if the category name is empty or only contains whitespace
+      >
+        Add
+      </Button>
     </div>
   );
 }

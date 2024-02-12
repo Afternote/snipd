@@ -1,0 +1,14 @@
+.margin-8 {
+    margin: 8px;
+}
+
+.new-category-div{
+    align-items: center;
+    align-content: center;
+    display: flex;
+}
+
+.add-category-button{
+    margin: 8px; 
+    justify-content: center;
+}
