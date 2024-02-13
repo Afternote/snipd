@@ -3,11 +3,15 @@
   flex-direction: column;
   justify-content: space-evenly;
   height: 100vh;
+  text-align: center;
+
 }
 
 .astronautUfoImage {
   width: 100%;
   padding: 16px;
+  margin: 8px;
+  font-size: 12px;
 }
 
 .cardActions {
