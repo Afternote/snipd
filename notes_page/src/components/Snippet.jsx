@@ -31,26 +31,27 @@ export function Snippet(props) {
             onDownClick={() => moveSnipdDown(props.index).then(props.refetch)}
           />
 
-            <Card className="text-content">
-              {props.type === "image" && (
-                  <img className="image-container" src={props.content} />
-              )}
-              {(props.type === "text" || props.type === "note") && (
-                <Text className="text-container" size="sm" color="dimmed">
-                  {props.content}
-                </Text>
-              )}
-              {props.type === "link" && (
-                <div className="link-container">
-                  <Anchor className="link-anchor" href={props.content}>
-                      
-                      <Text className="link-url" size="sm" color="dimmed" lineClamp={1}>
-                        {props.content}
-                      </Text>
-                  </Anchor>
-                </div>
-              )}
-            </Card>
+          <Card className="text-content">
+            {props.type === "image" && (
+              <div className="image-div">
+                <img className="image-container" src={props.content} />
+              </div>
+            )}
+            {(props.type === "text" || props.type === "note") && (
+              <Text className="text-container" size="sm" color="dimmed">
+                {props.content}
+              </Text>
+            )}
+            {props.type === "link" && (
+              <div className="link-container">
+                <Anchor className="link-anchor" href={props.content}>
+                  <Text className="link-url" size="sm" color="dimmed" lineClamp={1}>
+                    {props.content}
+                  </Text>
+                </Anchor>
+              </div>
+            )}
+          </Card>
         </div>
       </div>
 
