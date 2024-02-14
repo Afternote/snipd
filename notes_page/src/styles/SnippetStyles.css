@@ -1,66 +1,69 @@
 /* SnippetStyles.css */
 
 .snippet-container {
-    margin-right: 24px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-  
-  .item-controls {
-    margin: 0 8px;
-    padding: 4px;
-    height: 90%;
-    opacity: 0;
-  }
-  
-  .item-controls:hover {
-    opacity: 1;
-  }
-  
-  .item-controls-icon {
-    cursor: pointer;
-  }
-  
-  .item-title-date-source {
-    width: 100%;
-  }
-  
-  .image-container {
-    max-height: 250px;
-  }
-  
-  .text-content {
-    width: 90%;
-    padding: 8px;
-  }
-  
-  .link-container {
-    margin-top: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .link-anchor {
-    width: 100%;
-  }
-  
-  .link-stack {
-    width: 100%;
-  }
-  
-  .link-title {
-    line-clamp: 1;
-  }
-  
-  .link-date {
-    color: dimmed;
-  }
-  
-  .link-url {
-    size: sm;
-    color: dimmed;
-    line-clamp: 1;
-  }
-  
-  
-  
+  margin-right: 24px;
+  width: 100%;
+  align-items: center;
+}
+
+.item-controls {
+  opacity: 0;
+  margin: 8px;
+}
+
+.item-controls:hover {
+  opacity: 1;
+}
+
+.item-controls-icon {
+  cursor: pointer;
+}
+
+.item-title-date-source {
+  width: 100%;
+}
+
+.image-container {
+  max-height: 250px;
+}
+
+.text-content {
+  width: 90%;
+  padding: 8px;
+  margin: 8px;
+  display: flex;
+}
+
+.link-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link-anchor {
+  width: 100%;
+}
+
+.link-stack {
+  width: 100%;
+}
+
+.link-title {
+  line-clamp: 1;
+}
+
+.link-date {
+  color: dimmed;
+}
+
+.link-url {
+  size: sm;
+  color: dimmed;
+}
+
+.text-container {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
