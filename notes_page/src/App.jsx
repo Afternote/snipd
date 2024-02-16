@@ -14,13 +14,16 @@ import "./assets/print.css";
 import { Snippet } from "./components/Snippet";
 
 function filterSnipds(searchQuery, category, snipds) {
+  console.log(category)
   return snipds.filter((a) => {
     if (!category) {
       if (a.content.toLowerCase().includes(searchQuery.toLowerCase()) || a.title.toLowerCase().includes(searchQuery.toLowerCase())) {
         return a;
       }
     } else {
-      if (a.content.toLowerCase().includes(searchQuery.toLowerCase()) && a.category === category || a.title.toLowerCase().includes(searchQuery.toLowerCase())) {
+      if ((a.content.toLowerCase().includes(searchQuery.toLowerCase()) ||  a.title.toLowerCase().includes(searchQuery.toLowerCase())) 
+           && a.category === category ) {
+        
         return a;
       }
     }
@@ -90,6 +93,7 @@ function App() {
             </Button>
           )}
           {filterSnipds(searchQuery, selectedCategory, snipds).map((arr, idx) => {
+            console.log(arr)
             return (
               <Snippet
                 key={idx}
