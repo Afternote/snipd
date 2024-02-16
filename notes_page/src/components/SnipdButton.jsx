@@ -14,7 +14,7 @@ export const SnipdButton = () => {
         
 
         <div style={{ flex: 1 }}>
-          <img style ={{width: "inherit"}} src={snipdLogoText}/>
+          <img style ={{width: "200px", margin: "16px 8px 16px 8px"}} src={snipdLogoText}/>
         </div>
 
         <IconChevronRight style={{ width: rem(14), height: rem(14) }} stroke={1.5} />
