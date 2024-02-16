@@ -12,6 +12,7 @@ import NavBar from "./components/NavBar";
 
 import "./assets/print.css";
 import { Snippet } from "./components/Snippet";
+import NavBarMantine from "./components/NavBarMantine";
 
 function filterSnipds(searchQuery, category, snipds) {
   console.log(category)
@@ -69,7 +70,9 @@ function App() {
   };
 
   return (
-    <AppShell padding="md" navbar={isPrinting ? null : <NavBar categoryList={categoryList} setSelectedCategory={setSelectedCategory} />}>
+    <AppShell padding="md" navbar={isPrinting ? null : <NavBarMantine />}>
+          {/* <AppShell padding="md" navbar={isPrinting ? null : <NavBar categoryList={categoryList} setSelectedCategory={setSelectedCategory} />}> */}
+
       <div className="App" style={{ margin: "48px" }}>
         <Group className="printHide" style={{ marginTop: "16px" }} position="apart" mb={"lg"}>
           <Title order={2}>Snipd</Title>

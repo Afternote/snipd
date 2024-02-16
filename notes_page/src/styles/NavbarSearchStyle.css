@@ -1,0 +1,116 @@
+.navbar {
+  background-color: var(--mantine-color-body);
+  width: 300px;
+  padding: var(--mantine-spacing-md);
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
+
+.section {
+  margin-left: calc(var(--mantine-spacing-md) * -1); /* Applies negative left margin  */
+  margin-right: calc(var(--mantine-spacing-md) * -1); /* Applies negative right margin  */
+  margin-bottom: var(--mantine-spacing-md); /* Applies bottom margin */
+}
+
+.section:not(:last-of-type) {
+  border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4)); /* Adds bottom border on all sections except the last one */
+}
+
+.searchCode {
+  font-weight: 700;
+  font-size: rem(10px);
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+  border: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-7));
+}
+
+.mainLinks {
+  padding-left: calc(var(--mantine-spacing-md) - var(--mantine-spacing-xs));
+  padding-right: calc(var(--mantine-spacing-md) - var(--mantine-spacing-xs));
+  padding-bottom: var(--mantine-spacing-md);
+}
+
+.mainLink {
+  display: flex; /* Arranges items in a row */
+  align-items: center; /* Vertically centers items within the row */
+  width: 100%; /* Takes up the full available width */
+  font-size: var(--mantine-font-size-xs); /* Uses a Mantine-specific font size variable */
+  padding: rem(8px) var(--mantine-spacing-xs); /* Applies padding using Mantine spacing */
+  border-radius: var(--mantine-radius-sm); /* Applies a Mantine-specific border radius */
+  font-weight: 500; /* Sets a medium font weight */
+  color: light-dark(
+    var(--mantine-color-gray-7),
+    var(--mantine-color-dark-0)
+  ); /* Dynamically adjusts color based on light/dark mode */
+}
+
+.mainLink:hover {
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-6)
+  ); /* Changes background color on hover */
+  color: light-dark(
+    var(--mantine-color-gray-7),
+    var(--mantine-color-dark-0)
+  ); /* Maintains consistent color in light/dark mode */
+}
+
+.mainLinkInner {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.mainLinkIcon {
+  margin-right: var(--mantine-spacing-sm);
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-2));
+}
+
+.mainLinkBadge {
+  padding: 0;
+  width: rem(20px);
+  height: rem(20px);
+  pointer-events: none;
+}
+
+.collections {
+  padding-left: calc(var(--mantine-spacing-md) - rem(6px));
+  padding-right: calc(var(--mantine-spacing-md) - rem(6px));
+  padding-bottom: var(--mantine-spacing-md);
+}
+
+.collectionsHeader {
+  padding-left: calc(var(--mantine-spacing-md) + rem(2px));
+  padding-right: var(--mantine-spacing-md);
+  margin-bottom: rem(5px);
+}
+
+.collectionLink {
+  display: block; /* Renders the element as a block-level element, taking up full width */
+  padding: rem(8px) var(--mantine-spacing-xs); /* Applies padding, likely using a Mantine theme variable */
+  text-decoration: none; /* Removes default underline from links */
+  border-radius: var(
+    --mantine-radius-sm
+  ); /* Rounds the corners, likely using a Mantine theme variable */
+  font-size: var(
+    --mantine-font-size-xs
+  ); /* Sets a small font size, likely using a Mantine theme variable  */
+  color: light-dark(
+    var(--mantine-color-gray-7),
+    var(--mantine-color-dark-0)
+  ); /* Dynamic color based on light/dark mode */
+  line-height: 1; /* Sets line height to 1, meaning lines of text will be close together */
+  font-weight: 500; /* Sets a medium font weight */
+}
+
+.collectionLink:hover {
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-6)
+  ); /* Change background color on hover */
+  color: light-dark(
+    var(--mantine-color-gray-7),
+    var(--mantine-color-dark-0)
+  ); /* Maintain text color for light/dark mode consistency */
+}
