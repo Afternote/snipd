@@ -1,0 +1,99 @@
+.navbar {
+  background-color: #1a1a1a;
+  width: 300px;
+  padding: var(--mantine-spacing-md);
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
+
+.section {
+  margin: 0px 8px 8px 8px;
+  border-bottom: 1px solid white; /* Adds bottom border on all sections except the last one */
+  display: flex;
+  justify-content: center;
+}
+
+.section:not(:last-of-type) {
+  border-bottom: rem(1px) solid white; /* Adds bottom border on all sections except the last one */
+}
+
+.searchCode {
+  font-weight: 700;
+  font-size: 10px;
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+  border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-7));
+}
+
+.mainLinks {
+  padding: 0px 8px 8px 8px;
+  width: 100%;
+}
+
+.mainLink {
+  display: flex; 
+  align-items: center; 
+  width: 100%; 
+  font-size: 20; 
+  padding: 8px; 
+  border-radius: 8px; 
+  font-weight: 500; 
+  color: white; 
+}
+
+.mainLink:hover {
+  background-color: grey /* Example background colors */
+}
+
+.mainLinkInner {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.mainLinkIcon {
+  margin-right: 8px;
+  color: light-dark(#888888, #222222); 
+}
+
+.mainLinkBadge {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.collections {
+  padding :8px;
+}
+
+.collection-section{
+    margin: 0px 8px 8px 0px;
+    display: flex;
+    flex-direction: column;
+
+  
+}
+
+.collectionsHeader {
+  padding:8px 16px 8px 16px;
+  margin-bottom: 5px;
+  justify-content: space-between;
+}
+
+.collectionLink {
+  display: block; /* Renders the element as a block-level element, taking up full width */
+  padding: 8px 8px; /* Applies padding, likely using a Mantine theme variable */
+  text-decoration: none; /* Removes default underline from links */
+  border-radius: 8px; /* Rounds the corners, likely using a Mantine theme variable */
+  font-size: 20; /* Sets a small font size, likely using a Mantine theme variable  */
+  color: white; /* Dynamic color based on light/dark mode */
+  line-height: 1; /* Sets line height to 1, meaning lines of text will be close together */
+  font-weight: 500; /* Sets a medium font weight */
+}
+
+.collectionLink:hover {
+  background-color: grey; /* Change background color on hover */
+   /* Maintain text color for light/dark mode consistency */
+}
