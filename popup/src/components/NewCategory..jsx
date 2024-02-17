@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { TextField, Button, Box } from "@mui/material";
-import "../styles/Categories.css";
+import { Button, Group, TextInput } from "@mantine/core";
 
 function NewCategory({ addCategory }) {
-
   const [newCategoryName, setNewCategoryName] = useState("");
 
   const handleChange = (event) => {
@@ -15,25 +13,18 @@ function NewCategory({ addCategory }) {
   };
 
   return (
-    <div className="new-category-div" textAlign="center">
-      <TextField
-        className="margin-8"
-        id="outlined-basic"
-        label="New Category"
-        variant="outlined"
+    <Group position="center">
+      <TextInput
+        m={8}
+        placeholder="New Category Name"
         value={newCategoryName}
         onChange={handleChange}
       />
 
-      <Button
-        variant="contained"
-        className="add-category-button"
-        onClick={handleAddCategory}
-        disabled={!newCategoryName.trim()} // Disable button if the category name is empty or only contains whitespace
-      >
+      <Button m={8} onClick={handleAddCategory} disabled={!newCategoryName.trim()}>
         Add
       </Button>
-    </div>
+    </Group>
   );
 }
 

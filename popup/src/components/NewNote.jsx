@@ -1,10 +1,7 @@
-// NewNote.js
-
 import React, { useState } from "react";
-import { CardActions, TextField } from "@mui/material";
-import { Button } from "@mantine/core";
+import { Button, Textarea } from "@mantine/core";
+
 import { saveNote } from "../utils/snippitUtils";
-import "../styles/EmptySelection.css";
 
 export function NewNote({ onClose }) {
   const [noteContent, setNoteContent] = useState("");
@@ -17,19 +14,18 @@ export function NewNote({ onClose }) {
 
   return (
     <>
-      <TextField
+      <Textarea
         label="Note content"
-        variant="outlined"
-        multiline={true}
-        rows={8}
+        minRows={4}
+        maxRows={10}
+        autosize
+        withAsterisk
         fullWidth
         onChange={(e) => setNoteContent(e.target.value)}
       />
-      <CardActions className="cardActions">
-        <Button className="margin16" onClick={handleMakeNote}>
-          Make note
-        </Button>
-      </CardActions>
+      <Button m={16} onClick={handleMakeNote}>
+        Make note
+      </Button>
     </>
   );
 }
