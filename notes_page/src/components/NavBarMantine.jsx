@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextInput,
   Code,
@@ -11,56 +11,87 @@ import {
   rem,
 } from "@mantine/core";
 import { SnipdButton } from "./SnipdButton";
-import { IconSearch, IconBlockquote, IconPhoto, IconUnlink, IconNote, IconPlus } from "@tabler/icons-react";
+import {
+  IconSearch,
+  IconBlockquote,
+  IconPhoto,
+  IconUnlink,
+  IconNote,
+  IconPlus,
+} from "@tabler/icons-react";
 
 import "../styles/NavbarSearchStyle.css";
 
 const links = [
-  { icon: IconBlockquote, label: "Text", notifications: 3 },
-  { icon: IconPhoto, label: "Images", notifications: 4 },
-  { icon: IconUnlink, label: "Links" },
-  { icon: IconNote, label: "Notes" },
+  { icon: IconBlockquote, label: "Text", notifications: 3, type: "text" },
+  { icon: IconPhoto, label: "Images", notifications: 4, type: "image" },
+  { icon: IconUnlink, label: "Links", type: "link" },
+  { icon: IconNote, label: "Notes", type: "note" },
 ];
 
+function filterSnipds(searchQuery, category, type, snipds) {
+  const typeCountsTemp = {}; // Reset count for each filtering operation
+  const filteredSnipds = snipds.filter((a) => {
+    const textToSearch = `${a.content} ${a.title}`.toLowerCase();
+    const matchesCriteria =
+      (!category || a.category === category) &&
+      (!type || a.type === type) &&
+      textToSearch.includes(searchQuery.toLowerCase());
 
+    if (matchesCriteria) {
+      typeCountsTemp[a.type] = (typeCountsTemp[a.type] || 0) + 1;
+    }
 
-const collections = [
-  {label: "Default"},
-  {label: "Brainstorming"},
-  {label: "To-Do"},
-  {label: "Research"},
-  {label: "Meetings"},
-  {label: "Quotes"},
-  {label: "Books"},
-  {label: "Articles"},
-  {label: "Inspiration"},
-]
+    return matchesCriteria;
+  });
 
+  return  typeCountsTemp ;
+}
 
-const NavBarMantine = () => {
+const NavBarMantine = (props) => {
+  const [counts, setCounts] = useState({})
+
+  useEffect(() => {
+    setCounts(filterSnipds(props.searchQuery, props.selectedCategory, "", props.snipds))
+    console.log(counts)
+  });
+
+  
+  const fetchCounts = (searchQuery, category, type, snipds) => {
+    setCounts(filterSnipds(searchQuery, category, type, snipds))
+    console.log(counts)
+  }
   const mainLinks = links.map((link) => (
-    <UnstyledButton key={link.label} className="mainLink">
+    <UnstyledButton
+      key={link.label}
+      className="mainLink"
+      onClick={() => {
+        props.setSelectedType(link.type);
+      }}>
       <div className="mainLinkInner">
         <link.icon size={20} className="mainLinkIcon" stroke={1.5} />
         <span>{link.label}</span>
       </div>
-      {link.notifications && (
+      {counts[link.type] && (
         <Badge size="sm" variant="filled" className="mainLinkBadge">
-          {link.notifications}
+          {counts[link.type]}
         </Badge>
       )}
     </UnstyledButton>
   ));
 
-  const collectionLinks = collections.map((collection) => (
+  const collectionLinks = props.categories.map((collection) => (
     <a
       href="#"
-      onClick={(event) => event.preventDefault()}
-      key={collection.label}
-      className="collectionLink"
-    >
+      onClick={() => {
+        props.setSelectedCategory(collection);
+        props.setSelectedType("");
+        fetchCounts(props.searchQuery, collection, "", props.snipds)
+      }}
+      key={collection}
+      className="collectionLink">
       <span style={{ marginRight: rem(9), fontSize: rem(16) }}></span>
-      {collection.label}
+      {collection}
     </a>
   ));
 
