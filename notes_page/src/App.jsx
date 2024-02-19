@@ -44,6 +44,29 @@ function App() {
     return filteredSnipds.filteredSnipds;
   };
 
+  const addCategory = async (newCategory) => {
+    try {
+
+      if (!newCategory.trim() || categoryList.includes(newCategory)) {
+        throw new Error("error");
+      }else{
+        const newCategoryList = [...categoryList, newCategory];
+        await chrome.storage.local.set({ snipd_categories: newCategoryList });
+      }
+    
+            
+      
+
+      populateCategory(newCategory);
+    } catch (error) {
+      throw new Error(ERROR_MESSAGES.ERROR_CATEGORIES);
+    }
+  };
+
+  const populateCategory = (newCategory) => {
+    setCategoryList((old) => [...old, newCategory]);
+  };
+
   const print = () => {
     setPrinting(true);
     setTimeout(() => {
@@ -78,6 +101,7 @@ function App() {
       navbar={
         isPrinting ? null : (
           <NavBarMantine
+            addCategory={addCategory}
             categories={categoryList}
             snipds={snipds}
             selectedCategory={selectedCategory}
