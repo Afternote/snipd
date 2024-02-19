@@ -25,14 +25,16 @@ function filterSnipds(searchQuery, category, type, snipds) {
 
   return { filteredSnipds, typeCountsTemp };
 }
+
+
 function App() {
   const [snipds, setSnipds] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [typeCounts, setTypeCounts] = useState({});
   const [categoryList, setCategoryList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("")
   const [selectedType, setSelectedType] = useState("");
-
+  const [categoryFilterQuery, setCategoryFilterQuery] = useState("")
   const [isPrinting, setPrinting] = useState(false);
 
   const filteredSnipdActions = (searchQuery, selectedCategory, selectedType, snipds) => {

@@ -30,7 +30,7 @@ const links = [
 ];
 
 function filterSnipds(searchQuery, category, type, snipds) {
-  const typeCountsTemp = {}; // Reset count for each filtering operation
+  const typeCountsTemp = {}; 
   const filteredSnipds = snipds.filter((a) => {
     const textToSearch = `${a.content} ${a.title}`.toLowerCase();
     const matchesCriteria =
@@ -48,13 +48,27 @@ function filterSnipds(searchQuery, category, type, snipds) {
   return  typeCountsTemp ;
 }
 
+function filterCategories(categoryQuery, categories){
+  return categories.filter((a) => {
+    return a.toLowerCase().includes(categoryQuery.toLowerCase())
+  });
+}
+
 const NavBarMantine = (props) => {
   const [counts, setCounts] = useState({})
+  const [categoryQuery, setCategoryQuery] = useState("")
+  const [collectionLinks, setCollectionLinks] = useState([]);
+
+
+  useEffect(() => {
+    const initialCounts = filterSnipds(props.searchQuery, props.selectedCategory, "", props.snipds); 
+    setCounts(initialCounts);
+  }, []);
 
   useEffect(() => {
     setCounts(filterSnipds(props.searchQuery, props.selectedCategory, "", props.snipds))
-    console.log(counts)
-  });
+  }, [props.searchQuery, props.selectedCategory, props.snipds]); // Updated dependencies
+
 
   
   const fetchCounts = (searchQuery, category, type, snipds) => {
@@ -80,20 +94,30 @@ const NavBarMantine = (props) => {
     </UnstyledButton>
   ));
 
-  const collectionLinks = props.categories.map((collection) => (
-    <a
-      href="#"
-      onClick={() => {
-        props.setSelectedCategory(collection);
-        props.setSelectedType("");
-        fetchCounts(props.searchQuery, collection, "", props.snipds)
-      }}
-      key={collection}
-      className="collectionLink">
-      <span style={{ marginRight: rem(9), fontSize: rem(16) }}></span>
-      {collection}
-    </a>
-  ));
+  const handleSearchInputChange = (event) => {
+    setCategoryQuery(event.target.value)
+  };
+
+  useEffect(() => {
+    const updatedCollectionLinks = filterCategories(categoryQuery, props.categories).map((collection, index) => (
+      <a
+        href="#"
+        onClick={() => {
+          props.setSelectedCategory(collection);
+          props.setSelectedType("");
+          fetchCounts(props.searchQuery, collection, "", props.snipds)
+        }}
+        key={`collection-${index}`}
+        className="collectionLink">
+        <span style={{ marginRight: rem(9), fontSize: rem(16) }}></span>
+        {collection}
+      </a>
+    ));
+    setCollectionLinks(updatedCollectionLinks);
+    console.log(collectionLinks)
+
+  }, [categoryQuery, props.categories]); // Track necessary changes
+
 
   return (
     <nav className="navbar">
@@ -104,6 +128,7 @@ const NavBarMantine = (props) => {
       <TextInput
         style={{ margin: "8px 16px 8px 16px" }}
         placeholder="Search Categories"
+        onChange={handleSearchInputChange}
         size="xs"
         leftSection={<IconSearch style={{ width: "12px", height: "12px" }} stroke={1.5} />}
         rightSectionWidth={70}
