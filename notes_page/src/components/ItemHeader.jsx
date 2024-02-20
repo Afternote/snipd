@@ -5,7 +5,7 @@ import '../styles/SnippetStyles.css'; // Assuming the CSS stays here
 function ItemHeader({ type, title, date, source, hovered, onSourceClick }) {
   return (
     <Stack className="item-title-date-source">
-      { type !== 'note' && (
+      { 
           <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
           <Group position="apart">
             <Title order={3}>{title}</Title>
@@ -25,7 +25,7 @@ function ItemHeader({ type, title, date, source, hovered, onSourceClick }) {
             {date}
           </Badge>
           </div>
-      )}
+      }
     </Stack>
   );
 }
