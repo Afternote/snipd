@@ -25,14 +25,16 @@ function filterSnipds(searchQuery, category, type, snipds) {
 
   return { filteredSnipds, typeCountsTemp };
 }
+
+
 function App() {
   const [snipds, setSnipds] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [typeCounts, setTypeCounts] = useState({});
   const [categoryList, setCategoryList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("")
   const [selectedType, setSelectedType] = useState("");
-
+  const [categoryFilterQuery, setCategoryFilterQuery] = useState("")
   const [isPrinting, setPrinting] = useState(false);
 
   const filteredSnipdActions = (searchQuery, selectedCategory, selectedType, snipds) => {
@@ -40,6 +42,29 @@ function App() {
     const filteredSnipds = filterSnipds(searchQuery, selectedCategory, selectedType, snipds);
     // setTypeCounts(filteredSnipds.typeCountsTemp);
     return filteredSnipds.filteredSnipds;
+  };
+
+  const addCategory = async (newCategory) => {
+    try {
+
+      if (!newCategory.trim() || categoryList.includes(newCategory)) {
+        throw new Error("error");
+      }else{
+        const newCategoryList = [...categoryList, newCategory];
+        await chrome.storage.local.set({ snipd_categories: newCategoryList });
+      }
+    
+            
+      
+
+      populateCategory(newCategory);
+    } catch (error) {
+      throw new Error(ERROR_MESSAGES.ERROR_CATEGORIES);
+    }
+  };
+
+  const populateCategory = (newCategory) => {
+    setCategoryList((old) => [...old, newCategory]);
   };
 
   const print = () => {
@@ -76,6 +101,7 @@ function App() {
       navbar={
         isPrinting ? null : (
           <NavBarMantine
+            addCategory={addCategory}
             categories={categoryList}
             snipds={snipds}
             selectedCategory={selectedCategory}

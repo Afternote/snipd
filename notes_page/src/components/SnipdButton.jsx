@@ -1,7 +1,6 @@
 import { UnstyledButton, Group, Avatar, Text, rem } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
 import '../styles/SnipdButtonStyle.css';
-import snipdRobo from "../assets/snipdRobo.png";
 import snipdLogoText from "../assets/snipdLogoText.png";
 
 
