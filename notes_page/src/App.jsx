@@ -75,6 +75,8 @@ function App() {
     }, 200);
   };
 
+  
+
   useEffect(() => {
     const fetchData = async () => {
       const store_obj = await chrome.storage.local.get(["snipd_store", "snipd_categories"]);
@@ -83,6 +85,19 @@ function App() {
     };
 
     fetchData();
+
+    const listener = (changes, namespace) => {
+      if (namespace === 'local' && (changes.snipd_store || changes.snipd_categories)) {
+        fetchData(); // Update the state when relevant data changes
+        console.log("helloooo")
+      }
+    }
+  
+    chrome.storage.onChanged.addListener(listener);
+
+    return () => {
+      chrome.storage.onChanged.removeListener(listener);
+    };
   }, []);
 
   const refetch = () => {
