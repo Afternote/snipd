@@ -35,18 +35,14 @@ async function getCurrentSelectionData() {
 
 function App() {
   const [snipd, setSnipd] = useState();
-  const [snipdStore, setSnipdStore] = useState(chrome.storage.local.get(["snipd_store"]))
-
-  console.log(chrome.storage.local.get(["snipd_store"]))
-  useEffect(() => {
-    console.log(snipdStore)
-  }, [snipdStore])
   
 
   useEffect(() => {
 
+
     getCurrentSelectionData().then((selection) => {
       setSnipd(selection);
+      console.log(selection)
     });
   }, []);
 

@@ -1,13 +1,12 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
-import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import NewCategory from "./NewCategory.";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import { Button, Title, Text, MantineProvider } from "@mantine/core";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -69,13 +68,23 @@ export default function CategoriesMenu({ addCategory, categoriesList, setCategor
         aria-controls={open ? "demo-customized-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
-        variant="contained"
-        disableElevation
+        style={{ width: "60%", marginBottom: "24px", marginTop:'8px' }}
         onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}>
-        Categories
+        color="rgba(222, 78, 78, 1)"
+        rightIcon={<KeyboardArrowDownIcon />}
+        radius="md">
+        <MantineProvider
+          theme={{
+            fontFamily: "Roboto",
+          }}>
+          <Text fz="md" lh="sm" style={{ padding: "8px" }}>
+          Categories
+          </Text>
+        </MantineProvider>
       </Button>
-      <StyledMenu onKeyDown={(e) => e.stopPropagation()}
+      
+      <StyledMenu
+        onKeyDown={(e) => e.stopPropagation()}
         id="demo-customized-menu"
         MenuListProps={{
           "aria-labelledby": "demo-customized-button",
@@ -85,24 +94,29 @@ export default function CategoriesMenu({ addCategory, categoriesList, setCategor
         onClose={handleClose}>
         {categoriesList.map((category) => {
           return (
-            <MenuItem onKeyDown={(e) => e.stopPropagation()} key={category} onClick={(e) => {
+            <MenuItem
+              onKeyDown={(e) => e.stopPropagation()}
+              key={category}
+              onClick={(e) => {
                 setCategory(category);
                 handleClose(e);
-            }} disableRipple>
+              }}
+              disableRipple>
               <StarBorderIcon />
               {category}
             </MenuItem>
           );
         })}
         {!custom ? (
-          <MenuItem onKeyDown={(e) => e.stopPropagation()} onClick={handleCustomClose} disableRipple>
+          <MenuItem
+            onKeyDown={(e) => e.stopPropagation()}
+            onClick={handleCustomClose}
+            disableRipple>
             <DashboardCustomizeIcon />
             Custom Category
           </MenuItem>
         ) : (
-          <MenuItem onKeyDown={(e) => e.stopPropagation()}  disableRipple
-          >
-            
+          <MenuItem onKeyDown={(e) => e.stopPropagation()} disableRipple>
             <NewCategory addCategory={addCategory} style={{ margin: "8px" }} />
           </MenuItem>
         )}

@@ -40,7 +40,6 @@ function App() {
   const filteredSnipdActions = (searchQuery, selectedCategory, selectedType, snipds) => {
     console.log(searchQuery)
     const filteredSnipds = filterSnipds(searchQuery, selectedCategory, selectedType, snipds);
-    // setTypeCounts(filteredSnipds.typeCountsTemp);
     return filteredSnipds.filteredSnipds;
   };
 
@@ -54,9 +53,6 @@ function App() {
         await chrome.storage.local.set({ snipd_categories: newCategoryList });
       }
     
-            
-      
-
       populateCategory(newCategory);
     } catch (error) {
       throw new Error(ERROR_MESSAGES.ERROR_CATEGORIES);
@@ -75,8 +71,6 @@ function App() {
     }, 200);
   };
 
-  
-
   useEffect(() => {
     const fetchData = async () => {
       const store_obj = await chrome.storage.local.get(["snipd_store", "snipd_categories"]);
@@ -88,8 +82,7 @@ function App() {
 
     const listener = (changes, namespace) => {
       if (namespace === 'local' && (changes.snipd_store || changes.snipd_categories)) {
-        fetchData(); // Update the state when relevant data changes
-        console.log("helloooo")
+        fetchData(); 
       }
     }
   
