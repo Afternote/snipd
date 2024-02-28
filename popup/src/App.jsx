@@ -29,28 +29,39 @@ async function getCurrentSelectionData() {
     title: currentTab.title,
     type: result.snip_type,
     content: result.snip_content,
-    date: new Date().toLocaleDateString() + ", " + new Date().toLocaleTimeString() ,
+    date: new Date().toLocaleDateString() + ", " + new Date().toLocaleTimeString(),
   };
 }
 
 function App() {
-  const [snipd, setSnipd] = useState();
-  
+  const [snipd, setSnipd] = useState({});
 
   useEffect(() => {
+    const updateSnipdFromSelection = () => {
+        getCurrentSelectionData()
+            .then((selection) => {
+                setSnipd(selection);
+                console.log(selection);
+            });
+    };
 
+    updateSnipdFromSelection(); 
 
-    getCurrentSelectionData().then((selection) => {
-      setSnipd(selection);
-      console.log(selection)
-    });
-  }, []);
+    const listener = (changes, namespace) => {
+        if (namespace === 'local') {
+            updateSnipdFromSelection();
+        }
+    };
+
+    chrome.storage.onChanged.addListener(listener);
+    return () => {
+        chrome.storage.onChanged.removeListener(listener); 
+    };
+}, []); 
 
   return (
-    <div
-      className="App"
-      >
-      {!!snipd?.content ? (
+    <div className="App" id="snipd-sidepanel">
+      {snipd.content ? (
         <Note
           snipd={snipd}
           style={{

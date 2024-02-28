@@ -84,7 +84,7 @@ const Note = ({ snipd }) => {
           <Title order={2}>Selected Highlight</Title>
         </MantineProvider>
       </CardContent>
-      <div className="margin-16">
+      <div className="margin-16" style={{ overflow: 'auto' }}>
         <Divider variant="middle">
           <Chip label={truncatedTitle} />
         </Divider>
