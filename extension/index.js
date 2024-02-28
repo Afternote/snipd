@@ -1,88 +1,70 @@
-/**
- * @type typeof chrome
- */
-let ext_api = chrome;
 const ID_ADD_SELECTED_TEXT_TO_COLLECTION = "add_selected_text_to_collection";
 
-chrome.tabs.onActivated.addListener(async function(activeInfo) {
-  await chrome.sidePanel.setOptions({
-    enabled: false
-  });
-});
+const extApi = chrome;
 
-chrome.action.onClicked.addListener(function(){
-  chrome.sidePanel.setOptions({
-    enabled: true
-  })
 
+
+async function setSidePanelOptions(enabled) {
+  await extApi.sidePanel.setOptions({ enabled });
 }
-)
-chrome.sidePanel
-  .setPanelBehavior({  
-    
-    openPanelOnActionClick: true })
-  .catch((error) => console.error(error));
 
-ext_api.contextMenus.create({
-  title: "Add Selected Text to Collection",
-  contexts: ["selection"],
-  id: ID_ADD_SELECTED_TEXT_TO_COLLECTION,
-});
+function setPanelBehavior() {
+  extApi.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
+    .catch((error) => console.error(error));
+}
 
-//context menu item for image
-ext_api.contextMenus.create({
-  title: "Add Image to Collection",
-  contexts: ["image"],
-  id: "add_image_to_collection",
-});
+function createContextMenu(title, contexts, id) {
+  extApi.contextMenus.create({ title, contexts, id });
+}
 
-ext_api.contextMenus.create({
-  title: "Add Link to Collection",
-  contexts: ["page"],
-  id: "add_link_to_collection",
-});
-
-ext_api.contextMenus.onClicked.addListener((info, tab) => {
-  chrome.sidePanel.setOptions({
-    enabled: true
+function setStorageDefaults() {
+  extApi.storage.local.get(["snipd_store"]).then((e) => {
+    if (!e.snipd_store) extApi.storage.local.set({ snipd_store: [] });
   });
+
+  extApi.storage.local.get(["snipd_categories"]).then((e) => {
+    if (!e.snipd_categories) extApi.storage.local.set({ snipd_categories: ["Default"] });
+  });
+}
+
+chrome.tabs.onActivated.addListener(async function (activeInfo) {
+  await setSidePanelOptions(false);
+});
+
+chrome.action.onClicked.addListener(function () {
+  setSidePanelOptions(true);
+});
+
+setPanelBehavior();
+
+createContextMenu("Add Selected Text to Collection", ["selection"], ID_ADD_SELECTED_TEXT_TO_COLLECTION);
+createContextMenu("Add Image to Collection", ["image"], "add_image_to_collection");
+createContextMenu("Add Link to Collection", ["page"], "add_link_to_collection");
+
+extApi.contextMenus.onClicked.addListener((info, tab) => {
+  setSidePanelOptions(true);
+
+  function handleMenuItem(menuItemId, snipType, snipContent) {
+    extApi.storage.local.set({ snip_type: snipType, snip_content: snipContent });
+    extApi.sidePanel.open({ windowId: tab.windowId });
+  }
+
   switch (info.menuItemId) {
     case "add_image_to_collection":
-      chrome.storage.local.set({
-        snip_type: "image",
-        snip_content: info.srcUrl,
-      });
-      ext_api.sidePanel.open({ windowId: tab.windowId });
+      handleMenuItem("image", info.srcUrl);
       break;
 
-    case "add_selected_text_to_collection":
+    case ID_ADD_SELECTED_TEXT_TO_COLLECTION:
       chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-          chrome.storage.local.set({
-            snip_type: "text",
-            snip_content: info.selectionText,
-          });
-
-          chrome.sidePanel.open({ windowId: tabs[0].windowId });
-        
+        handleMenuItem("text", info.selectionText);
       });
       break;
 
     case "add_link_to_collection":
-      chrome.storage.local.set({
-        snip_type: "link",
-        snip_content: info.pageUrl,
-      });
-      ext_api.sidePanel.open({ windowId: tab.windowId });
+      handleMenuItem("link", info.pageUrl);
       break;
   }
 });
 
-// Make a storage array if it doesn't exist
-ext_api.storage.local.get(["snipd_store"]).then((e) => {
-  if (!e.snipd_store) ext_api.storage.local.set({ snipd_store: [] });
-});
 
-// Make a storage array if it doesn't exist
-ext_api.storage.local.get(["snipd_categories"]).then((e) => {
-  if (!e.snipd_categories) ext_api.storage.local.set({ snipd_categories: ["Default"] });
-});
+setStorageDefaults();
