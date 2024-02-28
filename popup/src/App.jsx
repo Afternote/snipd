@@ -54,7 +54,6 @@ function App() {
     };
 
     chrome.storage.onChanged.addListener(listener);
-
     return () => {
         chrome.storage.onChanged.removeListener(listener); 
     };
