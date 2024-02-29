@@ -145,7 +145,6 @@ const NavBarMantine = (props) => {
         size="xs"
         leftSection={<IconSearch style={{ width: "12px", height: "12px" }} stroke={1.5} />}
         rightSectionWidth={70}
-        rightSection={<Code className="searchCode">Ctrl + K</Code>}
         styles={{ section: { pointerEvents: "none" } }}
         mb="sm"
       />

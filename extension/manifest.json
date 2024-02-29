@@ -5,7 +5,7 @@
   "version": "1.0",
   "homepage_url": "https://github.com/PDFilez/snipd",
   "icons": {
-    "48": "images/snipdLogo.png"
+    "48": "images/snipdLogo8.png"
   },
   "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage", "notifications", "sidePanel"],
   "host_permissions": ["file:///*", "https://*/*"],

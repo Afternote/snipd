@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CardActions, CardContent, Divider, Typography, Chip, Stack } from "@mui/material";
 import CategoriesMenu from "./CategoriesMenu";
+import CategoriesMenuMantine from "./CategoriesMenuMantine";
 import {
   openAllSnipdPage,
   saveSnipd,
@@ -76,7 +77,7 @@ const Note = ({ snipd }) => {
 
   return (
     <div className="notes-root-div" style={{ height: "100vh" }}>
-      <CardContent style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+      <CardContent style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
         <MantineProvider
           theme={{
             fontFamily: "Roboto",
@@ -84,7 +85,7 @@ const Note = ({ snipd }) => {
           <Title order={2}>Selected Highlight</Title>
         </MantineProvider>
       </CardContent>
-      <div className="margin-16" style={{ overflow: 'auto' }}>
+      <div className="margin-16" style={{ overflow: "auto" }}>
         <Divider variant="middle">
           <Chip label={truncatedTitle} />
         </Divider>
@@ -138,12 +139,11 @@ const Note = ({ snipd }) => {
               Current category: {category}
             </Text>
           </MantineProvider>
-          <CategoriesMenu
-            className="categories-menu"
+          
+          <CategoriesMenuMantine
             categoriesList={snipdCategories}
             addCategory={addCategory}
-            setCategory={setCategory}
-          />
+            setCategory={setCategory}></CategoriesMenuMantine>
         </center>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <Button
