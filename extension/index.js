@@ -3,7 +3,6 @@ const ID_ADD_SELECTED_TEXT_TO_COLLECTION = "add_selected_text_to_collection";
 const extApi = chrome;
 
 
-
 async function setSidePanelOptions(enabled) {
   await extApi.sidePanel.setOptions({ enabled });
 }
@@ -26,6 +25,8 @@ function setStorageDefaults() {
     if (!e.snipd_categories) extApi.storage.local.set({ snipd_categories: ["Default"] });
   });
 }
+
+
 
 chrome.tabs.onActivated.addListener(async function (activeInfo) {
   await setSidePanelOptions(false);
