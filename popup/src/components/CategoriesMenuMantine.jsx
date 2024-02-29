@@ -5,6 +5,13 @@ import { IconCategoryPlus, IconCategory2 } from "@tabler/icons-react";
 
 const CategoriesMenuMantine = ({ addCategory, categoriesList, setCategory }) => {
   const [custom, setCustom] = React.useState(false);
+  const [categoryAdded, setCategoryAdded] = React.useState('')
+
+  const viewport = React.useRef(null);
+  React.useEffect(() => {
+    viewport.current?.scrollTo({ top: viewport.current?.scrollHeight, behavior: 'smooth' });
+
+  }, [categoryAdded] )
 
   const handleCustomClose = () => {
     setCustom(true);
@@ -30,7 +37,7 @@ const CategoriesMenuMantine = ({ addCategory, categoriesList, setCategory }) => 
 
       <Menu.Dropdown onKeyDown={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
         <Menu.Label>Categories</Menu.Label>
-        <ScrollArea style={{ height: 250 }}>
+        <ScrollArea style={{ height: 250 }} viewportRef={viewport}>
           {categoriesList.map((category) => {
             return (
               <Menu.Item
@@ -50,18 +57,18 @@ const CategoriesMenuMantine = ({ addCategory, categoriesList, setCategory }) => 
         <Menu.Label>Custom</Menu.Label>
         {!custom ? (
           <Button
-            variant="transparent"
-            color="indigo"
+            variant="outline"
             onClick={(e) => {
               e.stopPropagation(); 
               handleCustomClose();
             }}
             onKeyDown={(e) => e.stopPropagation()}
-            rightSection={<IconCategoryPlus size={14} />}>
-            Create a new Category
+            >
+            Add a new Category
+            <IconCategoryPlus style={{paddingLeft:'16px'}}size={14} />
           </Button>
         ) : (
-            <NewCategory setCustom={setCustom} addCategory={addCategory} style={{ margin: "8px" }} />
+            <NewCategory setCustom={setCustom} addCategory={addCategory} setCategoryAdded={setCategoryAdded} style={{ margin: "8px" }} />
         )}
       </Menu.Dropdown>
     </Menu>
