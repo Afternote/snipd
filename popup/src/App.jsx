@@ -11,7 +11,6 @@ async function getCurrentSelectionData() {
     target: { tabId: currentTab.id },
     func: async () => {
       let selectionText = await chrome.storage.local.get(["snip_content", "snip_type"]);
-      await chrome.storage.local.remove(["snip_content", "snip_type"]);
 
       if (!window.location.href.endsWith(".pdf") && selectionText.snip_content === undefined) {
         return {
@@ -29,12 +28,14 @@ async function getCurrentSelectionData() {
     title: currentTab.title,
     type: result.snip_type,
     content: result.snip_content,
-    date: new Date().toLocaleDateString() + ", " + new Date().toLocaleTimeString(),
+    date: new Date().toLocaleDateString() + ", " + new Date().toLocaleTimeString() ,
   };
 }
 
 function App() {
-  const [snipd, setSnipd] = useState({});
+  const [snipd, setSnipd] = useState();
+
+  
 
   useEffect(() => {
     const updateSnipdFromSelection = () => {
@@ -60,8 +61,10 @@ function App() {
 }, []); 
 
   return (
-    <div className="App" id="snipd-sidepanel">
-      {snipd.content ? (
+    <div
+      className="App"
+      >
+      {!!snipd?.content ? (
         <Note
           snipd={snipd}
           style={{

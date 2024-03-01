@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles/Categories.css";
 import { TextInput, Button } from "@mantine/core";
 
-function NewCategory({ addCategory, setCustom }) {
+function NewCategory({ addCategory, setCustom, setCategoryAdded }) {
   const [newCategoryName, setNewCategoryName] = useState("");
 
   const handleChange = (event) => {
@@ -11,6 +11,8 @@ function NewCategory({ addCategory, setCustom }) {
 
   const handleAddCategory = () => {
     addCategory(newCategoryName);
+    setCategoryAdded(newCategoryName)
+
     setCustom(false)
   };
 
