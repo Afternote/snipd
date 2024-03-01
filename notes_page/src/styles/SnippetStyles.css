@@ -25,6 +25,7 @@
 
 .image-container {
   max-height: 250px;
+  max-width: 80%;
 }
 
 .text-content {

@@ -10,6 +10,7 @@ import {
   Tooltip,
   rem,
   Button,
+  ScrollArea,
 } from "@mantine/core";
 import { SnipdButton } from "./SnipdButton";
 import {
@@ -68,7 +69,7 @@ const NavBarMantine = (props) => {
 
   const handleAddCategory = () => {
     props.addCategory(newCategoryName);
-    setAddCategoryFlag(false)
+    setAddCategoryFlag(false);
   };
 
   useEffect(() => {
@@ -108,8 +109,8 @@ const NavBarMantine = (props) => {
   };
 
   const handleCreateCategoryClick = () => {
-    setAddCategoryFlag(!addCategoryFlag)
-  }
+    setAddCategoryFlag(!addCategoryFlag);
+  };
 
   useEffect(() => {
     const updatedCollectionLinks = filterCategories(categoryQuery, props.categories).map(
@@ -182,7 +183,9 @@ const NavBarMantine = (props) => {
           </Group>
         )}
 
-        <div className="collections">{collectionLinks}</div>
+        <ScrollArea style={{ height: 400 }} >
+          <div className="collections">{collectionLinks}</div>
+        </ScrollArea>
       </div>
     </nav>
   );
