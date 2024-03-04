@@ -8,12 +8,20 @@ chrome.tabs.onActivated.addListener(async function(activeInfo) {
   await chrome.sidePanel.setOptions({
     enabled: false
   });
+  await chrome.sidePanel.setOptions({
+    enabled: true
+  });
 });
 
-chrome.action.onClicked.addListener(function(){
-  chrome.sidePanel.setOptions({
+chrome.action.onClicked.addListener(async function(){
+  await chrome.sidePanel.setOptions({
     enabled: true
-  })
+  });
+  await chrome.sidePanel
+  .setPanelBehavior({  
+    
+    openPanelOnActionClick: true })
+  .catch((error) => console.error(error));
 
 }
 )

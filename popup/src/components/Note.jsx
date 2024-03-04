@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CardActions, CardContent, Divider, Typography, Chip, Stack } from "@mui/material";
-import CategoriesMenu from "./CategoriesMenu";
+import {  CardContent, Divider, Chip, Stack } from "@mui/material";
 import CategoriesMenuMantine from "./CategoriesMenuMantine";
 import {
   openAllSnipdPage,
