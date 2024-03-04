@@ -12,6 +12,15 @@ chrome.tabs.onActivated.addListener(async function(activeInfo) {
     enabled: true
   });
 });
+chrome.runtime.onConnect.addListener(function (port) {
+  if (port.name === 'mySidepanel') {
+    port.onDisconnect.addListener(async () => {
+      console.log('Sidepanel closed.');
+      chrome.storage.local.remove(["snip_content", "snip_type"]);
+
+    });
+  }
+});
 
 chrome.action.onClicked.addListener(async function(){
   await chrome.sidePanel.setOptions({

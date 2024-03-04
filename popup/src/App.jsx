@@ -13,10 +13,9 @@ async function getCurrentSelectionData() {
     target: { tabId: currentTab.id },
     func: async () => {
       let selectionText = await chrome.storage.local.get(["snip_content", "snip_type"]);
-      disableListener = true; // Temporarily disable
-      await chrome.storage.local.remove(["snip_content", "snip_type"]);
-      disableListener = false; // Re-enable
+     
       if (!window.location.href.endsWith(".pdf") && selectionText.snip_content === undefined) {
+        console.log(window.getSelection().toString())
         return {
           snip_content: window.getSelection().toString(),
           snip_type: "text",
@@ -38,6 +37,7 @@ async function getCurrentSelectionData() {
 
 function App() {
   const [snipd, setSnipd] = useState();
+  chrome.runtime.connect({ name: 'mySidepanel' });
 
   useEffect(() => {
     const updateSnipdFromSelection = () => {
@@ -49,17 +49,6 @@ function App() {
 
     updateSnipdFromSelection();
 
-    // const listener = (changes, namespace) => {
-    //     if (namespace === 'local') {
-    //         updateSnipdFromSelection();
-    //     }
-    // };
-
-    // const listener = (changes, namespace) => {
-    //   if (namespace === "local" && (changes.snip_content || changes.snip_type)) {
-    //     updateSnipdFromSelection();
-    //   }
-    // };
 
     const listener = (changes, namespace) => {
       if (namespace === 'local' && !disableListener) { 
