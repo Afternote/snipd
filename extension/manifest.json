@@ -1,15 +1,15 @@
 {
-  "description": "WIP",
+  "description": " Organize research from websites & PDFs. Categorize highlights, images, links, notes",
   "manifest_version": 3,
-  "name": "snipd",
-  "version": "1.0",
+  "name": "Snipd",
+  "version": "0.0.0.2",
   "homepage_url": "https://github.com/PDFilez/snipd",
   "icons": {
     "48": "images/snipdLogo8.png"
   },
-  "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage", "notifications", "sidePanel"],
+  "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage",  "sidePanel"],
   "host_permissions": ["file:///*", "https://*/*"],
- 
+
   "background": {
     "service_worker": "index.js"
   },
