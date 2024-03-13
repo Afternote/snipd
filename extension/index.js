@@ -22,6 +22,14 @@ chrome.runtime.onConnect.addListener(function (port) {
   }
 });
 
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
+    chrome.tabs.create({
+      url: "https://snipd-landing.vercel.app/"
+    });
+  } 
+});
+
 chrome.action.onClicked.addListener(async function(){
   await chrome.sidePanel.setOptions({
     enabled: true
