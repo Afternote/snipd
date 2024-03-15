@@ -35,7 +35,7 @@ function NewCategory({ addCategory, setCustom, setCategoryAdded }) {
         radius="xl"
         className="add-category-button"
         onClick={handleAddCategory}
-        disabled={!newCategoryName.trim()} // Disable button if the category name is empty or only contains whitespace
+        disabled={!newCategoryName.trim()} 
       >
         Add
       </Button>

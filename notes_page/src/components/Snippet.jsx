@@ -1,10 +1,18 @@
 import React from "react";
-import { Stack, Center, Card, Text, Anchor, Divider, Group, Badge, Flex } from "@mantine/core";
+import { Card, Text, Anchor, Divider } from "@mantine/core";
+import { NavLink } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import { deleteSnipd, moveSnipdDown, moveSnipdUp } from "../utils/snipUtils";
 import ItemControls from "./ItemControls";
 import ItemHeader from "./ItemHeader";
 import "../styles/SnippetStyles.css"; // Assuming the CSS stays here
+import {
+  IconHome2,
+  IconGauge,
+  IconChevronRight,
+  IconActivity,
+  IconCircleOff,
+} from "@tabler/icons-react";
 
 export function Snippet(props) {
   const { hovered, ref } = useHover();
@@ -30,28 +38,29 @@ export function Snippet(props) {
             onDeleteClick={() => deleteSnipd(props.index).then(props.refetch)}
             onDownClick={() => moveSnipdDown(props.index).then(props.refetch)}
           />
-
-          <Card className="text-content">
-            {props.type === "image" && (
+          {props.type === "image" && (
+            <Card className="text-content">
               <div className="image-div">
                 <img className="image-container" src={props.content} />
               </div>
-            )}
-            {(props.type === "text" || props.type === "note") && (
+            </Card>
+          )}
+          {(props.type === "text" || props.type === "note") && (
+            <Card className="text-content">
               <Text className="text-container" size="sm" color="dimmed">
                 {props.content}
               </Text>
-            )}
-            {props.type === "link" && (
+            </Card>
+          )}
+          {props.type === "link" && (
+            <Card className="link-content">
               <div className="link-container">
-                <Anchor className="link-anchor" href={props.content}>
-                  <Text className="link-url" size="sm" color="dimmed" lineClamp={1}>
-                    {props.content}
-                  </Text>
+                <Anchor variant="gradient" className="link-anchor" href={props.content}>
+                  {props.content}
                 </Anchor>
               </div>
-            )}
-          </Card>
+            </Card>
+          )}
         </div>
       </div>
 
