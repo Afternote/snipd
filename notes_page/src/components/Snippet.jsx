@@ -5,7 +5,8 @@ import { useHover } from "@mantine/hooks";
 import { deleteSnipd, moveSnipdDown, moveSnipdUp } from "../utils/snipUtils";
 import ItemControls from "./ItemControls";
 import ItemHeader from "./ItemHeader";
-import "../styles/SnippetStyles.css"; // Assuming the CSS stays here
+import { Spoiler } from "@mantine/core";
+import "../styles/SnippetStyles.css";
 import {
   IconHome2,
   IconGauge,
@@ -33,11 +34,11 @@ export function Snippet(props) {
           onSourceClick={handleSourceButtonClick}
         />
         <div style={{ display: "flex", width: "100%" }}>
-          <ItemControls
+          {/* <ItemControls
             onUpClick={() => moveSnipdUp(props.index).then(props.refetch)}
             onDeleteClick={() => deleteSnipd(props.index).then(props.refetch)}
             onDownClick={() => moveSnipdDown(props.index).then(props.refetch)}
-          />
+          /> */}
           {props.type === "image" && (
             <Card className="text-content">
               <div className="image-div">
@@ -47,9 +48,15 @@ export function Snippet(props) {
           )}
           {(props.type === "text" || props.type === "note") && (
             <Card className="text-content">
-              <Text className="text-container" size="sm" color="dimmed">
-                {props.content}
-              </Text>
+              <Spoiler
+                maxHeight={90}
+                showLabel="Show more"
+                hideLabel="Hide"
+                transitionDuration={100}>
+                <Text className="text-container" size="sm" color="dimmed">
+                  {props.content}
+                </Text>
+              </Spoiler>
             </Card>
           )}
           {props.type === "link" && (
@@ -63,8 +70,6 @@ export function Snippet(props) {
           )}
         </div>
       </div>
-
-      <Divider className="divider" />
     </div>
   );
 }
