@@ -10,10 +10,8 @@ function moveSnipd(from, to) {
     });
 }
 
-async function moveSnipdUp(id) {
-    if (id > 0) {
-        await moveSnipd(id, id - 1);
-    }
+async function moveSnipdUp(id, destination) {
+        await moveSnipd(id, destination);
 }
 
 async function moveSnipdDown(id) {

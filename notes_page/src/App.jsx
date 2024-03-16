@@ -110,7 +110,10 @@ function App() {
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
-    moveSnipdUp(result.source.index).then(refetch);
+    console.log(result.source.index)
+    console.log(result.destination.index)
+
+    moveSnipdUp(result.source.index, result.destination.index).then(refetch);
   };
 
  
