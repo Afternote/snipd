@@ -1,10 +1,13 @@
-import { Button, Group, Stack, Divider, Title, AppShell } from "@mantine/core";
+import { Button, Group, Stack, Divider, Title, AppShell, rem, Container } from "@mantine/core";
 import MantineSearchBar from "./components/searchBar";
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { deleteSnipd, moveSnipdDown, moveSnipdUp } from "./utils/snipUtils";
-import { Card, Text } from "@mantine/core";
+import { moveSnipdTo } from "./utils/snipUtils";
+import { Card } from "@mantine/core";
+import { ActionIcon } from "@mantine/core";
+import { Menu } from "@mantine/core";
 
+import { IconAdjustmentsCog, IconArrowsUp, IconArrowsDown, IconTrash } from "@tabler/icons-react";
 import "./assets/print.css";
 import { Snippet } from "./components/Snippet";
 import NavBarMantine from "./components/NavBarMantine";
@@ -110,13 +113,11 @@ function App() {
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
-    console.log(result.source.index)
-    console.log(result.destination.index)
+    console.log(result.source.index);
+    console.log(result.destination.index);
 
-    moveSnipdUp(result.source.index, result.destination.index).then(refetch);
+    moveSnipdTo(result.source.index, result.destination.index).then(refetch);
   };
-
- 
 
   return (
     <AppShell
@@ -157,38 +158,6 @@ function App() {
               Show all snipds
             </Button>
           )}
-          {/* <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="cards-list">
-              {(provided) => (
-                <div {...provided.droppableProps} ref={provided.innerRef}>
-                  {filteredSnipdActions(searchQuery, selectedCategory, selectedType, snipds).map(
-                    (arr, idx) => {
-                      return (
-                        <Draggable key={idx} draggableId={idx} index={idx}>
-                          {(provided) => (
-                            <Snippet
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                              key={idx}
-                              index={idx}
-                              refetch={refetch}
-                              source={arr.source}
-                              title={arr.title}
-                              content={arr.content}
-                              date={arr.date}
-                              type={arr.type}
-                            />
-                          )}
-                        </Draggable>
-                      );
-                    }
-                  )}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext> */}
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="cards-list">
               {(provided) => (
@@ -197,23 +166,28 @@ function App() {
                     (card, index) => (
                       <Draggable key={"Card_" + index} draggableId={"Card_" + index} index={index}>
                         {(provided) => (
-                          <Card
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            ref={provided.innerRef}
-                            sx={{ marginBottom: 10 }}>
-                            <Snippet
-                              ref={provided.innerRef}
-                              key={index}
-                              index={index}
-                              refetch={refetch}
-                              source={card.source}
-                              title={card.title}
-                              content={card.content}
-                              date={card.date}
-                              type={card.type}
-                            />
-                          </Card>
+                          <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+                              <Card
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                ref={provided.innerRef}
+                                sx={{ width: '100%', margin: 10 }}>
+                                <div style={{ display: "flex", flexDirection: "row" }}>
+                                  <Snippet
+                                    ref={provided.innerRef}
+                                    key={index}
+                                    index={index}
+                                    refetch={refetch}
+                                    source={card.source}
+                                    title={card.title}
+                                    content={card.content}
+                                    date={card.date}
+                                    type={card.type}
+                                  />
+                                </div>
+                              </Card>
+                            
+                          </div>
                         )}
                       </Draggable>
                     )
