@@ -1,13 +1,19 @@
-import { Button, Group, Stack, Divider, Title, AppShell } from "@mantine/core";
+import { Button, Group, Stack, Divider, Title, AppShell, rem, Container } from "@mantine/core";
 import MantineSearchBar from "./components/searchBar";
 import { useEffect, useState } from "react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { moveSnipdTo } from "./utils/snipUtils";
+import { Card } from "@mantine/core";
+import { ActionIcon } from "@mantine/core";
+import { Menu } from "@mantine/core";
 
+import { IconAdjustmentsCog, IconArrowsUp, IconArrowsDown, IconTrash } from "@tabler/icons-react";
 import "./assets/print.css";
 import { Snippet } from "./components/Snippet";
 import NavBarMantine from "./components/NavBarMantine";
 
 function filterSnipds(searchQuery, category, type, snipds) {
-  const typeCountsTemp = {}; 
+  const typeCountsTemp = {};
   const filteredSnipds = snipds.filter((a) => {
     const textToSearch = `${a.content} ${a.title}`.toLowerCase();
     const matchesCriteria =
@@ -25,31 +31,36 @@ function filterSnipds(searchQuery, category, type, snipds) {
   return { filteredSnipds, typeCountsTemp };
 }
 
+const initialCards = [
+  { id: "card-1", content: "Card 1" },
+  { id: "card-2", content: "Card 2" },
+  { id: "card-3", content: "Card 3" },
+];
 
 function App() {
   const [snipds, setSnipds] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryList, setCategoryList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [isPrinting, setPrinting] = useState(false);
+  const [cards, setCards] = useState(initialCards);
 
   const filteredSnipdActions = (searchQuery, selectedCategory, selectedType, snipds) => {
-    console.log(searchQuery)
+    console.log(searchQuery);
     const filteredSnipds = filterSnipds(searchQuery, selectedCategory, selectedType, snipds);
     return filteredSnipds.filteredSnipds;
   };
 
   const addCategory = async (newCategory) => {
     try {
-
       if (!newCategory.trim() || categoryList.includes(newCategory)) {
         throw new Error("error");
-      }else{
+      } else {
         const newCategoryList = [...categoryList, newCategory];
         await chrome.storage.local.set({ snipd_categories: newCategoryList });
       }
-    
+
       populateCategory(newCategory);
     } catch (error) {
       throw new Error(ERROR_MESSAGES.ERROR_CATEGORIES);
@@ -78,11 +89,11 @@ function App() {
     fetchData();
 
     const listener = (changes, namespace) => {
-      if (namespace === 'local' && (changes.snipd_store || changes.snipd_categories)) {
-        fetchData(); 
+      if (namespace === "local" && (changes.snipd_store || changes.snipd_categories)) {
+        fetchData();
       }
-    }
-  
+    };
+
     chrome.storage.onChanged.addListener(listener);
 
     return () => {
@@ -98,6 +109,14 @@ function App() {
     chrome.storage.local.get(["snipd_categories"]).then((store_obj) => {
       setCategoryList(store_obj.snipd_categories);
     });
+  };
+
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return;
+    console.log(result.source.index);
+    console.log(result.destination.index);
+
+    moveSnipdTo(result.source.index, result.destination.index).then(refetch);
   };
 
   return (
@@ -116,8 +135,6 @@ function App() {
           />
         )
       }>
-      {/* <AppShell padding="md" navbar={isPrinting ? null : <NavBar categoryList={categoryList} setSelectedCategory={setSelectedCategory} />}> */}
-
       <div className="App" style={{ margin: "48px" }}>
         <Group className="printHide" style={{ marginTop: "16px" }} position="apart" mb={"lg"}>
           <Title order={2}>Snipd</Title>
@@ -141,22 +158,45 @@ function App() {
               Show all snipds
             </Button>
           )}
-          {filteredSnipdActions(searchQuery, selectedCategory, selectedType, snipds).map(
-            (arr, idx) => {
-              return (
-                <Snippet
-                  key={idx}
-                  index={idx}
-                  refetch={refetch}
-                  source={arr.source}
-                  title={arr.title}
-                  content={arr.content}
-                  date={arr.date}
-                  type={arr.type}
-                />
-              );
-            }
-          )}
+          <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId="cards-list">
+              {(provided) => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {filteredSnipdActions(searchQuery, selectedCategory, selectedType, snipds).map(
+                    (card, index) => (
+                      <Draggable key={"Card_" + index} draggableId={"Card_" + index} index={index}>
+                        {(provided) => (
+                          <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+                              <Card
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                ref={provided.innerRef}
+                                sx={{ width: '100%', margin: 10 }}>
+                                <div style={{ display: "flex", flexDirection: "row" }}>
+                                  <Snippet
+                                    ref={provided.innerRef}
+                                    key={index}
+                                    index={index}
+                                    refetch={refetch}
+                                    source={card.source}
+                                    title={card.title}
+                                    content={card.content}
+                                    date={card.date}
+                                    type={card.type}
+                                  />
+                                </div>
+                              </Card>
+                            
+                          </div>
+                        )}
+                      </Draggable>
+                    )
+                  )}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         </Stack>
       </div>
     </AppShell>

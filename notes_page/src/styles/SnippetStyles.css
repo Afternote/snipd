@@ -35,6 +35,10 @@
   display: flex;
 }
 
+.link-content{
+  background-color: transparent;
+}
+
 .link-container {
   width: 100%;
   display: flex;
