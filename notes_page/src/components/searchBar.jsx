@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { TextInput, Button, Container, Flex } from "@mantine/core";
+import { TextInput, Button, Container, Flex, ActionIcon } from "@mantine/core";
+import { IconZoomFilled, IconSearch, IconPrinter } from "@tabler/icons-react";
 
 const MantineSearchBar = ({ onSearch, print }) => {
   // console.log(someProp);
@@ -21,9 +22,19 @@ const MantineSearchBar = ({ onSearch, print }) => {
     <>
       <Container m={10}>
         <Flex direction={{ base: "column", sm: "row" }} gap="sm" align="center">
-          <TextInput placeholder="Search" value={searchQuery} onChange={handleSearchInputChange} />
-          <Button onClick={() => onSearch(searchQuery)}>Search</Button>
-          <Button onClick={() => print()}>Print</Button>
+          <TextInput
+            radius="lg"
+            placeholder="Search"
+            value={searchQuery}
+            onChange={handleSearchInputChange}
+          />
+          <ActionIcon onClick={() => onSearch(searchQuery)} size="lg" color="blue" variant="filled"  radius="xl" aria-label="Settings">
+            <IconSearch style={{ color: "white", width: "70%", height: "70%" }}  />
+          </ActionIcon>
+          <ActionIcon onClick={() => print()} size="lg" color="blue" variant="filled"  radius="xl" aria-label="Settings">
+            <IconPrinter style={{ color: "white", width: "70%", height: "70%" }}  />
+          </ActionIcon>
+          
         </Flex>
       </Container>
     </>

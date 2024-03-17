@@ -75,6 +75,9 @@
 
   
 }
+.collectionLink:active {
+  background-color: lightblue; /* Your desired active color */
+}
 
 .collectionsHeader {
   padding:8px 16px 8px 16px;
