@@ -2,7 +2,7 @@
   "description": " Organize research from websites & PDFs. Categorize highlights, images, links, notes",
   "manifest_version": 3,
   "name": "Snipd",
-  "version": "0.0.0.3",
+  "version": "0.0.0.4",
   "homepage_url": "https://github.com/PDFilez/snipd",
   "icons": {
     "48": "images/snipdLogo8.png"

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Anchor } from "@mantine/core";
+
 import {
   TextInput,
   Code,
@@ -113,20 +115,24 @@ const NavBarMantine = (props) => {
   };
 
   useEffect(() => {
+
     const updatedCollectionLinks = filterCategories(categoryQuery, props.categories).map(
       (collection, index) => (
-        <a
+        <Anchor
           href="#"
+          underline="never"
           onClick={() => {
             props.setSelectedCategory(collection);
             props.setSelectedType("");
+
             fetchCounts(props.searchQuery, collection, "", props.snipds);
           }}
           key={`collection-${index}`}
           className="collectionLink">
-          <span style={{ marginRight: rem(9), fontSize: rem(16) }}></span>
-          {collection}
-        </a>
+          <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+            {collection}
+          </div>
+        </Anchor>
       )
     );
     setCollectionLinks(updatedCollectionLinks);
@@ -144,10 +150,7 @@ const NavBarMantine = (props) => {
         placeholder="Search Categories"
         onChange={handleSearchInputChange}
         size="xs"
-        leftSection={<IconSearch style={{ width: "12px", height: "12px" }} stroke={1.5} />}
-        rightSectionWidth={70}
-        styles={{ section: { pointerEvents: "none" } }}
-        mb="sm"
+        radius="lg"
       />
 
       <div className="section" style={{ marginTop: "16px" }}>
@@ -183,7 +186,7 @@ const NavBarMantine = (props) => {
           </Group>
         )}
 
-        <ScrollArea style={{ height: 400 }} >
+        <ScrollArea style={{ height: 400 }}>
           <div className="collections">{collectionLinks}</div>
         </ScrollArea>
       </div>

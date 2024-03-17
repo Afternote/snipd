@@ -8,7 +8,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <MantineProvider
       withGlobalStyles
       withNormalizeCSS
-      theme={{ colorScheme: "dark", primaryColor: "green" }}>
+      theme={{ colorScheme: "dark", primaryColor: "blue", fontFamily: 'Open Sans, sans-serif' }}>
       <App />
     </MantineProvider>
   </React.StrictMode>

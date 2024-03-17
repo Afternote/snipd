@@ -1,13 +1,12 @@
 import React from "react";
-import { Stack, Badge, Group, Title, Button, rem, Menu  } from "@mantine/core";
-import "../styles/SnippetStyles.css"; // Assuming the CSS stays here
-import { ActionIcon } from "@mantine/core";
+import { Stack, Badge, Group, Title, Button, rem, Menu, ActionIcon  } from "@mantine/core";
 import {
   IconAdjustmentsCog,
   IconArrowsUp,
   IconArrowsDown,
   IconTrash,
 } from "@tabler/icons-react";
+import "../styles/SnippetStyles.css"; 
 
 
 function ItemHeader({
@@ -34,10 +33,8 @@ function ItemHeader({
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <Badge
               style={{ marginRight: "16px" }}
-              color="gray"
-              size="sm"
-              radius="sm"
-              variant="outline">
+              color="blue"
+              >
               {date}
             </Badge>
 
