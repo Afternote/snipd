@@ -1,16 +1,27 @@
-import { Button, Group, Stack, Divider, Title, AppShell, rem, Container } from "@mantine/core";
+import { Button, Group, Stack, Divider, Title, AppShell } from "@mantine/core";
 import MantineSearchBar from "./components/searchBar";
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { moveSnipdTo } from "./utils/snipUtils";
 import { Card } from "@mantine/core";
-import { ActionIcon } from "@mantine/core";
-import { Menu } from "@mantine/core";
-
-import { IconAdjustmentsCog, IconArrowsUp, IconArrowsDown, IconTrash } from "@tabler/icons-react";
 import "./assets/print.css";
 import { Snippet } from "./components/Snippet";
 import NavBarMantine from "./components/NavBarMantine";
+import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import { PDFViewer } from '@react-pdf/renderer';
+import ReactDOM from 'react-dom';
+
+const pdfStyles = StyleSheet.create({
+  page: {
+    flexDirection: "row",
+    backgroundColor: "#E4E4E4",
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+  },
+});
 
 function filterSnipds(searchQuery, category, type, snipds) {
   const typeCountsTemp = {};
@@ -31,12 +42,6 @@ function filterSnipds(searchQuery, category, type, snipds) {
   return { filteredSnipds, typeCountsTemp };
 }
 
-const initialCards = [
-  { id: "card-1", content: "Card 1" },
-  { id: "card-2", content: "Card 2" },
-  { id: "card-3", content: "Card 3" },
-];
-
 function App() {
   const [snipds, setSnipds] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -44,7 +49,6 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [isPrinting, setPrinting] = useState(false);
-  const [cards, setCards] = useState(initialCards);
 
   const filteredSnipdActions = (searchQuery, selectedCategory, selectedType, snipds) => {
     console.log(searchQuery);
@@ -60,7 +64,6 @@ function App() {
         const newCategoryList = [...categoryList, newCategory];
         await chrome.storage.local.set({ snipd_categories: newCategoryList });
       }
-
       populateCategory(newCategory);
     } catch (error) {
       throw new Error(ERROR_MESSAGES.ERROR_CATEGORIES);
@@ -72,12 +75,28 @@ function App() {
   };
 
   const print = () => {
-    setPrinting(true);
-    setTimeout(() => {
-      window.print();
-      setPrinting(false);
-    }, 200);
+    ReactDOM.render(<Pdft />, document.getElementById('root'));
+
   };
+
+  const MyDocument = () => (
+    <Document>
+      <Page size="A4" style={pdfStyles.page}>
+        <View style={pdfStyles.section}>
+          <Text>Section #1</Text>
+        </View>
+        <View style={pdfStyles.section}>
+          <Text>Section #2</Text>
+        </View>
+      </Page>
+    </Document>
+  );
+
+  const Pdft = () => (
+    <PDFViewer>
+      <MyDocument />
+    </PDFViewer>
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -167,26 +186,25 @@ function App() {
                       <Draggable key={"Card_" + index} draggableId={"Card_" + index} index={index}>
                         {(provided) => (
                           <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-                              <Card
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                ref={provided.innerRef}
-                                sx={{ width: '100%', margin: 10 }}>
-                                <div style={{ display: "flex", flexDirection: "row" }}>
-                                  <Snippet
-                                    ref={provided.innerRef}
-                                    key={index}
-                                    index={index}
-                                    refetch={refetch}
-                                    source={card.source}
-                                    title={card.title}
-                                    content={card.content}
-                                    date={card.date}
-                                    type={card.type}
-                                  />
-                                </div>
-                              </Card>
-                            
+                            <Card
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              ref={provided.innerRef}
+                              sx={{ width: "100%", margin: 10 }}>
+                              <div style={{ display: "flex", flexDirection: "row" }}>
+                                <Snippet
+                                  ref={provided.innerRef}
+                                  key={index}
+                                  index={index}
+                                  refetch={refetch}
+                                  source={card.source}
+                                  title={card.title}
+                                  content={card.content}
+                                  date={card.date}
+                                  type={card.type}
+                                />
+                              </div>
+                            </Card>
                           </div>
                         )}
                       </Draggable>
