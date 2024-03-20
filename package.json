@@ -14,7 +14,8 @@
     "@mantine/ds": "^6.0.0",
     "@mui/icons-material": "^5.11.11",
     "@tabler/icons": "^2.7.0",
-    "@tabler/icons-react": "^2.47.0"
+    "@tabler/icons-react": "^2.47.0",
+    "jspdf": "^2.5.1"
   },
   "devDependencies": {
     "prettier": "^2.8.4"
