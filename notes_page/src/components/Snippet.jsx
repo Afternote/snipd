@@ -1,19 +1,11 @@
 import React from "react";
-import { Card, Text, Anchor, Divider } from "@mantine/core";
-import { NavLink } from "@mantine/core";
+import { Card, Text, Anchor} from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import { deleteSnipd, moveSnipdDown, moveSnipdUp } from "../utils/snipUtils";
-
 import ItemHeader from "./ItemHeader";
 import { Spoiler } from "@mantine/core";
 import "../styles/SnippetStyles.css";
-import {
-  IconHome2,
-  IconGauge,
-  IconChevronRight,
-  IconActivity,
-  IconCircleOff,
-} from "@tabler/icons-react";
+
 
 export function Snippet(props) {
   const { hovered, ref } = useHover();
@@ -37,9 +29,7 @@ export function Snippet(props) {
           onDownClick={() => moveSnipdDown(props.index).then(props.refetch)}
         />
         <div style={{ display: "flex", width: "100%" }}>
-          {/* <ItemControls
-            
-          /> */}
+          
           {props.type === "image" && (
             <Card className="text-content">
               <div className="image-div">
