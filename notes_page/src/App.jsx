@@ -1,9 +1,8 @@
-import { Stack, Divider, AppShell } from "@mantine/core";
+import { Stack, Divider, AppShell, Card } from "@mantine/core";
 import MantineSearchBar from "./components/searchBar";
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { moveSnipdTo, filterSnipds } from "./utils/snipUtils";
-import { Card } from "@mantine/core";
 import { ShowAllSnippets } from "./components/ShowAllSnippets";
 import "./assets/print.css";
 import { Snippet } from "./components/Snippet";
