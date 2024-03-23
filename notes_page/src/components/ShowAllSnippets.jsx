@@ -7,8 +7,8 @@ export const ShowAllSnippets = (props) => {
       variant="outline"
       color="error"
       onClick={() => {
-        props.setSelectedCategory("");
-        props.setSelectedType("");
+        props.setFilterState({...props.filterState, selectedCategory: ""} )
+        props.setFilterState({...props.filterState, selectedType: ""} )
       }}>
       Show all snipds
     </Button>

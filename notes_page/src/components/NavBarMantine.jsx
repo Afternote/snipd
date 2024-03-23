@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Anchor } from "@mantine/core";
-
 import {
   TextInput,
-  Code,
   UnstyledButton,
   Badge,
   Text,
@@ -13,7 +10,9 @@ import {
   rem,
   Button,
   ScrollArea,
+  Anchor,
 } from "@mantine/core";
+
 import { SnipdButton } from "./SnipdButton";
 import {
   IconSearch,
@@ -75,24 +74,34 @@ const NavBarMantine = (props) => {
   };
 
   useEffect(() => {
-    const initialCounts = filterSnipds(props.searchQuery, props.selectedCategory, "", props.snipds);
+    const initialCounts = filterSnipds(
+      props.filterState.searchQuery,
+      props.filterState.selectedCategory,
+      "",
+      props.snipds
+    );
     setCounts(initialCounts);
   }, []);
 
   useEffect(() => {
-    setCounts(filterSnipds(props.searchQuery, props.selectedCategory, "", props.snipds));
-  }, [props.searchQuery, props.selectedCategory, props.snipds]); // Updated dependencies
-
+    setCounts(
+      filterSnipds(
+        props.filterState.searchQuery,
+        props.filterState.selectedCategory,
+        "",
+        props.snipds
+      )
+    );
+  }, [props.filterState, props.snipds]);
   const fetchCounts = (searchQuery, category, type, snipds) => {
     setCounts(filterSnipds(searchQuery, category, type, snipds));
-    console.log(counts);
   };
   const mainLinks = links.map((link) => (
     <UnstyledButton
       key={link.label}
       className="mainLink"
       onClick={() => {
-        props.setSelectedType(link.type);
+        props.setFilterState({ ...props.filterState, selectedType: link.type });
       }}>
       <div className="mainLinkInner">
         <link.icon size={20} className="mainLinkIcon" stroke={1.5} />
@@ -115,17 +124,16 @@ const NavBarMantine = (props) => {
   };
 
   useEffect(() => {
-
     const updatedCollectionLinks = filterCategories(categoryQuery, props.categories).map(
       (collection, index) => (
         <Anchor
           href="#"
           underline="never"
           onClick={() => {
-            props.setSelectedCategory(collection);
-            props.setSelectedType("");
+            props.setFilterState({ ...props.filterState, selectedCategory: collection });
+            props.setFilterState({ ...props.filterState, selectedType: "" });
 
-            fetchCounts(props.searchQuery, collection, "", props.snipds);
+            fetchCounts(props.filterState.searchQuery, collection, "", props.snipds);
           }}
           key={`collection-${index}`}
           className="collectionLink">

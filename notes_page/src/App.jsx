@@ -9,17 +9,19 @@ import "./assets/print.css";
 import { Snippet } from "./components/Snippet";
 import NavBarMantine from "./components/NavBarMantine";
 
-
-
 function App() {
   const [snipds, setSnipds] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
   const [categoryList, setCategoryList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedType, setSelectedType] = useState("");
   const [isPrinting, setPrinting] = useState(false);
-  const shouldShowClearButton = selectedCategory !== "" || selectedType !== "";
+  const [filterState, setFilterState] = useState({
+    searchQuery: "",
+    selectedCategory: "",
+    selectedType: "",
+  });
 
+  const shouldShowClearButton = filterState.selectedCategory !== "" || filterState.selectedType !== "";
+
+  
   const addCategory = async (newCategory) => {
     try {
       if (!newCategory.trim() || categoryList.includes(newCategory)) {
@@ -75,61 +77,62 @@ function App() {
             addCategory={addCategory}
             categories={categoryList}
             snipds={snipds}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            setSelectedType={setSelectedType}
-            searchQuery={searchQuery}
+            filterState={filterState}
+            setFilterState={setFilterState}
           />
         )
       }>
       <div className="App" style={{ margin: "48px" }}>
         <MantineSearchBar
           setPrinting={setPrinting}
-          onSearch={(searchQuery) => {
-            setSearchQuery(searchQuery);
+          onSearch={(searchQueryInput) => {
+            setFilterState({...filterState, searchQuery: searchQueryInput})
           }}
         />
         <Stack>
           <Divider />
           {shouldShowClearButton && (
             <ShowAllSnippets
-              setSelectedCategory={setSelectedCategory}
-              setSelectedType={setSelectedType}
+              filterState = {filterState}
+              setFilterState = {setFilterState}
             />
           )}
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="cards-list">
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
-                  {filterSnipds(searchQuery, selectedCategory, selectedType, snipds).filteredSnipds.map(
-                    (card, index) => (
-                      <Draggable key={"Card_" + index} draggableId={"Card_" + index} index={index}>
-                        {(provided) => (
-                          <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-                            <Card
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                              sx={{ width: "100%", margin: 10 }}>
-                              <div style={{ display: "flex", flexDirection: "row" }}>
-                                <Snippet
-                                  ref={provided.innerRef}
-                                  key={index}
-                                  index={index}
-                                  refetch={fetchSnipdData}
-                                  source={card.source}
-                                  title={card.title}
-                                  content={card.content}
-                                  date={card.date}
-                                  type={card.type}
-                                />
-                              </div>
-                            </Card>
-                          </div>
-                        )}
-                      </Draggable>
-                    )
-                  )}
+                  {filterSnipds(
+                    filterState.searchQuery,
+                    filterState.selectedCategory,
+                    filterState.selectedType,
+                    snipds
+                  ).filteredSnipds.map((card, index) => (
+                    <Draggable key={"Card_" + index} draggableId={"Card_" + index} index={index}>
+                      {(provided) => (
+                        <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+                          <Card
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}
+                            sx={{ width: "100%", margin: 10 }}>
+                            <div style={{ display: "flex", flexDirection: "row" }}>
+                              <Snippet
+                                ref={provided.innerRef}
+                                key={index}
+                                index={index}
+                                refetch={fetchSnipdData}
+                                source={card.source}
+                                title={card.title}
+                                content={card.content}
+                                date={card.date}
+                                type={card.type}
+                              />
+                            </div>
+                          </Card>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
                   {provided.placeholder}
                 </div>
               )}
