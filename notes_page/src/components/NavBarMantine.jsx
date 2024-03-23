@@ -124,19 +124,31 @@ const NavBarMantine = (props) => {
   };
 
   useEffect(() => {
+    console.log(props.filterState);
     const updatedCollectionLinks = filterCategories(categoryQuery, props.categories).map(
       (collection, index) => (
         <Anchor
+          id={index}
           href="#"
           underline="never"
-          onClick={() => {
-            props.setFilterState({ ...props.filterState, selectedCategory: collection });
-            props.setFilterState({ ...props.filterState, selectedType: "" });
-
-            fetchCounts(props.filterState.searchQuery, collection, "", props.snipds);
-          }}
           key={`collection-${index}`}
-          className="collectionLink">
+          className="collectionLink"
+          onClick={() => {
+            props.setFilterState({
+              searchQuery: props.filterState.searchQuery,
+              selectedType: "",
+              selectedCategory: collection,
+            });
+
+            console.log(props.filterState);
+
+            fetchCounts(
+              props.filterState.searchQuery,
+              props.filterState.collection,
+              "",
+              props.snipds
+            );
+          }}>
           <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
             {collection}
           </div>
@@ -144,7 +156,6 @@ const NavBarMantine = (props) => {
       )
     );
     setCollectionLinks(updatedCollectionLinks);
-    console.log(collectionLinks);
   }, [categoryQuery, props.categories]); // Track necessary changes
 
   return (
