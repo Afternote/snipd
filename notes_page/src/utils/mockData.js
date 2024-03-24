@@ -1,4 +1,3 @@
-import { IconPhoto, IconUnlink, IconNote } from "@tabler/icons-react";
 import BlockQuoteIcon from "../assets/icons/BlockQuoteIcon";
 import PhotoIcon from "../assets/icons/PhotoIcon";
 import UnlinkIcon from "../assets/icons/UnlinkIcon";

@@ -1,16 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Menu, Button, Text, MantineProvider, ScrollArea } from "@mantine/core";
 import NewCategory from "./NewCategory.";
-import { IconCategoryPlus, IconCategory2 } from "@tabler/icons-react";
+import CategoryTwoIcon from "../assets/icons/CategoryTwoIcon";
+import CategoryPlusIcon from "../assets/icons/CategoryPlusIcon";
 
 const CategoriesMenuMantine = ({ addCategory, categoriesList, setCategory }) => {
   const [custom, setCustom] = useState(false);
-  const [categoryAdded, setCategoryAdded] = useState('');
+  const [categoryAdded, setCategoryAdded] = useState("");
 
   const viewport = useRef(null);
 
   useEffect(() => {
-    viewport.current?.scrollTo({ top: viewport.current?.scrollHeight, behavior: 'smooth' });
+    viewport.current?.scrollTo({ top: viewport.current?.scrollHeight, behavior: "smooth" });
   }, [categoryAdded]);
 
   const handleCustomClose = () => {
@@ -22,7 +23,9 @@ const CategoriesMenuMantine = ({ addCategory, categoriesList, setCategory }) => 
       <Menu.Target>
         <Button style={{ width: "60%", marginBottom: "24px", marginTop: "8px" }}>
           <MantineProvider theme={{ fontFamily: "Roboto" }}>
-            <Text fz="md" lh="sm" style={{ padding: "8px" }}>Categories</Text>
+            <Text fz="md" lh="sm" style={{ padding: "8px" }}>
+              Categories
+            </Text>
           </MantineProvider>
         </Button>
       </Menu.Target>
@@ -32,13 +35,12 @@ const CategoriesMenuMantine = ({ addCategory, categoriesList, setCategory }) => 
         <ScrollArea style={{ height: 250 }} viewportRef={viewport}>
           {categoriesList.map((category) => (
             <Menu.Item
-              rightSection={<IconCategory2 style={{ width: "1rem", height: "1rem" }} />}
+              rightSection={<CategoryTwoIcon style={{ width: "1rem", height: "1rem" }} />}
               key={category}
               onClick={(e) => {
                 e.stopPropagation();
                 setCategory(category);
-              }}
-            >
+              }}>
               {category}
             </Menu.Item>
           ))}
@@ -49,13 +51,20 @@ const CategoriesMenuMantine = ({ addCategory, categoriesList, setCategory }) => 
         {!custom ? (
           <Button
             variant="outline"
-            onClick={(e) => { e.stopPropagation(); handleCustomClose(); }}
-          >
+            onClick={(e) => {
+              e.stopPropagation();
+              handleCustomClose();
+            }}>
             Add a new Category
-            <IconCategoryPlus style={{ paddingLeft: "16px" }} size={14} />
+            <CategoryPlusIcon style={{ paddingLeft: "16px" }} size={14} />
           </Button>
         ) : (
-          <NewCategory setCustom={setCustom} addCategory={addCategory} setCategoryAdded={setCategoryAdded} style={{ margin: "8px" }} />
+          <NewCategory
+            setCustom={setCustom}
+            addCategory={addCategory}
+            setCategoryAdded={setCategoryAdded}
+            style={{ margin: "8px" }}
+          />
         )}
       </Menu.Dropdown>
     </Menu>

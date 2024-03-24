@@ -3,7 +3,7 @@ import { CardActions, TextField } from "@mui/material";
 import { Button } from "@mantine/core";
 import { saveNote } from "../utils/snippitUtils";
 import "../styles/EmptySelection.css";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowLeftIcon from "../assets/icons/ArrowLeftIcon";
 
 export function NewNote({ onClose, isNewNote }) {
   const [noteContent, setNoteContent] = useState("");
@@ -21,9 +21,9 @@ export function NewNote({ onClose, isNewNote }) {
 
   return (
     <>
-      <ArrowBackIcon
-        style={{ paddingTop: "8px", paddingBottom: "8px", height: "16px", width: "16px" }}
-        onClick={handleBackClick}
+      <ArrowLeftIcon
+        handleBackClick={handleBackClick}
+        style={{ paddingTop: "16px", paddingBottom: "8px", height: "16px", width: "16px" }}
       />
       <TextField
         size="small"
