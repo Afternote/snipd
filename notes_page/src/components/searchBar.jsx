@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { TextInput, Container, Flex, ActionIcon } from "@mantine/core";
-import { IconSearch, IconPrinter } from "@tabler/icons-react";
 import { Group, Title } from "@mantine/core";
+import SearchIcon from "../assets/icons/SearchIcon";
+import PrinterIcon from "../assets/icons/PrinterIcon";
 
 const MantineSearchBar = ({ onSearch, setPrinting }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,7 +38,7 @@ const MantineSearchBar = ({ onSearch, setPrinting }) => {
               variant="filled"
               radius="xl"
               aria-label="Settings">
-              <IconSearch style={{ color: "white", width: "70%", height: "70%" }} />
+              <SearchIcon style={{ color: "white", width: "70%", height: "70%" }} />
             </ActionIcon>
             <ActionIcon
               onClick={() => print()}
@@ -46,7 +47,7 @@ const MantineSearchBar = ({ onSearch, setPrinting }) => {
               variant="filled"
               radius="xl"
               aria-label="Settings">
-              <IconPrinter style={{ color: "white", width: "70%", height: "70%" }} />
+              <PrinterIcon style={{ color: "white", width: "70%", height: "70%" }} />
             </ActionIcon>
           </Flex>
         </Container>

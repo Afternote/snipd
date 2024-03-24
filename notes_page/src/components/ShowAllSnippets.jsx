@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Group, Stack, Divider, Title, AppShell } from "@mantine/core";
+import { Button } from "@mantine/core";
 
 export const ShowAllSnippets = (props) => {
   return (
@@ -7,8 +7,7 @@ export const ShowAllSnippets = (props) => {
       variant="outline"
       color="error"
       onClick={() => {
-        props.setFilterState({...props.filterState, selectedCategory: ""} )
-        props.setFilterState({...props.filterState, selectedType: ""} )
+        props.setFilterState({...props.filterState, selectedCategory: "", selectedType: ""} )
       }}>
       Show all snipds
     </Button>
