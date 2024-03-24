@@ -11,17 +11,17 @@ export function Snippet(props) {
   const { hovered, ref } = useHover();
 
   const handleSourceButtonClick = () => {
-    window.location.href = props.source;
+    window.location.href = props.snip.source;
   };
 
   return (
     <div className="snippet-container" ref={ref}>
       <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
         <ItemHeader
-          type={props.type}
-          title={props.title}
-          date={props.date}
-          source={props.source}
+          type={props.snip.type}
+          title={props.snip.title}
+          date={props.snip.date}
+          source={props.snip.source}
           hovered={hovered}
           onSourceClick={handleSourceButtonClick}
           onUpClick={() => moveSnipdUp(props.index).then(props.refetch)}
@@ -30,14 +30,14 @@ export function Snippet(props) {
         />
         <div style={{ display: "flex", width: "100%" }}>
           
-          {props.type === "image" && (
+          {props.snip.type === "image" && (
             <Card className="text-content">
               <div className="image-div">
-                <img className="image-container" src={props.content} />
+                <img className="image-container" src={props.snip.content} />
               </div>
             </Card>
           )}
-          {(props.type === "text" || props.type === "note") && (
+          {(props.snip.type === "text" || props.snip.type === "note") && (
             <Card className="text-content">
               <Spoiler
                 maxHeight={90}
@@ -45,16 +45,16 @@ export function Snippet(props) {
                 hideLabel="Hide"
                 transitionDuration={100}>
                 <Text className="text-container" size="sm" color="dimmed">
-                  {props.content}
+                  {props.snip.content}
                 </Text>
               </Spoiler>
             </Card>
           )}
-          {props.type === "link" && (
+          {props.snip.type === "link" && (
             <Card className="link-content">
               <div className="link-container">
-                <Anchor variant="gradient" className="link-anchor" href={props.content}>
-                  {props.content}
+                <Anchor variant="gradient" className="link-anchor" href={props.snip.content}>
+                  {props.snip.content}
                 </Anchor>
               </div>
             </Card>

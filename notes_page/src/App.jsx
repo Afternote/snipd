@@ -1,12 +1,14 @@
-import { Stack, Divider, AppShell, Card } from "@mantine/core";
-import MantineSearchBar from "./components/searchBar";
-import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { moveSnipdTo, filterSnipds } from "./utils/snipUtils";
 import { ShowAllSnippets } from "./components/ShowAllSnippets";
-import "./assets/print.css";
-import { Snippet } from "./components/Snippet";
+import { Stack, Divider, AppShell, Card } from "@mantine/core";
+import { moveSnipdTo, filterSnipds, fetchDataFromChromeStorage } from "./utils/snipUtils";
 import NavBarMantine from "./components/NavBarMantine";
+import MantineSearchBar from "./components/searchBar";
+import { Snippet } from "./components/Snippet";
+import { useEffect, useState } from "react";
+import ERROR_MESSAGES from "./utils/errorMessages";
+import CACHE_KEYS from "./utils/cacheKeys";
+import "./assets/print.css";
 
 function App() {
   const [snipds, setSnipds] = useState([]);
@@ -18,54 +20,56 @@ function App() {
     selectedType: "",
   });
 
-  const shouldShowClearButton = filterState.selectedCategory !== "" || filterState.selectedType !== "";
+  const shouldShowClearButton =
+    filterState.selectedCategory !== "" || filterState.selectedType !== "";
 
-  
   const addCategory = async (newCategory) => {
     try {
-      if (!newCategory.trim() || categoryList.includes(newCategory)) {
-        throw new Error("error");
-      } else {
-        const newCategoryList = [...categoryList, newCategory];
-        await chrome.storage.local.set({ snipd_categories: newCategoryList });
+      if (!newCategory.trim()) {
+        throw new SnipdError(ERROR_MESSAGES.CATEGORY_EMPTY);
+      } else if (categoryList.includes(newCategory)) {
+        throw new SnipdError(ERROR_MESSAGES.CATEGORY_EXISTS);
       }
 
-      populateCategory(newCategory);
+      await chrome.storage.local.set({
+        [CACHE_KEYS.SNIPD_CATEGORIES]: [...categoryList, newCategory],
+      });
+      setCategoryList((old) => [...old, newCategory]);
     } catch (error) {
-      throw new Error(ERROR_MESSAGES.ERROR_CATEGORIES);
+      throw new SnipdError(error?.message ?? ERROR_MESSAGES.ERROR_CATEGORIES);
     }
-  };
-
-  const populateCategory = (newCategory) => {
-    setCategoryList((old) => [...old, newCategory]);
   };
 
   const fetchSnipdData = async () => {
-    const store_obj = await chrome.storage.local.get(["snipd_store", "snipd_categories"]);
-    setSnipds(store_obj.snipd_store);
-    setCategoryList(store_obj.snipd_categories);
+    const { snipd_store, snipd_categories } = await fetchDataFromChromeStorage([
+      CACHE_KEYS.SNIPD_STORE,
+      CACHE_KEYS.SNIPD_CATEGORIES,
+    ]);
+    setSnipds(snipd_store);
+    setCategoryList(snipd_categories);
   };
 
   const handleStorageChanges = (changes, namespace) => {
-    if (namespace === "local" && (changes.snipd_store || changes.snipd_categories)) {
+    if (namespace !== "local") return;
+
+    const relevantChanges = changes.snipd_store || changes.snipd_categories;
+    if (relevantChanges) {
       fetchSnipdData();
     }
   };
-
-  useEffect(() => {
-    fetchSnipdData();
-
-    chrome.storage.onChanged.addListener(handleStorageChanges);
-
-    return () => {
-      chrome.storage.onChanged.removeListener(handleStorageChanges);
-    };
-  }, []);
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
     moveSnipdTo(result.source.index, result.destination.index).then(fetchSnipdData);
   };
+
+  useEffect(() => {
+    fetchSnipdData();
+    chrome.storage.onChanged.addListener(handleStorageChanges);
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChanges);
+    };
+  }, []);
 
   return (
     <AppShell
@@ -85,28 +89,20 @@ function App() {
         <MantineSearchBar
           setPrinting={setPrinting}
           onSearch={(searchQueryInput) => {
-            setFilterState({...filterState, searchQuery: searchQueryInput})
+            setFilterState({ ...filterState, searchQuery: searchQueryInput });
           }}
         />
-         
+
         <Stack>
           <Divider />
           {shouldShowClearButton && (
-            <ShowAllSnippets
-              filterState = {filterState}
-              setFilterState = {setFilterState}
-            />
+            <ShowAllSnippets filterState={filterState} setFilterState={setFilterState} />
           )}
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="cards-list">
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
-                  {filterSnipds(
-                    filterState.searchQuery,
-                    filterState.selectedCategory,
-                    filterState.selectedType,
-                    snipds
-                  ).filteredSnipds.map((card, index) => (
+                  {filterSnipds(filterState, snipds).filteredSnipds.map((snip, index) => (
                     <Draggable key={"Card_" + index} draggableId={"Card_" + index} index={index}>
                       {(provided) => (
                         <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
@@ -121,11 +117,7 @@ function App() {
                                 key={index}
                                 index={index}
                                 refetch={fetchSnipdData}
-                                source={card.source}
-                                title={card.title}
-                                content={card.content}
-                                date={card.date}
-                                type={card.type}
+                                snip={snip}
                               />
                             </div>
                           </Card>

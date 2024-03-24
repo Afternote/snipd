@@ -40,14 +40,14 @@ async function deleteSnipd(id) {
   }
 }
 
-function filterSnipds(searchQuery, category, type, snipds) {
+function filterSnipds(filterState, snipds) {
   const typeCountsTemp = {};
   const filteredSnipds = snipds.filter((a) => {
     const textToSearch = `${a.content} ${a.title}`.toLowerCase();
     const matchesCriteria =
-      (!category || a.category === category) &&
-      (!type || a.type === type) &&
-      textToSearch.includes(searchQuery.toLowerCase());
+      (!filterState.selectedCategory || a.category === filterState.selectedCategory) &&
+      (!filterState.selectedType || a.type === filterState.selectedType) &&
+      textToSearch.includes(filterState.searchQuery.toLowerCase());
 
     if (matchesCriteria) {
       typeCountsTemp[a.type] = (typeCountsTemp[a.type] || 0) + 1;
@@ -59,4 +59,39 @@ function filterSnipds(searchQuery, category, type, snipds) {
   return { filteredSnipds, typeCountsTemp };
 }
 
-export { moveSnipdUp, moveSnipdDown, deleteSnipd, moveSnipdTo, filterSnipds };
+function getSnipdCounts(filterState, snipds) {
+  const typeCountsTemp = {};
+  const filteredSnipds = snipds.filter((a) => {
+    const textToSearch = `${a.content} ${a.title}`.toLowerCase();
+    const matchesCriteria =
+      (!filterState.selectedCategory || a.category === filterState.selectedCategory) &&
+      (!filterState.selectedType || a.type === filterState.selectedType) &&
+      textToSearch.includes(filterState.searchQuery.toLowerCase());
+
+    if (matchesCriteria) {
+      typeCountsTemp[a.type] = (typeCountsTemp[a.type] || 0) + 1;
+    }
+
+    return matchesCriteria;
+  });
+
+  return typeCountsTemp;
+}
+
+const fetchDataFromChromeStorage = async (keys) => {
+    try {
+        return await chrome.storage.local.get(keys);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error; 
+    }
+};
+
+function filterCategories(categoryQuery, categories) {
+    return categories.filter((a) => {
+      return a.toLowerCase().includes(categoryQuery.toLowerCase());
+    });
+  }
+
+
+export { moveSnipdUp, moveSnipdDown, deleteSnipd, moveSnipdTo, filterSnipds, getSnipdCounts, fetchDataFromChromeStorage, filterCategories };
