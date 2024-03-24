@@ -1,10 +1,10 @@
 import { UnstyledButton, Group, Avatar, Text, rem } from '@mantine/core';
-import { IconChevronRight } from '@tabler/icons-react';
 import '../styles/SnipdButtonStyle.css';
 import snipdLogoText from "../assets/snipdLogoText.png";
 
 
 import React from 'react'
+import ChevronRightIcon from '../assets/icons/ChevronRightIcon';
 
 export const SnipdButton = () => {
   const handleChevronRightClick = () => {
@@ -18,7 +18,7 @@ export const SnipdButton = () => {
           <img style ={{width: "200px", margin: "16px 8px 16px 8px"}} src={snipdLogoText}/>
         </div>
 
-        <IconChevronRight onClick={handleChevronRightClick} style={{ width: rem(14), height: rem(14) }} stroke={1.5} />
+        <ChevronRightIcon onClick={handleChevronRightClick} style={{ width: rem(14), height: rem(14) }} stroke={1.5} />
       </Group>
     </UnstyledButton>
   )

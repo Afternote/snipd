@@ -1,13 +1,7 @@
 import React from "react";
-import { Stack, Badge, Group, Title, Button, rem, Menu, ActionIcon  } from "@mantine/core";
-import {
-  IconAdjustmentsCog,
-  IconArrowsUp,
-  IconArrowsDown,
-  IconTrash,
-} from "@tabler/icons-react";
-import "../styles/SnippetStyles.css"; 
-
+import { Stack, Badge, Group, Title, Button, rem, Menu, ActionIcon } from "@mantine/core";
+import "../styles/SnippetStyles.css";
+import AdjustmentsCogIcon from "../assets/icons/AdjustmentsCogIcon";
 
 function ItemHeader({
   title,
@@ -31,35 +25,20 @@ function ItemHeader({
             )}
           </Group>
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <Badge
-              style={{ marginRight: "16px" }}
-              color="blue"
-              >
+            <Badge style={{ marginRight: "16px" }} color="blue">
               {date}
             </Badge>
 
             <Menu position="right" styles={{ margin: "8px" }}>
               <Menu.Target>
                 <ActionIcon variant="filled" aria-label="Settings">
-                  <IconAdjustmentsCog style={{ width: "70%", height: "70%" }} stroke={1.5} />
+                  <AdjustmentsCogIcon style={{ width: "70%", height: "70%" }} stroke={1.5} />
                 </ActionIcon>
               </Menu.Target>
               <Menu.Dropdown>
-                <Menu.Item
-                  onClick={onUpClick}
-                  leftSection={<IconArrowsUp style={{ width: rem(14), height: rem(14) }} />}>
-                  Move Up
-                </Menu.Item>
-                <Menu.Item
-                  onClick={onDownClick}
-                  leftSection={<IconArrowsDown style={{ width: rem(14), height: rem(14) }} />}>
-                  Move Down
-                </Menu.Item>
-                <Menu.Item
-                  onClick={onDeleteClick}
-                  leftSection={<IconTrash style={{ width: rem(14), height: rem(14) }} />}>
-                  Delete
-                </Menu.Item>
+                <Menu.Item onClick={onUpClick}>Move Up</Menu.Item>
+                <Menu.Item onClick={onDownClick}> Move Down</Menu.Item>
+                <Menu.Item onClick={onDeleteClick}> Delete</Menu.Item>
               </Menu.Dropdown>
             </Menu>
           </div>

@@ -12,8 +12,6 @@
     "@emotion/react": "^11.10.6",
     "@mantine/core": "^6.0.0",
     "@mantine/hooks": "^6.0.0",
-    "@react-pdf/renderer": "^3.4.0",
-    "@tabler/icons-react": "^2.47.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0"

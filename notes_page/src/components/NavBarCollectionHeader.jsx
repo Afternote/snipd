@@ -6,8 +6,8 @@ import {
   Tooltip,
   rem,
 } from "@mantine/core";
-import { IconSearch, IconPlus } from "@tabler/icons-react";
 import "../styles/NavbarSearchStyle.css";
+import PlusIcon from "../assets/icons/PlusIcon";
 const NavBarCollectionHeader = (props) => {
   return (
     <Group className="collectionsHeader" justify="space-between">
@@ -16,7 +16,7 @@ const NavBarCollectionHeader = (props) => {
       </Text>
       <Tooltip label="Create category" withArrow position="right">
         <ActionIcon variant="default" size={18} onClick={props.handleCreateCategoryClick}>
-          <IconPlus style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
+          <PlusIcon style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
         </ActionIcon>
       </Tooltip>
     </Group>
