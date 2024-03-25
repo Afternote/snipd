@@ -4,7 +4,6 @@ import { TextInput } from "@mantine/core";
 
 const NavBarTypeSection = (props) => {
   return (
-    //handleSearchInputChange, mainLinks
     <div>
       <TextInput
         style={{ margin: "8px 16px 8px 16px" }}
