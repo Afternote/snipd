@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  CardContent, Divider, Chip, Stack } from "@mui/material";
+import { CardContent, Divider, Chip, Stack } from "@mui/material";
 import CategoriesMenuMantine from "./CategoriesMenuMantine";
 import {
   openAllSnipdPage,
@@ -11,6 +11,8 @@ import { Button, Title, Text, MantineProvider } from "@mantine/core";
 import { ERROR_MESSAGES } from "../utils/errorMessages";
 import { STORAGE_KEYS } from "../utils/localStorageKeys";
 import "../styles/Notes.css";
+import TextCard from "./TextCard";
+import CustomNoteCard from "./CustomNoteCard";
 
 const Note = ({ snipd }) => {
   const [snipdCategories, setSnipdCategories] = useState([]);
@@ -75,108 +77,110 @@ const Note = ({ snipd }) => {
   }, []);
 
   return (
-    <div className="notes-root-div" style={{ height: "100vh" }}>
-      <CardContent style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <>
+      <CardContent
+        style={{
+          padding: "0px",
+          height: "36px",
+          backgroundColor: "black",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
         <MantineProvider
           theme={{
             fontFamily: "Roboto",
           }}>
-          <Title order={2}>Selected Highlight</Title>
+          <Title sx={{ padding: "0px" }} style={{ color: "white" }} order={5}>
+            Selected Highlight
+          </Title>
         </MantineProvider>
       </CardContent>
-      <div className="margin-16" style={{ overflow: "auto" }}>
-        <Divider variant="middle">
-          <Chip label={truncatedTitle} />
-        </Divider>
-        <Stack direction="row" justifyContent="space-evenly" alignItems="center">
-          <MantineProvider
-            theme={{
-              fontFamily: "Roboto",
-            }}>
-            <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-              on {formattedDate} {formattedTime}
-            </Text>
-          </MantineProvider>
-        </Stack>
-        <hr />
-        <div>
-          {snipd?.type === "image" && (
-            <img className="selected-image" src={snipd?.content} alt="selected image" />
-          )}
-        </div>
-        {snipd?.type === "text" && (
-          <MantineProvider
-            theme={{
-              fontFamily: "Roboto",
-            }}>
-            <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-              {snipd?.content}
-              <br />
-            </Text>
-          </MantineProvider>
-        )}
-        {snipd?.type === "link" && (
-          <MantineProvider
-            theme={{
-              fontFamily: "Roboto",
-            }}>
-            <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-              {truncatedContent}
-              <br />
-            </Text>
-          </MantineProvider>
-        )}
-        <hr />
-      </div>
-      <div>
-        <center>
-          <MantineProvider
-            theme={{
-              fontFamily: "Roboto",
-            }}>
-            <Text fz="lg" lh="sm" style={{ padding: "8px" }}>
-              Current category: {category}
-            </Text>
-          </MantineProvider>
-          
-          <CategoriesMenuMantine
-            categoriesList={snipdCategories}
-            addCategory={addCategory}
-            setCategory={setCategory}></CategoriesMenuMantine>
-        </center>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <Button
-            style={{ width: "90%", margin: "4px" }}
-            onClick={handleSaveSnippet}
-            color="cyan"
-            radius="xl">
-            <MantineProvider
-              theme={{
-                fontFamily: "Roboto",
-              }}>
-              <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-                Save Snippet
-              </Text>
-            </MantineProvider>
-          </Button>
+      {snipd?.type === "text" && <TextCard snipd={snipd} />}
+      <CustomNoteCard/>
 
-          <Button
-            style={{ width: "90%", margin: "4px" }}
-            onClick={openAllSnipdPage}
-            color="cyan"
-            radius="xl">
+      <div className="notes-root-div" style={{ height: "100vh" }}>
+        <div className="margin-16" style={{ overflow: "auto" }}>
+            <Chip label={truncatedTitle} />
+          <Stack direction="row" justifyContent="space-evenly" alignItems="center">
             <MantineProvider
               theme={{
                 fontFamily: "Roboto",
               }}>
               <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-                Central Page
+                on {formattedDate} {formattedTime}
               </Text>
             </MantineProvider>
-          </Button>
+          </Stack>
+          <hr />
+          <div>
+            {snipd?.type === "image" && (
+              <img className="selected-image" src={snipd?.content} alt="selected image" />
+            )}
+          </div>
+          {snipd?.type === "link" && (
+            <MantineProvider
+              theme={{
+                fontFamily: "Roboto",
+              }}>
+              <Text fz="md" lh="sm" style={{ padding: "8px" }}>
+                {truncatedContent}
+                <br />
+              </Text>
+            </MantineProvider>
+          )}
+          <hr />
+        </div>
+        <div>
+          <center>
+            <MantineProvider
+              theme={{
+                fontFamily: "Roboto",
+              }}>
+              <Text fz="lg" lh="sm" style={{ padding: "8px" }}>
+                Current category: {category}
+              </Text>
+            </MantineProvider>
+
+            <CategoriesMenuMantine
+              categoriesList={snipdCategories}
+              addCategory={addCategory}
+              setCategory={setCategory}></CategoriesMenuMantine>
+          </center>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Button
+              style={{ width: "90%", margin: "4px" }}
+              onClick={handleSaveSnippet}
+              color="cyan"
+              radius="xl">
+              <MantineProvider
+                theme={{
+                  fontFamily: "Roboto",
+                }}>
+                <Text fz="md" lh="sm" style={{ padding: "8px" }}>
+                  Save Snippet
+                </Text>
+              </MantineProvider>
+            </Button>
+
+            <Button
+              style={{ width: "90%", margin: "4px" }}
+              onClick={openAllSnipdPage}
+              color="cyan"
+              radius="xl">
+              <MantineProvider
+                theme={{
+                  fontFamily: "Roboto",
+                }}>
+                <Text fz="md" lh="sm" style={{ padding: "8px" }}>
+                  Central Page
+                </Text>
+              </MantineProvider>
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
