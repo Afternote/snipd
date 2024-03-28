@@ -12,7 +12,8 @@ import { ERROR_MESSAGES } from "../utils/errorMessages";
 import { STORAGE_KEYS } from "../utils/localStorageKeys";
 import "../styles/Notes.css";
 import TextCard from "./TextCard";
-import CustomNoteCard from "./CustomNoteCard";
+import AddCustomNoteCard from "./AddCustomNoteCard";
+import CustomNoteDisplayCard from "./CustomNoteDisplayCard";
 
 const Note = ({ snipd }) => {
   const [snipdCategories, setSnipdCategories] = useState([]);
@@ -23,6 +24,8 @@ const Note = ({ snipd }) => {
 
   const formattedDate = snipd.date.toString().split(",")[0];
   const formattedTime = snipd.date.toString().split(",")[1];
+
+  const [customNotes, setCustomNotes] = useState([]);
 
   const fetchSnipdCategories = async () => {
     try {
@@ -97,11 +100,14 @@ const Note = ({ snipd }) => {
         </MantineProvider>
       </CardContent>
       {snipd?.type === "text" && <TextCard snipd={snipd} />}
-      <CustomNoteCard/>
+      {customNotes.map((note) => (
+        <CustomNoteDisplayCard note={note} />
+      ))}
+      <AddCustomNoteCard customNotes={customNotes} setCustomNotes={setCustomNotes} />
 
       <div className="notes-root-div" style={{ height: "100vh" }}>
         <div className="margin-16" style={{ overflow: "auto" }}>
-            <Chip label={truncatedTitle} />
+          <Chip label={truncatedTitle} />
           <Stack direction="row" justifyContent="space-evenly" alignItems="center">
             <MantineProvider
               theme={{

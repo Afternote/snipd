@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Title, Text, Button } from "@mantine/core";
 import CustomNoteInputCard from "./CustomNoteInputCard";
 
-const CustomNoteCard = () => {
+const AddCustomNoteCard = (props) => {
   const [customNoteFlag, setCustomNoteFlag] = useState(false);
   const styles = {
     card: {
@@ -25,7 +25,11 @@ const CustomNoteCard = () => {
   return (
     <div>
       {customNoteFlag ? (
-        <CustomNoteInputCard />
+        <CustomNoteInputCard
+          setCustomNoteFlag={setCustomNoteFlag}
+          customNotes={props.customNotes}
+          setCustomNotes={props.setCustomNotes}
+        />
       ) : (
         <Card p="md" radius="md" style={styles.card}>
           <Button variant="transparent" onClick={handleAddNoteOnClick}>
@@ -37,4 +41,4 @@ const CustomNoteCard = () => {
   );
 };
 
-export default CustomNoteCard;
+export default AddCustomNoteCard;
