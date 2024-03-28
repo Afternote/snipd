@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CardContent, Divider, Chip, Stack } from "@mui/material";
+import { Badge } from "@mantine/core";
+
 import CategoriesMenuMantine from "./CategoriesMenuMantine";
 import {
   openAllSnipdPage,
@@ -83,8 +85,7 @@ const Note = ({ snipd }) => {
     <>
       <CardContent
         style={{
-          padding: "0px",
-          height: "36px",
+          padding: "4px",
           backgroundColor: "black",
           display: "flex",
           alignItems: "center",
@@ -94,11 +95,27 @@ const Note = ({ snipd }) => {
           theme={{
             fontFamily: "Roboto",
           }}>
-          <Title sx={{ padding: "0px" }} style={{ color: "white" }} order={5}>
+          <Title align="center" sx={{ padding: "0px" }} style={{ color: "white" }} order={5}>
             Selected Highlight
+            <br />
           </Title>
         </MantineProvider>
       </CardContent>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
+        <Badge style={{margin:'8px 8px 4px 8px'}} variant="light" color="rgba(73, 152, 201, 1)">
+          {truncatedTitle}
+        </Badge>
+        <Badge style={{margin:'4px 8px 0px 8px'}} variant="light" color="gray">
+          {formattedDate} {formattedTime}
+        </Badge>
+      </div>
+
       {snipd?.type === "text" && <TextCard snipd={snipd} />}
       {customNotes.map((note) => (
         <CustomNoteDisplayCard note={note} />
@@ -107,16 +124,11 @@ const Note = ({ snipd }) => {
 
       <div className="notes-root-div" style={{ height: "100vh" }}>
         <div className="margin-16" style={{ overflow: "auto" }}>
-          <Chip label={truncatedTitle} />
           <Stack direction="row" justifyContent="space-evenly" alignItems="center">
             <MantineProvider
               theme={{
                 fontFamily: "Roboto",
-              }}>
-              <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-                on {formattedDate} {formattedTime}
-              </Text>
-            </MantineProvider>
+              }}></MantineProvider>
           </Stack>
           <hr />
           <div>
