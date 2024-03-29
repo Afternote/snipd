@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { CardContent, Divider, Chip, Stack } from "@mui/material";
+import { CardContent } from "@mui/material";
 import { Badge } from "@mantine/core";
-
+import { ScrollArea } from "@mantine/core";
 import CategoriesMenuMantine from "./CategoriesMenuMantine";
 import {
   openAllSnipdPage,
@@ -16,7 +16,8 @@ import "../styles/Notes.css";
 import TextCard from "./TextCard";
 import AddCustomNoteCard from "./AddCustomNoteCard";
 import CustomNoteDisplayCard from "./CustomNoteDisplayCard";
-import EditIcon from "../assets/icons/EditIcon";
+import SaveIcon from "../assets/icons/SaveIcon";
+import HomeIcon from "../assets/icons/HomeIcon";
 
 const Note = ({ snipd }) => {
   const [snipdCategories, setSnipdCategories] = useState([]);
@@ -83,80 +84,100 @@ const Note = ({ snipd }) => {
   }, []);
 
   return (
-    <>
-      <CardContent
-        style={{
-          padding: "4px",
-          backgroundColor: "black",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}>
-        <MantineProvider
-          theme={{
-            fontFamily: "Roboto",
+    <div
+      style={{
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100vh",
+      }}>
+      <div>
+        <CardContent
+          style={{
+            padding: "4px",
+            backgroundColor: "black",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}>
-          <Title align="center" sx={{ padding: "0px" }} style={{ color: "white" }} order={5}>
-            Selected Highlight
-            <br />
-          </Title>
-        </MantineProvider>
-      </CardContent>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}>
-        <Badge style={{ margin: "8px 8px 4px 8px" }} variant="light" color="rgba(73, 152, 201, 1)">
-          {truncatedTitle}
-        </Badge>
-        <Badge style={{ margin: "4px 8px 0px 8px" }} variant="light" color="gray">
-          {formattedDate} {formattedTime}
-        </Badge>
-      </div>
-
-      {snipd?.type === "text" && <TextCard snipd={snipd} />}
-      {snipd?.type === "image" && (
-        <img className="selected-image" src={snipd?.content} alt="selected image" />
-      )}
-      {snipd?.type === "link" && (
-        <MantineProvider
-          theme={{
-            fontFamily: "Roboto",
-          }}>
-          <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-            {truncatedContent}
-            <br />
-          </Text>
-        </MantineProvider>
-      )}
-      {customNotes.map((note) => (
-        <CustomNoteDisplayCard note={note} />
-      ))}
-
-      <AddCustomNoteCard customNotes={customNotes} setCustomNotes={setCustomNotes} />
-
-      <div
-        style={{ margin: "8px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <CategoriesMenuMantine
-          category={category}
-          categoriesList={snipdCategories}
-          addCategory={addCategory}
-          setCategory={setCategory}></CategoriesMenuMantine>
-      </div>
-
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <Button
-          style={{ width: "90%", margin: "4px" }}
-          onClick={handleSaveSnippet}
-          color="cyan"
-          radius="xl">
           <MantineProvider
             theme={{
               fontFamily: "Roboto",
             }}>
+            <Title align="center" sx={{ padding: "0px" }} style={{ color: "white" }} order={5}>
+              Selected Highlight
+              <br />
+            </Title>
+          </MantineProvider>
+        </CardContent>
+      </div>
+      <div style={{  overflow: "auto",  }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}>
+          <Badge
+            style={{ margin: "8px 8px 4px 8px" }}
+            variant="light"
+            color="rgba(73, 152, 201, 1)">
+            {truncatedTitle}
+          </Badge>
+          <Badge style={{ margin: "4px 8px 0px 8px" }} variant="light" color="gray">
+            {formattedDate} {formattedTime}
+          </Badge>
+        </div>
+
+        {snipd?.type === "text" && <TextCard snipd={snipd} />}
+        {snipd?.type === "image" && (
+          <img className="selected-image" src={snipd?.content} alt="selected image" />
+        )}
+        {snipd?.type === "link" && (
+          <MantineProvider
+            theme={{
+              fontFamily: "Roboto",
+            }}>
+            <Text fz="md" lh="sm" style={{ padding: "8px" }}>
+              {truncatedContent}
+              <br />
+            </Text>
+          </MantineProvider>
+        )}
+        {customNotes.map((note) => (
+          <CustomNoteDisplayCard note={note} />
+        ))}
+
+        <AddCustomNoteCard customNotes={customNotes} setCustomNotes={setCustomNotes} />
+
+        <div
+          style={{
+            margin: "8px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+          <CategoriesMenuMantine
+            category={category}
+            categoriesList={snipdCategories}
+            addCategory={addCategory}
+            setCategory={setCategory}></CategoriesMenuMantine>
+        </div>
+      </div>{" "}
+      <div style={{ margin: "8px", display: "flex", flexDirection: "row", alignItems: "center" }}>
+        <Button
+          variant="filled"
+          style={{ margin: "4px" }}
+          onClick={handleSaveSnippet}
+          color="teal"
+          radius="lg">
+          <MantineProvider
+            theme={{
+              fontFamily: "Roboto",
+            }}>
+            <SaveIcon />
             <Text fz="md" lh="sm" style={{ padding: "8px" }}>
               Save Snippet
             </Text>
@@ -164,23 +185,23 @@ const Note = ({ snipd }) => {
         </Button>
 
         <Button
-          style={{ width: "90%", margin: "4px" }}
+          variant="filled"
+          style={{ margin: "4px" }}
           onClick={openAllSnipdPage}
-          color="cyan"
-          radius="xl">
+          color="blue"
+          radius="lg">
           <MantineProvider
             theme={{
               fontFamily: "Roboto",
             }}>
+            <HomeIcon />
             <Text fz="md" lh="sm" style={{ padding: "8px" }}>
               Central Page
             </Text>
           </MantineProvider>
         </Button>
       </div>
-
-      
-    </>
+    </div>
   );
 };
 
