@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CardContent } from "@mui/material";
 import { Badge } from "@mantine/core";
-import { ScrollArea } from "@mantine/core";
 import CategoriesMenuMantine from "./CategoriesMenuMantine";
 import {
   openAllSnipdPage,
@@ -18,6 +17,8 @@ import AddCustomNoteCard from "./AddCustomNoteCard";
 import CustomNoteDisplayCard from "./CustomNoteDisplayCard";
 import SaveIcon from "../assets/icons/SaveIcon";
 import HomeIcon from "../assets/icons/HomeIcon";
+import ImageCard from "./ImageCard";
+import LinkCard from "./LinkCard";
 
 const Note = ({ snipd }) => {
   const [snipdCategories, setSnipdCategories] = useState([]);
@@ -112,7 +113,7 @@ const Note = ({ snipd }) => {
           </MantineProvider>
         </CardContent>
       </div>
-      <div style={{  overflow: "auto",  }}>
+      <div style={{ overflow: "auto" }}>
         <div
           style={{
             display: "flex",
@@ -132,20 +133,9 @@ const Note = ({ snipd }) => {
         </div>
 
         {snipd?.type === "text" && <TextCard snipd={snipd} />}
-        {snipd?.type === "image" && (
-          <img className="selected-image" src={snipd?.content} alt="selected image" />
-        )}
-        {snipd?.type === "link" && (
-          <MantineProvider
-            theme={{
-              fontFamily: "Roboto",
-            }}>
-            <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-              {truncatedContent}
-              <br />
-            </Text>
-          </MantineProvider>
-        )}
+        {snipd?.type === "image" && <ImageCard content={snipd?.content} />}
+        {snipd?.type === "link" && <LinkCard truncatedContent={truncatedContent} />}
+
         {customNotes.map((note) => (
           <CustomNoteDisplayCard note={note} />
         ))}
