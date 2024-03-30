@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {  CardContent, Divider, Chip, Stack } from "@mui/material";
+import { CardContent } from "@mui/material";
+import { Badge, Button, Title, Text, MantineProvider } from "@mantine/core";
 import CategoriesMenuMantine from "./CategoriesMenuMantine";
 import {
   openAllSnipdPage,
@@ -7,20 +8,27 @@ import {
   truncateString,
   validateCategory,
 } from "../utils/snippitUtils";
-import { Button, Title, Text, MantineProvider } from "@mantine/core";
 import { ERROR_MESSAGES } from "../utils/errorMessages";
 import { STORAGE_KEYS } from "../utils/localStorageKeys";
 import "../styles/Notes.css";
+import AddCustomNoteCard from "./AddCustomNoteCard";
+import CustomNoteDisplayCard from "./CustomNoteDisplayCard";
+import SaveIcon from "../assets/icons/SaveIcon";
+import HomeIcon from "../assets/icons/HomeIcon";
+import BadgeContainer from "./Popup/BadgeContainer";
+import ContentCard from "./Popup/Content/ContentCard";
+import CustomButton from "./CustomButton";
 
 const Note = ({ snipd }) => {
   const [snipdCategories, setSnipdCategories] = useState([]);
   const [category, setCategory] = useState("Default");
 
   const truncatedTitle = truncateString(snipd?.title, 30);
-  const truncatedContent = truncateString(snipd?.content, 40);
 
   const formattedDate = snipd.date.toString().split(",")[0];
   const formattedTime = snipd.date.toString().split(",")[1];
+
+  const [customNotes, setCustomNotes] = useState([]);
 
   const fetchSnipdCategories = async () => {
     try {
@@ -34,10 +42,8 @@ const Note = ({ snipd }) => {
   const addCategory = async (newCategory) => {
     try {
       validateCategory(newCategory, snipdCategories);
-
       const newCategoryList = [...snipdCategories, newCategory];
       await chrome.storage.local.set({ snipd_categories: newCategoryList });
-
       populateCategory(newCategory);
     } catch (error) {
       throw new Error(ERROR_MESSAGES.ERROR_CATEGORIES);
@@ -49,9 +55,10 @@ const Note = ({ snipd }) => {
   };
 
   const handleSaveSnippet = () => {
-    console.log(snipd);
     snipd.category = category;
+    snipd.customNotes = customNotes;
     saveSnipd(snipd).then(() => {
+      
       if (snipd) {
         chrome.windows.getCurrent(function (window) {
           chrome.windows.remove(window.id);
@@ -75,106 +82,50 @@ const Note = ({ snipd }) => {
   }, []);
 
   return (
-    <div className="notes-root-div" style={{ height: "100vh" }}>
-      <CardContent style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <MantineProvider
-          theme={{
-            fontFamily: "Roboto",
-          }}>
-          <Title order={2}>Selected Highlight</Title>
-        </MantineProvider>
-      </CardContent>
-      <div className="margin-16" style={{ overflow: "auto" }}>
-        <Divider variant="middle">
-          <Chip label={truncatedTitle} />
-        </Divider>
-        <Stack direction="row" justifyContent="space-evenly" alignItems="center">
-          <MantineProvider
-            theme={{
-              fontFamily: "Roboto",
-            }}>
-            <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-              on {formattedDate} {formattedTime}
-            </Text>
-          </MantineProvider>
-        </Stack>
-        <hr />
-        <div>
-          {snipd?.type === "image" && (
-            <img className="selected-image" src={snipd?.content} alt="selected image" />
-          )}
-        </div>
-        {snipd?.type === "text" && (
-          <MantineProvider
-            theme={{
-              fontFamily: "Roboto",
-            }}>
-            <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-              {snipd?.content}
-              <br />
-            </Text>
-          </MantineProvider>
-        )}
-        {snipd?.type === "link" && (
-          <MantineProvider
-            theme={{
-              fontFamily: "Roboto",
-            }}>
-            <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-              {truncatedContent}
-              <br />
-            </Text>
-          </MantineProvider>
-        )}
-        <hr />
+    <div className="container">
+      <div className="card-content">
+          <Title className="title" align="center" sx={{ padding: "0px" }} order={5}>
+            Selected Highlight
+            <br />
+          </Title>
       </div>
-      <div>
-        <center>
-          <MantineProvider
-            theme={{
-              fontFamily: "Roboto",
-            }}>
-            <Text fz="lg" lh="sm" style={{ padding: "8px" }}>
-              Current category: {category}
-            </Text>
-          </MantineProvider>
-          
+      <div style={{ overflow: "auto" }}>
+        <BadgeContainer
+          truncatedTitle={truncatedTitle}
+          formattedDate={formattedDate}
+          formattedTime={formattedTime}
+        />
+
+        <ContentCard snipd={snipd} />
+
+        {customNotes.map((note) => (
+          <CustomNoteDisplayCard note={note} />
+        ))}
+
+        <AddCustomNoteCard customNotes={customNotes} setCustomNotes={setCustomNotes} />
+
+        <div className="categories-menu">
           <CategoriesMenuMantine
+            category={category}
             categoriesList={snipdCategories}
             addCategory={addCategory}
             setCategory={setCategory}></CategoriesMenuMantine>
-        </center>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <Button
-            style={{ width: "90%", margin: "4px" }}
-            onClick={handleSaveSnippet}
-            color="cyan"
-            radius="xl">
-            <MantineProvider
-              theme={{
-                fontFamily: "Roboto",
-              }}>
-              <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-                Save Snippet
-              </Text>
-            </MantineProvider>
-          </Button>
-
-          <Button
-            style={{ width: "90%", margin: "4px" }}
-            onClick={openAllSnipdPage}
-            color="cyan"
-            radius="xl">
-            <MantineProvider
-              theme={{
-                fontFamily: "Roboto",
-              }}>
-              <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-                Central Page
-              </Text>
-            </MantineProvider>
-          </Button>
         </div>
+      </div>{" "}
+      <div className="buttons-container">
+        <CustomButton
+          onClick={handleSaveSnippet}
+          color="teal"
+          content="Save Snippet"
+          icon={SaveIcon}
+        />
+
+        <CustomButton
+          onClick={openAllSnipdPage}
+          color="blue"
+          content="Central Page"
+          icon={HomeIcon}
+        />
       </div>
     </div>
   );

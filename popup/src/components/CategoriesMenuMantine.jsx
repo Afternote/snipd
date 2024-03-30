@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Menu, Button, Text, MantineProvider, ScrollArea } from "@mantine/core";
+import { Menu, Button, Badge, Text, MantineProvider, ScrollArea } from "@mantine/core";
 import NewCategory from "./NewCategory.";
 import CategoryTwoIcon from "../assets/icons/CategoryTwoIcon";
 import CategoryPlusIcon from "../assets/icons/CategoryPlusIcon";
-
-const CategoriesMenuMantine = ({ addCategory, categoriesList, setCategory }) => {
+import EditIcon from "../assets/icons/EditIcon";
+const CategoriesMenuMantine = ({ category, addCategory, categoriesList, setCategory }) => {
   const [custom, setCustom] = useState(false);
   const [categoryAdded, setCategoryAdded] = useState("");
 
@@ -21,13 +21,18 @@ const CategoriesMenuMantine = ({ addCategory, categoriesList, setCategory }) => 
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
-        <Button style={{ width: "60%", marginBottom: "24px", marginTop: "8px" }}>
-          <MantineProvider theme={{ fontFamily: "Roboto" }}>
-            <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-              Categories
-            </Text>
-          </MantineProvider>
-        </Button>
+        <Badge
+          size="lg"
+          radius="sm"
+          style={{ margin: "8px 8px 4px 8px" }}
+          variant="light"
+          color="rgba(73, 152, 201, 1)">
+          Current category:
+          <Button style={{ color: "rgba(196, 77, 77, 1)" }} variant="transparent" size="sm">
+            {category}
+            <EditIcon size={14} />
+          </Button>
+        </Badge>
       </Menu.Target>
 
       <Menu.Dropdown onKeyDown={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
