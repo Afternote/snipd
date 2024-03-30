@@ -1,11 +1,12 @@
 import React from "react";
-import { Card, Text, Anchor} from "@mantine/core";
+import { Card, Text, Anchor } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import { deleteSnipd, moveSnipdDown, moveSnipdUp } from "../utils/snipUtils";
 import ItemHeader from "./ItemHeader";
 import { Spoiler } from "@mantine/core";
 import "../styles/SnippetStyles.css";
-
+import { Accordion } from "@mantine/core";
+import SaveIcon from "../assets/icons/SaveIcon";
 
 export function Snippet(props) {
   const { hovered, ref } = useHover();
@@ -29,7 +30,6 @@ export function Snippet(props) {
           onDownClick={() => moveSnipdDown(props.index).then(props.refetch)}
         />
         <div style={{ display: "flex", width: "100%" }}>
-          
           {props.snip.type === "image" && (
             <Card className="text-content">
               <div className="image-div">
@@ -60,6 +60,14 @@ export function Snippet(props) {
             </Card>
           )}
         </div>
+        <Accordion variant="contained" defaultValue="Apples">
+          {props.snip.customNotes?.map(( note, index) => (
+            <Accordion.Item key={note} value={note}>
+              <Accordion.Control > Note {index + 1}</Accordion.Control>
+              <Accordion.Panel>{note}</Accordion.Panel>
+            </Accordion.Item>
+          ))}
+        </Accordion>
       </div>
     </div>
   );
