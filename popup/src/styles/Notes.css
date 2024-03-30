@@ -1,4 +1,3 @@
-/* Common styles */
 
 .margin-16 {
   margin: 16px;
@@ -8,7 +7,6 @@
   font-size: 12px;
 }
 
-/* Component-specific styles */
 .notes-root-div {
   display: flex;
   flex-direction: column;
@@ -43,15 +41,64 @@
   font-size: 12px;
 }
 
-.categories-menu {
-  display: flex;
-  align-items: center;
-}
-
 .categories-card {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+
+.card-content {
+  padding: 4px !important;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  color: white;
+  padding: "0px";
+}
+
+.container {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.badges-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge {
+  margin: 4px 8px;
+}
+
+.buttons-container {
+  margin: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  margin: 4px;
+}
+
+.button-text {
+  padding: 8px;
+}
+
+.categories-menu {
+  margin: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 

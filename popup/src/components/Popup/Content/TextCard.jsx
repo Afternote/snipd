@@ -3,6 +3,7 @@ import { MantineProvider } from "@mantine/styles";
 import { Text } from "@mantine/core";
 import { Card } from "@mantine/core";
 import { Spoiler } from "@mantine/core";
+import "../../../styles/Notes.css";
 
 const TextCard = (props) => {
   return (

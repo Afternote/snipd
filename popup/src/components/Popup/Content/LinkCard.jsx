@@ -1,8 +1,11 @@
 import React from "react";
 import { MantineProvider, Text, Card } from "@mantine/core";
-import "../styles/Notes.css";
+import { truncateString } from "../../../utils/snippitUtils";
+import "../../../styles/Notes.css";
 
 const LinkCard = (props) => {
+  const truncatedContent = truncateString(props.truncatedContent, 40);
+
   return (
     <Card
       shadow="sm"
@@ -15,7 +18,7 @@ const LinkCard = (props) => {
           fontFamily: "Roboto",
         }}>
         <Text fz="md" lh="sm" style={{ padding: "8px" }}>
-          <a href={props.truncatedContent}>{props.truncatedContent}</a>
+          <a href={truncatedContent}>{truncatedContent}</a>
           <br />
         </Text>
       </MantineProvider>
