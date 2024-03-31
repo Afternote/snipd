@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CardContent } from "@mui/material";
-import { Badge, Button, Title, Text, MantineProvider } from "@mantine/core";
+import { Title } from "@mantine/core";
 import CategoriesMenuMantine from "./CategoriesMenuMantine";
 import {
   openAllSnipdPage,
@@ -18,17 +17,19 @@ import HomeIcon from "../assets/icons/HomeIcon";
 import BadgeContainer from "./Popup/BadgeContainer";
 import ContentCard from "./Popup/Content/ContentCard";
 import CustomButton from "./CustomButton";
+import { Notification } from "@mantine/core";
 
 const Note = ({ snipd }) => {
   const [snipdCategories, setSnipdCategories] = useState([]);
   const [category, setCategory] = useState("Default");
+  const [customNotes, setCustomNotes] = useState([]);
+  const [errorFlag, setErrorFlag] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const truncatedTitle = truncateString(snipd?.title, 30);
 
   const formattedDate = snipd.date.toString().split(",")[0];
   const formattedTime = snipd.date.toString().split(",")[1];
-
-  const [customNotes, setCustomNotes] = useState([]);
 
   const fetchSnipdCategories = async () => {
     try {
@@ -58,7 +59,6 @@ const Note = ({ snipd }) => {
     snipd.category = category;
     snipd.customNotes = customNotes;
     saveSnipd(snipd).then(() => {
-      
       if (snipd) {
         chrome.windows.getCurrent(function (window) {
           chrome.windows.remove(window.id);
@@ -67,6 +67,11 @@ const Note = ({ snipd }) => {
       }
     });
   };
+
+  const handleErrorClick = () => {
+    setErrorFlag(false)
+    setErrorMessage("")
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,11 +89,18 @@ const Note = ({ snipd }) => {
   return (
     <div className="container">
       <div className="card-content">
-          <Title className="title" align="center" sx={{ padding: "0px" }} order={5}>
-            Selected Highlight
-            <br />
-          </Title>
+        <Title className="title" align="center" sx={{ padding: "0px" }} order={5}>
+          Selected Highlight
+          <br />
+        </Title>
       </div>
+      {errorFlag && (
+        <div style={{marginLeft:'16px'}}>
+          <Notification onClick={handleErrorClick} withBorder color="red" title="Error">
+            {errorMessage}
+          </Notification>
+        </div>
+      )}
       <div style={{ overflow: "auto" }}>
         <BadgeContainer
           truncatedTitle={truncatedTitle}
@@ -102,7 +114,12 @@ const Note = ({ snipd }) => {
           <CustomNoteDisplayCard note={note} />
         ))}
 
-        <AddCustomNoteCard customNotes={customNotes} setCustomNotes={setCustomNotes} />
+        <AddCustomNoteCard
+          setErrorFlag={setErrorFlag}
+          setErrorMessage={setErrorMessage}
+          customNotes={customNotes}
+          setCustomNotes={setCustomNotes}
+        />
 
         <div className="categories-menu">
           <CategoriesMenuMantine

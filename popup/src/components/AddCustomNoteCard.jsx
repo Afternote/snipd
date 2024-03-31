@@ -26,6 +26,8 @@ const AddCustomNoteCard = (props) => {
     <div>
       {customNoteFlag ? (
         <CustomNoteInputCard
+          setErrorFlag={props.setErrorFlag}
+          setErrorMessage={props.setErrorMessage}
           setCustomNoteFlag={setCustomNoteFlag}
           customNotes={props.customNotes}
           setCustomNotes={props.setCustomNotes}
