@@ -17,6 +17,7 @@ const NavBarMantine = (props) => {
   const [addCategoryFlag, setAddCategoryFlag] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
 
+  
   const handleNewCategoryChange = (event) => {
     setNewCategoryName(event.target.value);
   };
@@ -40,6 +41,7 @@ const NavBarMantine = (props) => {
   };
 
   const mainLinks = links.map((link) => (
+
     <SnippetTypeButton
       link={link}
       setFilterState={props.setFilterState}
@@ -58,7 +60,7 @@ const NavBarMantine = (props) => {
 
   useEffect(() => {
     const updatedCollectionLinks = filterCategories(categoryQuery, props.categories).map(
-      (collection, index) => (
+      (collection, index) => ( 
         <SnippetCategoryButton
           index={index}
           setFilterState={props.setFilterState}
@@ -70,7 +72,7 @@ const NavBarMantine = (props) => {
       )
     );
     setCollectionLinks(updatedCollectionLinks);
-  }, [categoryQuery, props.categories]);
+  }, [categoryQuery, props.filterState, props.categories]);
 
   return (
     <nav className="navbar">

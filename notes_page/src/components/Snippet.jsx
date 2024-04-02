@@ -6,7 +6,6 @@ import ItemHeader from "./ItemHeader";
 import { Spoiler } from "@mantine/core";
 import "../styles/SnippetStyles.css";
 import { Accordion } from "@mantine/core";
-import SaveIcon from "../assets/icons/SaveIcon";
 
 export function Snippet(props) {
   const { hovered, ref } = useHover();
@@ -53,17 +52,23 @@ export function Snippet(props) {
           {props.snip.type === "link" && (
             <Card className="link-content">
               <div className="link-container">
-                <Anchor variant="gradient" className="link-anchor" href={props.snip.content}>
-                  {props.snip.content}
+                <Anchor
+                  fw={500}
+                  variant="gradient"
+                  className="link-anchor"
+                  href={props.snip.content}>
+                  {props.snip.content.length > 80
+                    ? props.snip.content.substring(0, 80) + "..."
+                    : props.snip.content}
                 </Anchor>
               </div>
             </Card>
           )}
         </div>
         <Accordion variant="contained" defaultValue="Apples">
-          {props.snip.customNotes?.map(( note, index) => (
+          {props.snip.customNotes?.map((note, index) => (
             <Accordion.Item key={note} value={note}>
-              <Accordion.Control > Note {index + 1}</Accordion.Control>
+              <Accordion.Control> Note {index + 1}</Accordion.Control>
               <Accordion.Panel>{note}</Accordion.Panel>
             </Accordion.Item>
           ))}

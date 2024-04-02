@@ -65,7 +65,9 @@
 }
 
 .collections {
-  padding :8px;
+  padding : 8px;
+  display: flex;
+  flex-direction: column;
 }
 
 .collection-section{
@@ -86,17 +88,20 @@
 }
 
 .collectionLink {
-  display: block; /* Renders the element as a block-level element, taking up full width */
-  padding: 8px 8px; /* Applies padding, likely using a Mantine theme variable */
-  text-decoration: none; /* Removes default underline from links */
-  border-radius: 8px; /* Rounds the corners, likely using a Mantine theme variable */
-  font-size: 20; /* Sets a small font size, likely using a Mantine theme variable  */
-  color: white; /* Dynamic color based on light/dark mode */
-  line-height: 1; /* Sets line height to 1, meaning lines of text will be close together */
-  font-weight: 500; /* Sets a medium font weight */
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 20;
+  color: white; 
+  line-height: 1; 
+  font-weight: 500;
 }
 
 .collectionLink:hover {
-  background-color: grey; /* Change background color on hover */
-   /* Maintain text color for light/dark mode consistency */
+  background-color: grey;
+}
+
+.selected {
+  /* Define your selected button styles here */
+  background-color: blue;
+  color: white;
 }

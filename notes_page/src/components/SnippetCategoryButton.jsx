@@ -1,27 +1,31 @@
-import React from 'react'
-import { Anchor } from '@mantine/core';
+import React, { useEffect } from "react";
+import { Button } from "@mantine/core";
 import "../styles/NavbarSearchStyle.css";
-const SnippetCategoryButton = (props) => {
-  return (
-    <Anchor
-          id={props.index}
-          href="#"
-          underline="never"
-          key={`collection-${props.index}`}
-          className="collectionLink"
-          onClick={() => {
-            props.setFilterState({
-              ...props.filterState,
-              selectedCategory: props.collection,
-              selectedType: "",
-            });
-            props.fetchCounts(props.filterState, props.snipds);
-          }}>
-          <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
-            {props.collection}
-          </div>
-        </Anchor>
-  )
-}
+import { filterSnipds } from "../utils/snipUtils";
 
-export default SnippetCategoryButton
+const SnippetCategoryButton = (props) => {
+  const handleButtonCLick = () => {
+    props.setFilterState({
+      ...props.filterState,
+      selectedCategory: props.collection,
+      selectedType: "",
+    });
+    props.fetchCounts(props.filterState, props.snipds);
+  };
+
+  return (
+    <div style={{ justifyContent: "left", width: "100%" }}>
+      <Button
+      style={{width:'100%', display:'flex', justifyContent:'left'}}
+        variant={props.filterState.selectedCategory == props.collection ? "filled" : "subtle"}
+        id={props.index}
+        onClick={() => {
+          handleButtonCLick();
+        }}>
+        {props.collection}
+      </Button>
+    </div>
+  );
+};
+
+export default SnippetCategoryButton;
