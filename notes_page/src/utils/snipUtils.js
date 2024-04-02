@@ -79,19 +79,27 @@ function getSnipdCounts(filterState, snipds) {
 }
 
 const fetchDataFromChromeStorage = async (keys) => {
-    try {
-        return await chrome.storage.local.get(keys);
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        throw error; 
-    }
+  try {
+    return await chrome.storage.local.get(keys);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
 };
 
 function filterCategories(categoryQuery, categories) {
-    return categories.filter((a) => {
-      return a.toLowerCase().includes(categoryQuery.toLowerCase());
-    });
-  }
+  return categories.filter((a) => {
+    return a.toLowerCase().includes(categoryQuery.toLowerCase());
+  });
+}
 
-
-export { moveSnipdUp, moveSnipdDown, deleteSnipd, moveSnipdTo, filterSnipds, getSnipdCounts, fetchDataFromChromeStorage, filterCategories };
+export {
+  moveSnipdUp,
+  moveSnipdDown,
+  deleteSnipd,
+  moveSnipdTo,
+  filterSnipds,
+  getSnipdCounts,
+  fetchDataFromChromeStorage,
+  filterCategories,
+};

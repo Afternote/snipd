@@ -33,7 +33,7 @@ const NavBarMantine = (props) => {
 
   useEffect(() => {
     setCounts(getSnipdCounts(props.filterState, props.snipds));
-  }, [props.filterState, props.snipds]);
+  }, [ props.filterState.selectedCategory, props.snipds]);
 
   const fetchCounts = (filterState, snipds) => {
     setCounts(getSnipdCounts(filterState, snipds));
@@ -70,7 +70,7 @@ const NavBarMantine = (props) => {
       )
     );
     setCollectionLinks(updatedCollectionLinks);
-  }, [categoryQuery, props.categories]);
+  }, [categoryQuery, props.filterState, props.categories]);
 
   return (
     <nav className="navbar">

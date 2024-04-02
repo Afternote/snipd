@@ -36,18 +36,19 @@
 }
 
 .link-content{
+  width: 90%;
   background-color: transparent;
 }
 
 .link-container {
-  width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
 .link-anchor {
-  width: 100%;
+  overflow: hidden;       
+  white-space: nowrap;     
+  text-overflow: ellipsis;
 }
 
 .link-stack {
