@@ -75,7 +75,7 @@ const NavBarMantine = (props) => {
   return (
     <nav className="navbar">
       <div className="section">
-        <SnipdButton style={{ center: true, maxWidth: 320 }} />
+        <SnipdButton style={{ center: true, maxWidth: 280 }} />
       </div>
 
       <NavBarTypeSection handleSearchInputChange={handleSearchInputChange} mainLinks={mainLinks} />

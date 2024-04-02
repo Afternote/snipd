@@ -15,10 +15,9 @@ export const SnipdButton = () => {
       <Group>
 
         <div style={{ flex: 1 }}>
-          <img style ={{width: "200px", margin: "16px 8px 16px 8px"}} src={snipdLogoText}/>
+          <img  onClick={handleChevronRightClick} style ={{width: "200px", margin: "16px 8px 16px 8px"}} src={snipdLogoText}/>
         </div>
 
-        <ChevronRightIcon onClick={handleChevronRightClick} style={{ width: rem(14), height: rem(14) }} stroke={1.5} />
       </Group>
     </UnstyledButton>
   )

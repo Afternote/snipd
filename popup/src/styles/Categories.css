@@ -7,6 +7,7 @@
     align-content: center;
     display: flex;
     flex-direction: column;
+    margin: 16px;
 }
 
 .add-category-button{

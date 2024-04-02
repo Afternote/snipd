@@ -1,9 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Menu, Button, Badge, Text, MantineProvider, ScrollArea } from "@mantine/core";
+import { Menu, Button, Badge, Divider, ScrollArea } from "@mantine/core";
 import NewCategory from "./NewCategory.";
 import CategoryTwoIcon from "../assets/icons/CategoryTwoIcon";
 import CategoryPlusIcon from "../assets/icons/CategoryPlusIcon";
 import EditIcon from "../assets/icons/EditIcon";
+import "../styles/Notes.css";
+import "../styles/Categories.css";
+
 const CategoriesMenuMantine = ({ category, addCategory, categoriesList, setCategory }) => {
   const [custom, setCustom] = useState(false);
   const [categoryAdded, setCategoryAdded] = useState("");
@@ -19,7 +22,7 @@ const CategoriesMenuMantine = ({ category, addCategory, categoriesList, setCateg
   };
 
   return (
-    <Menu shadow="md" width={200}>
+    <Menu shadow="md" width={250}>
       <Menu.Target>
         <Badge
           size="lg"
@@ -27,7 +30,7 @@ const CategoriesMenuMantine = ({ category, addCategory, categoriesList, setCateg
           style={{ margin: "8px 8px 4px 8px" }}
           variant="light"
           color="rgba(73, 152, 201, 1)">
-          Current category:
+          Category:
           <Button style={{ color: "rgba(196, 77, 77, 1)" }} variant="transparent" size="sm">
             {category}
             <EditIcon size={14} />
@@ -36,7 +39,7 @@ const CategoriesMenuMantine = ({ category, addCategory, categoriesList, setCateg
       </Menu.Target>
 
       <Menu.Dropdown onKeyDown={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
-        <Menu.Label>Categories</Menu.Label>
+        <Menu.Label>Select a Category</Menu.Label>
         <ScrollArea style={{ height: 250 }} viewportRef={viewport}>
           {categoriesList.map((category) => (
             <Menu.Item
@@ -50,27 +53,15 @@ const CategoriesMenuMantine = ({ category, addCategory, categoriesList, setCateg
             </Menu.Item>
           ))}
         </ScrollArea>
-        <Menu.Divider />
 
-        <Menu.Label>Custom</Menu.Label>
-        {!custom ? (
-          <Button
-            variant="outline"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleCustomClose();
-            }}>
-            Add a new Category
-            <CategoryPlusIcon style={{ paddingLeft: "16px" }} size={14} />
-          </Button>
-        ) : (
-          <NewCategory
-            setCustom={setCustom}
-            addCategory={addCategory}
-            setCategoryAdded={setCategoryAdded}
-            style={{ margin: "8px" }}
-          />
-        )}
+        <Divider my="xs" label="Or, Add a new Category" labelPosition="center" />
+
+        <NewCategory
+          setCustom={setCustom}
+          addCategory={addCategory}
+          setCategoryAdded={setCategoryAdded}
+          style={{ margin: "8px" }}
+        />
       </Menu.Dropdown>
     </Menu>
   );
