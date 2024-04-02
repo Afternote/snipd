@@ -1,15 +1,20 @@
 import React from "react";
 import "../styles/NavbarSearchStyle.css";
-import {
-  UnstyledButton,
-  Badge,
-  
-} from "@mantine/core";
+import { Button, Badge } from "@mantine/core";
 const SnippetTypeButton = (props) => {
   return (
-    <div>
-      <UnstyledButton
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}>
+      <Button
+        variant={props.filterState.selectedType == props.link.type ? "filled" : "subtle"}
         key={props.link.label}
+        radius="xs"
+        style={{ margin: "4px", width: "100%", display: "flex", justifyContent: "left" }}
         className="mainLink"
         onClick={() => {
           props.setFilterState({ ...props.filterState, selectedType: props.link.type });
@@ -18,12 +23,17 @@ const SnippetTypeButton = (props) => {
           <props.link.icon size={20} className="mainLinkIcon" stroke={1.5} />
           <span>{props.link.label}</span>
         </div>
-        {props.counts[props.link.type] && (
-          <Badge size="sm" variant="filled" className="mainLinkBadge">
-            {props.counts[props.link.type]}
-          </Badge>
-        )}
-      </UnstyledButton>
+      </Button>
+
+      {props.counts[props.link.type] >= 0 ? (
+        <Badge size="sm" variant="filled" className="mainLinkBadge">
+          {props.counts[props.link.type]}
+        </Badge>
+      ) : (
+        <Badge size="sm" variant="filled" className="mainLinkBadge">
+          0
+        </Badge>
+      )}
     </div>
   );
 };

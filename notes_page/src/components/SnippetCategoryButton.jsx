@@ -16,7 +16,7 @@ const SnippetCategoryButton = (props) => {
   return (
     <div style={{ justifyContent: "left", width: "100%" }}>
       <Button
-      style={{width:'100%', display:'flex', justifyContent:'left'}}
+        style={{ margin: "4px", width: "100%", display: "flex", justifyContent: "left" }}
         variant={props.filterState.selectedCategory == props.collection ? "filled" : "subtle"}
         id={props.index}
         onClick={() => {
