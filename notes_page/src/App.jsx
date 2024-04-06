@@ -3,12 +3,13 @@ import { ShowAllSnippets } from "./components/ShowAllSnippets";
 import { Stack, Divider, AppShell, Card } from "@mantine/core";
 import { moveSnipdTo, filterSnipds, fetchDataFromChromeStorage } from "./utils/snipUtils";
 import NavBarMantine from "./components/NavBarMantine";
-import MantineSearchBar from "./components/searchBar";
+import MantineSearchBar from "./components/MantineSearchBar";
 import { Snippet } from "./components/Snippet";
 import { useEffect, useState } from "react";
 import ERROR_MESSAGES from "./utils/errorMessages";
 import CACHE_KEYS from "./utils/cacheKeys";
 import "./assets/print.css";
+import SortMenuComponent from "./components/SortMenuComponent";
 
 function App() {
   const [snipds, setSnipds] = useState([]);
@@ -85,7 +86,7 @@ function App() {
           />
         )
       }>
-      <div className="App" style={{ margin: "48px" }}>
+      <div className="App" style={{ margin: "8px 48px 48px 48px" }}>
         <MantineSearchBar
           setPrinting={setPrinting}
           onSearch={(searchQueryInput) => {
@@ -95,6 +96,7 @@ function App() {
 
         <Stack>
           <Divider />
+          <SortMenuComponent/>
           {shouldShowClearButton && (
             <ShowAllSnippets filterState={filterState} setFilterState={setFilterState} />
           )}
