@@ -1,7 +1,10 @@
 import React from "react";
-import { Stack, Badge, Group, Title, Button, rem, Menu, ActionIcon } from "@mantine/core";
+import { Stack, Badge, Group, Title, Button, ActionIcon } from "@mantine/core";
 import "../styles/SnippetStyles.css";
-import AdjustmentsCogIcon from "../assets/icons/AdjustmentsCogIcon";
+import ArrowUpIcon from "../assets/icons/ArrowUpIcon";
+import ArrowDownIcon from "../assets/icons/ArrowDownIcon";
+import TrashIcon from "../assets/icons/TrashIcon";
+import EditIcon from "../assets/icons/EditIcon";
 
 function ItemHeader({
   title,
@@ -11,12 +14,20 @@ function ItemHeader({
   onUpClick,
   onDeleteClick,
   onDownClick,
+  editFlag,
+  setEditFlag,
 }) {
+
+  const handleEditClick = () => {
+    setEditFlag(!editFlag)
+  }
+
   return (
     <Stack className="item-title-date-source">
       {
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
           <Group position="apart">
+          
             <Title order={3}>{title}</Title>
             {hovered && (
               <Button compact variant="light" onClick={onSourceClick}>
@@ -29,18 +40,25 @@ function ItemHeader({
               {date}
             </Badge>
 
-            <Menu position="right" styles={{ margin: "8px" }}>
-              <Menu.Target>
-                <ActionIcon variant="filled" aria-label="Settings">
-                  <AdjustmentsCogIcon style={{ width: "70%", height: "70%" }} stroke={1.5} />
-                </ActionIcon>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Item onClick={onUpClick}>Move Up</Menu.Item>
-                <Menu.Item onClick={onDownClick}> Move Down</Menu.Item>
-                <Menu.Item onClick={onDeleteClick}> Delete</Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
+            <div style={{display:'flex', flexDirection:'row'}}>
+              <ActionIcon onClick={onUpClick} style={{margin:'1px'}} variant="filled" aria-label="Up">
+                <ArrowUpIcon />
+              </ActionIcon>
+
+              <ActionIcon onClick={onDownClick} style={{margin:'1px'}} variant="filled" aria-label="Down">
+                <ArrowDownIcon />
+              </ActionIcon>
+
+              <ActionIcon onClick={onDeleteClick} style={{margin:'1px'}} variant="filled" aria-label="Delete">
+                <TrashIcon />
+              </ActionIcon>
+
+              <ActionIcon onClick={handleEditClick}  style={{margin:'1px'}} variant="filled" aria-label="Edit">
+                <EditIcon />
+              </ActionIcon>
+            </div>
+
+            
           </div>
         </div>
       }
