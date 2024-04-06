@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Note from "./components/Note";
 import { EmptySelection } from "./components/EmptySelection";
 
-let disableListener = false; // Outside useEffect
+let disableListener = false; 
 
 async function getCurrentSelectionData() {
   const [currentTab] = await chrome.tabs.query({
