@@ -83,7 +83,7 @@ export function Snippet(props) {
             ))}
           </Accordion>
         </div>
-      ): <EditSnippetCard snip={props.snip}/>}
+      ): <EditSnippetCard index={props.index} setEditFlag={setEditFlag} snip={props.snip} categoryList={props.categoryList}/>}
       
     </div>
   );

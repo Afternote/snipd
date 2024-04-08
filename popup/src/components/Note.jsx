@@ -18,6 +18,7 @@ import BadgeContainer from "./Popup/BadgeContainer";
 import ContentCard from "./Popup/Content/ContentCard";
 import CustomButton from "./CustomButton";
 import { Notification } from "@mantine/core";
+import { v4 as uuidv4 } from "uuid";
 
 const Note = ({ snipd }) => {
   const [snipdCategories, setSnipdCategories] = useState([]);
@@ -58,20 +59,21 @@ const Note = ({ snipd }) => {
   const handleSaveSnippet = () => {
     snipd.category = category;
     snipd.customNotes = customNotes;
-    saveSnipd(snipd).then(() => {
-      if (snipd) {
-        chrome.windows.getCurrent(function (window) {
-          chrome.windows.remove(window.id);
-        });
-        window.close();
-      }
-    });
+    (snipd.id = uuidv4()),
+      saveSnipd(snipd).then(() => {
+        if (snipd) {
+          chrome.windows.getCurrent(function (window) {
+            chrome.windows.remove(window.id);
+          });
+          window.close();
+        }
+      });
   };
 
   const handleErrorClick = () => {
-    setErrorFlag(false)
-    setErrorMessage("")
-  }
+    setErrorFlag(false);
+    setErrorMessage("");
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -95,7 +97,7 @@ const Note = ({ snipd }) => {
         </Title>
       </div>
       {errorFlag && (
-        <div style={{marginLeft:'16px'}}>
+        <div style={{ marginLeft: "16px" }}>
           <Notification onClick={handleErrorClick} withBorder color="red" title="Error">
             {errorMessage}
           </Notification>

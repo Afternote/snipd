@@ -104,6 +104,7 @@ function App() {
             <Droppable droppableId="cards-list">
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {console.log(snipds)}
                   {filterSnipds(filterState, snipds).filteredSnipds.map((snip, index) => (
                     <Draggable key={"Card_" + index} draggableId={"Card_" + index} index={index}>
                       {(provided) => (
@@ -114,12 +115,14 @@ function App() {
                             ref={provided.innerRef}
                             sx={{ width: "100%", margin: 10 }}>
                             <div style={{ display: "flex", flexDirection: "row" }}>
+                                
                               <Snippet
                                 ref={provided.innerRef}
                                 key={index}
                                 index={index}
                                 refetch={fetchSnipdData}
                                 snip={snip}
+                                categoryList={categoryList}
                               />
                             </div>
                           </Card>
