@@ -1,5 +1,5 @@
 import React from "react";
-import { Stack, Badge, Group, Title, Button, ActionIcon } from "@mantine/core";
+import { Stack, Badge, Group, Title, Button, ActionIcon, Text } from "@mantine/core";
 import "../styles/SnippetStyles.css";
 import ArrowUpIcon from "../assets/icons/ArrowUpIcon";
 import ArrowDownIcon from "../assets/icons/ArrowDownIcon";
@@ -23,17 +23,15 @@ function ItemHeader({
   };
 
   return (
-    <Stack className="item-title-date-source">
+    <Stack>
       {
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-          <Group position="apart">
+          <div style={{ display: "flex", flexDirection: "row" }}>
             <Title order={3}>{title}</Title>
-            {hovered && (
-              <Button compact variant="light" onClick={onSourceClick}>
-                Source
-              </Button>
-            )}
-          </Group>
+            <Button  style={{marginLeft:'8px'}} variant="subtle" size="xs" radius="xl" onClick={onSourceClick}>
+              Source
+            </Button>
+          </div>
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <Badge style={{ marginRight: "16px" }} color="blue">
               {date}
