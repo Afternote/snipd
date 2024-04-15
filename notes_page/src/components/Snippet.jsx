@@ -36,6 +36,7 @@ export function Snippet(props) {
             onDownClick={() => moveSnipdDown(props.index).then(props.refetch)}
             editFlag={editFlag}
             setEditFlag={setEditFlag}
+            snipType={props.snip.type}
           />
           <div style={{ display: "flex", width: "100%" }}>
             {props.snip.type === "image" && (

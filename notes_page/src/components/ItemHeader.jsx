@@ -16,18 +16,17 @@ function ItemHeader({
   onDownClick,
   editFlag,
   setEditFlag,
+  snipType,
 }) {
-
   const handleEditClick = () => {
-    setEditFlag(!editFlag)
-  }
+    setEditFlag(!editFlag);
+  };
 
   return (
     <Stack className="item-title-date-source">
       {
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
           <Group position="apart">
-          
             <Title order={3}>{title}</Title>
             {hovered && (
               <Button compact variant="light" onClick={onSourceClick}>
@@ -40,25 +39,39 @@ function ItemHeader({
               {date}
             </Badge>
 
-            <div style={{display:'flex', flexDirection:'row'}}>
-              <ActionIcon onClick={onUpClick} style={{margin:'1px'}} variant="filled" aria-label="Up">
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <ActionIcon
+                onClick={onUpClick}
+                style={{ margin: "1px" }}
+                variant="filled"
+                aria-label="Up">
                 <ArrowUpIcon />
               </ActionIcon>
 
-              <ActionIcon onClick={onDownClick} style={{margin:'1px'}} variant="filled" aria-label="Down">
+              <ActionIcon
+                onClick={onDownClick}
+                style={{ margin: "1px" }}
+                variant="filled"
+                aria-label="Down">
                 <ArrowDownIcon />
               </ActionIcon>
 
-              <ActionIcon onClick={onDeleteClick} style={{margin:'1px'}} variant="filled" aria-label="Delete">
+              <ActionIcon
+                onClick={onDeleteClick}
+                style={{ margin: "1px" }}
+                variant="filled"
+                aria-label="Delete">
                 <TrashIcon />
               </ActionIcon>
-
-              <ActionIcon onClick={handleEditClick}  style={{margin:'1px'}} variant="filled" aria-label="Edit">
+              <ActionIcon
+                disabled={!(snipType == "text" || snipType == "note")}
+                onClick={handleEditClick}
+                style={{ margin: "1px" }}
+                variant="filled"
+                aria-label="Edit">
                 <EditIcon />
               </ActionIcon>
             </div>
-
-            
           </div>
         </div>
       }
