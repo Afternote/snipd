@@ -17,6 +17,7 @@ function ItemHeader({
   editFlag,
   setEditFlag,
   snipType,
+  category
 }) {
   const handleEditClick = () => {
     setEditFlag(!editFlag);
@@ -27,11 +28,22 @@ function ItemHeader({
       {
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <Title order={3}>{title}</Title>
-            <Button  style={{marginLeft:'8px'}} variant="subtle" size="xs" radius="xl" onClick={onSourceClick}>
+            <div>
+              <Title order={3}>{title}</Title>
+              <Text size="xs" c="grey">Category: {category}</Text>
+
+              
+            </div>
+            <Button
+              style={{ marginLeft: "8px" }}
+              variant="subtle"
+              size="xs"
+              radius="xl"
+              onClick={onSourceClick}>
               Source
             </Button>
           </div>
+
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <Badge style={{ marginRight: "16px" }} color="blue">
               {date}

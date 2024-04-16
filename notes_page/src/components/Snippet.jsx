@@ -37,6 +37,7 @@ export function Snippet(props) {
             editFlag={editFlag}
             setEditFlag={setEditFlag}
             snipType={props.snip.type}
+            category={props.snip.category}
           />
           <div style={{ display: "flex", width: "100%" }}>
             {props.snip.type === "image" && (
