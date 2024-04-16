@@ -96,7 +96,7 @@ function App() {
 
         <Stack>
           <Divider />
-          <SortMenuComponent/>
+          {/* <SortMenuComponent/> */}
           {shouldShowClearButton && (
             <ShowAllSnippets filterState={filterState} setFilterState={setFilterState} />
           )}
