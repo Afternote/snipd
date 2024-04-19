@@ -1,8 +1,8 @@
 import React from "react";
-import "../styles/NavbarSearchStyle.css";
+import "../../styles/NavbarSearchStyle.css";
 import { TextInput } from "@mantine/core";
 
-const NavBarTypeSection = (props) => {
+const TypeSection = (props) => {
   return (
     <div>
       <TextInput
@@ -20,4 +20,4 @@ const NavBarTypeSection = (props) => {
   );
 };
 
-export default NavBarTypeSection;
+export default TypeSection;

@@ -1,7 +1,8 @@
 import React from "react";
-import "../styles/NavbarSearchStyle.css";
+import "../../styles/NavbarSearchStyle.css";
 import { Button, Badge } from "@mantine/core";
-const SnippetTypeButton = (props) => {
+
+const TypeButton = (props) => {
   return (
     <div
       style={{
@@ -38,4 +39,4 @@ const SnippetTypeButton = (props) => {
   );
 };
 
-export default SnippetTypeButton;
+export default TypeButton;

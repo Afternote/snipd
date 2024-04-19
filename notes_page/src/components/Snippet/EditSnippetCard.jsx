@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
-import { Input, Badge, Button } from "@mantine/core";
+import React from "react";
+import { Input, Button } from "@mantine/core";
 import { useState } from "react";
 import { Textarea } from "@mantine/core";
 import { NativeSelect } from "@mantine/core";
 import { ActionIcon } from "@mantine/core";
-import XIcon from "../assets/icons/XIcon";
+import XIcon from "../../assets/icons/XIcon";
+
+import "../../styles/EditSnippetStyles.css";
 
 const EditSnippetCard = (props) => {
   const [title, setTitle] = useState(props.snip.title);
@@ -16,28 +18,21 @@ const EditSnippetCard = (props) => {
   };
 
   const handleSaveSnippet = () => {
-    chrome.storage.local.get(["snipd_store"]).then((old_snipd_store) => {
-        const snipd_store = [...old_snipd_store.snipd_store];
-
-        snipd_store.forEach((snip) => {
-            if (snip.id === props.snip.id) {
-                snip.title = title;
-                snip.content = content;
-                snip.category = currentCategory;
-            }
-        });
-
-        chrome.storage.local.set({ snipd_store: snipd_store }); 
-        props.setEditFlag(false);
-
-    });
-};
+    chrome.storage.local.get(["snipd_store"]).then((result) => {
+      const snipd_store = result.snipd_store || []; 
+      const updatedSnipdStore = snipd_store.map((snip) => {
+         return snip.id === props.snip.id ? { ...snip, title, content, category: currentCategory } : snip;
+      });
+      chrome.storage.local.set({ snipd_store: updatedSnipdStore });
+      props.setEditFlag(false);
+   });
+   
+  };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <div style={{ display: "flex", justifyContent: "right" }}>
+    <div className="edit-snippet-card">
+      <div className="close-icon-container">
         <ActionIcon
-          style={{ marginBottom: "8px" }}
           variant="filled"
           size="xs"
           radius="xl"
@@ -46,17 +41,17 @@ const EditSnippetCard = (props) => {
           <XIcon style={{ width: "70%", height: "70%" }} stroke={1.5} />
         </ActionIcon>
       </div>
-      <div style={{ display: "flex", flexDirection: "row" }}>
+      <div className="title-category-row">
         <Input
-          style={{ flexGrow: "3", margin: "0px 8px 0px 0px" }}
+          style={{ flex: "3", marginRight:'8px' }}
           placeholder="Input component"
           value={title}
           onChange={(event) => setTitle(event.currentTarget.value)}
         />
         <NativeSelect
+          style={{ flex: "1" }}
           value={currentCategory}
           onChange={(event) => setCurrentCategory(event.currentTarget.value)}
-          style={{ flexGrow: "1", margin: "0px 0px 8px 8px" }}
           data={props.categoryList}
         />
       </div>
@@ -69,7 +64,7 @@ const EditSnippetCard = (props) => {
         placeholder="Input placeholder"
         value={content}
       />
-      <div style={{ margin: "8px 0px 0px 0px", display: "flex", justifyContent: "right" }}>
+      <div className="save-button-container">
         <Button onClick={handleSaveSnippet} variant="light" radius="xl">
           Save
         </Button>

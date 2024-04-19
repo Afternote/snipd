@@ -1,9 +1,8 @@
 import React from "react";
 import { TextInput, Group, Button } from "@mantine/core";
-import "../styles/NavbarSearchStyle.css";
+import "../../styles/NavbarSearchStyle.css";
 
-const NavBarAddCategory = (props) => {
-  //handleNewCategoryChange, handleAddCategory
+const AddCategoryCard = (props) => {
   return (
     <Group justify="space-around">
       <TextInput
@@ -22,4 +21,4 @@ const NavBarAddCategory = (props) => {
   );
 };
 
-export default NavBarAddCategory;
+export default AddCategoryCard;

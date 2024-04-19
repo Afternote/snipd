@@ -1,0 +1,27 @@
+.edit-snippet-card {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .close-icon-container {
+    display: flex;
+    justify-content: right;
+    margin-bottom: 8px;
+  }
+  
+  .title-category-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .title-category-row > * {
+    margin: 0px 0px 8px 0px;
+  }
+  
+  .save-button-container {
+    margin: 8px 0px 0px 0px;
+    display: flex;
+    justify-content: right;
+  }
+  

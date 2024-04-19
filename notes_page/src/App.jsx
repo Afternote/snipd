@@ -2,14 +2,13 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { ShowAllSnippets } from "./components/ShowAllSnippets";
 import { Stack, Divider, AppShell, Card } from "@mantine/core";
 import { moveSnipdTo, filterSnipds, fetchDataFromChromeStorage } from "./utils/snipUtils";
-import NavBarMantine from "./components/NavBarMantine";
+import NavBarMantine from "./components/Navbar/NavBar";
 import MantineSearchBar from "./components/MantineSearchBar";
-import { Snippet } from "./components/Snippet";
+import { Snippet } from "./components/Snippet/Snippet";
 import { useEffect, useState } from "react";
 import ERROR_MESSAGES from "./utils/errorMessages";
 import CACHE_KEYS from "./utils/cacheKeys";
 import "./assets/print.css";
-import SortMenuComponent from "./components/SortMenuComponent";
 
 function App() {
   const [snipds, setSnipds] = useState([]);
@@ -96,7 +95,7 @@ function App() {
 
         <Stack>
           <Divider />
-          <SortMenuComponent/>
+          {/* <SortMenuComponent/> */}
           {shouldShowClearButton && (
             <ShowAllSnippets filterState={filterState} setFilterState={setFilterState} />
           )}
