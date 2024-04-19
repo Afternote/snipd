@@ -5,11 +5,11 @@ import ArrowUpIcon from "../../assets/icons/ArrowUpIcon";
 import ArrowDownIcon from "../../assets/icons/ArrowDownIcon";
 import TrashIcon from "../../assets/icons/TrashIcon";
 import EditIcon from "../../assets/icons/EditIcon";
+import { useEffect, useState } from "react";
 
 function ItemHeader({
   title,
   date,
-  hovered,
   onSourceClick,
   onUpClick,
   onDeleteClick,
@@ -17,34 +17,46 @@ function ItemHeader({
   editFlag,
   setEditFlag,
   snipType,
-  category
+  category,
 }) {
   const handleEditClick = () => {
     setEditFlag(!editFlag);
   };
 
+  function useTruncateText(text, maxLength) {
+    const [truncatedText, setTruncatedText] = useState(text);
+
+    useEffect(() => {
+      if (text.length > maxLength) {
+        setTruncatedText(text.substring(0, maxLength) + "...");
+      }
+    }, [text, maxLength]);
+
+    return truncatedText;
+  }
+
   return (
     <Stack>
       {
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <div>
-              <Title order={3}>{title}</Title>
-              <Text size="xs" c="grey">Category: {category}</Text>
-
-              
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <Title order={3}>{useTruncateText(title, 40)}</Title>
+              <Button
+                style={{ marginLeft: "8px" }}
+                variant="subtle"
+                size="xs"
+                radius="xl"
+                onClick={onSourceClick}>
+                Source
+              </Button>
             </div>
-            <Button
-              style={{ marginLeft: "8px" }}
-              variant="subtle"
-              size="xs"
-              radius="xl"
-              onClick={onSourceClick}>
-              Source
-            </Button>
+            <Text size="xs" c="grey">
+              Category: {category}
+            </Text>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <div style={{ display: "flex" }}>
             <Badge style={{ marginRight: "16px" }} color="blue">
               {date}
             </Badge>

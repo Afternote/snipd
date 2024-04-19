@@ -7,7 +7,7 @@ const SnippetCategoryButton = (props) => {
   const handleButtonCLick = () => {
     props.setFilterState({
       ...props.filterState,
-      selectedCategory: props.collection,
+      selectedCategory: props.category,
       selectedType: "",
     });
     props.fetchCounts(props.filterState, props.snipds);

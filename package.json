@@ -14,6 +14,7 @@
     "@mantine/ds": "^6.0.0",
     "jspdf": "^2.5.1",
     "postcss-preset-mantine": "^1.13.0",
+    "react-text-truncate": "^0.19.0",
     "uuid": "^9.0.1",
     "uuidv4": "^6.2.13"
   },

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getSnipdCounts, filterCategories } from "../../utils/snipUtils";
 import { SnipdLogo } from "./SnipdLogo";
 import links from "../../utils/mockData";
-import SnippetTypeButton from "./TypeButton";
+import TypeButton from "./TypeButton";
 import SnippetCategoryButton from "./SnippetCategoryButton";
 import TypeSection from "./TypeSection";
 import CategoriesSection from "./CategoriesSection";
@@ -38,7 +38,7 @@ const NavBarMantine = (props) => {
   };
 
   const mainLinks = links.map((link) => (
-    <SnippetTypeButton
+    <TypeButton
       link={link}
       setFilterState={props.setFilterState}
       filterState={props.filterState}
