@@ -6,9 +6,10 @@ import {
   Tooltip,
   rem,
 } from "@mantine/core";
-import "../styles/NavbarSearchStyle.css";
-import PlusIcon from "../assets/icons/PlusIcon";
-const NavBarCollectionHeader = (props) => {
+import "../../styles/NavbarSearchStyle.css";
+import PlusIcon from "../../assets/icons/PlusIcon";
+
+const CategoriesHeader = (props) => {
   return (
     <Group className="collectionsHeader" justify="space-between">
       <Text size="xs" fw={500} c="dimmed">
@@ -23,4 +24,4 @@ const NavBarCollectionHeader = (props) => {
   );
 };
 
-export default NavBarCollectionHeader;
+export default CategoriesHeader;

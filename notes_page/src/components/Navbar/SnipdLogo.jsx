@@ -1,12 +1,9 @@
-import { UnstyledButton, Group, Avatar, Text, rem } from '@mantine/core';
-import '../styles/SnipdButtonStyle.css';
-import snipdLogoText from "../assets/snipdLogoText.png";
-
-
 import React from 'react'
-import ChevronRightIcon from '../assets/icons/ChevronRightIcon';
+import { UnstyledButton, Group } from '@mantine/core';
+import '../../styles/SnipdButtonStyle.css';
+import snipdLogoText from "../../assets/snipdLogoText.png";
 
-export const SnipdButton = () => {
+export const SnipdLogo = () => {
   const handleChevronRightClick = () => {
     window.open('https://github.com/PDFilez/snipd', '_blank')
   }

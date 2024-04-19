@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Textarea } from "@mantine/core";
 import { NativeSelect } from "@mantine/core";
 import { ActionIcon } from "@mantine/core";
-import XIcon from "../assets/icons/XIcon";
+import XIcon from "../../assets/icons/XIcon";
 
-import "../styles/EditSnippetStyles.css";
+import "../../styles/EditSnippetStyles.css";
 
 const EditSnippetCard = (props) => {
   const [title, setTitle] = useState(props.snip.title);

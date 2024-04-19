@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Card, Text, Anchor } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import { deleteSnipd, moveSnipdDown, moveSnipdUp } from "../utils/snipUtils";
-import ItemHeader from "./ItemHeader";
+import { deleteSnipd, moveSnipdDown, moveSnipdUp } from "../../utils/snipUtils";
+import SnippetHeader from "./SnippetHeader";
 import { Spoiler } from "@mantine/core";
-import "../styles/SnippetStyles.css";
+import "../../styles/SnippetStyles.css";
 import { Accordion } from "@mantine/core";
 import EditSnippetCard from "./EditSnippetCard";
 
@@ -24,7 +24,7 @@ export function Snippet(props) {
     <div className="snippet-container" ref={ref}>
       {!editFlag ? (
         <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-          <ItemHeader
+          <SnippetHeader
             type={props.snip.type}
             title={props.snip.title}
             date={props.snip.date}

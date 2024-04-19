@@ -1,10 +1,10 @@
 import React from "react";
 import { Stack, Badge, Group, Title, Button, ActionIcon, Text } from "@mantine/core";
-import "../styles/SnippetStyles.css";
-import ArrowUpIcon from "../assets/icons/ArrowUpIcon";
-import ArrowDownIcon from "../assets/icons/ArrowDownIcon";
-import TrashIcon from "../assets/icons/TrashIcon";
-import EditIcon from "../assets/icons/EditIcon";
+import "../../styles/SnippetStyles.css";
+import ArrowUpIcon from "../../assets/icons/ArrowUpIcon";
+import ArrowDownIcon from "../../assets/icons/ArrowDownIcon";
+import TrashIcon from "../../assets/icons/TrashIcon";
+import EditIcon from "../../assets/icons/EditIcon";
 
 function ItemHeader({
   title,
