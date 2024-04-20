@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { TextInput, Container, Flex, ActionIcon, Button } from "@mantine/core";
-import { Group} from "@mantine/core";
+import { Group } from "@mantine/core";
 import SearchIcon from "../assets/icons/SearchIcon";
 import PrinterIcon from "../assets/icons/PrinterIcon";
+import { Document, Packer, Paragraph, TextRun } from "docx";
+import { saveAs } from 'file-saver';
 
 const MantineSearchBar = ({ onSearch, setPrinting }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -11,17 +13,37 @@ const MantineSearchBar = ({ onSearch, setPrinting }) => {
   };
 
   const print = () => {
-    setPrinting(true);
-    setTimeout(() => {
-      window.print();
-      setPrinting(false);
-    }, 200);
+    // setPrinting(true);
+    // setTimeout(() => {
+    //   window.print();
+    //   setPrinting(false);
+    // }, 200);
+    const doc = new Document({
+      sections: [{
+          children: [
+              new Paragraph({
+                  children: [
+                      new TextRun("Hello, World!"),
+                  ],
+              }),
+          ],
+      }],
+  });
+
+  const blob = Packer.toBlob(doc).then(blob => {
+      saveAs(blob, "example.docx");
+  });
+
   };
 
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <Group className="printHide" style={{ justifyContent:'right', marginTop: "16px" }} position="apart" mb={"lg"}>
+        <Group
+          className="printHide"
+          style={{ justifyContent: "right", marginTop: "16px" }}
+          position="apart"
+          mb={"lg"}>
           <Container m={10}>
             <Flex direction={{ base: "column", sm: "row" }} gap="sm" align="center">
               <TextInput
@@ -47,9 +69,7 @@ const MantineSearchBar = ({ onSearch, setPrinting }) => {
                 size="lg"
                 aria-label="Settings">
                 <div>
-                  <PrinterIcon
-                    style={{ color: "white", width: "70%", height: "70%" }}
-                  />
+                  <PrinterIcon style={{ color: "white", width: "70%", height: "70%" }} />
                 </div>
               </ActionIcon>
             </Flex>
