@@ -87,6 +87,7 @@ function App() {
       }>
       <div className="App" style={{ margin: "8px 48px 48px 48px" }}>
         <MantineSearchBar
+          snippets={snipds}
           setPrinting={setPrinting}
           onSearch={(searchQueryInput) => {
             setFilterState({ ...filterState, searchQuery: searchQueryInput });
@@ -114,7 +115,6 @@ function App() {
                             ref={provided.innerRef}
                             sx={{ width: "100%", margin: 10 }}>
                             <div style={{ display: "flex", flexDirection: "row" }}>
-                                
                               <Snippet
                                 ref={provided.innerRef}
                                 key={index}

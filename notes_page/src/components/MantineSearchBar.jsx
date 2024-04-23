@@ -3,37 +3,68 @@ import { TextInput, Container, Flex, ActionIcon, Button } from "@mantine/core";
 import { Group } from "@mantine/core";
 import SearchIcon from "../assets/icons/SearchIcon";
 import PrinterIcon from "../assets/icons/PrinterIcon";
-import { Document, Packer, Paragraph, TextRun } from "docx";
-import { saveAs } from 'file-saver';
+import {
+  Document,
+  HeadingLevel,
+  HorizontalPosition,
+  ImageRun,
+  Packer,
+  Paragraph,
+  TextRun,
+  VerticalAlign,
+} from "docx";
+import { saveAs } from "file-saver";
 
-const MantineSearchBar = ({ onSearch, setPrinting }) => {
+const MantineSearchBar = ({ snippets, onSearch, setPrinting }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
   const print = () => {
-    // setPrinting(true);
-    // setTimeout(() => {
-    //   window.print();
-    //   setPrinting(false);
-    // }, 200);
+    setPrinting(true);
+    setTimeout(() => {
+      window.print();
+      setPrinting(false);
+    }, 200);
+  };
+
+  const generateDoc = () => {
     const doc = new Document({
-      sections: [{
-          children: [
-              new Paragraph({
-                  children: [
-                      new TextRun("Hello, World!"),
-                  ],
-              }),
-          ],
-      }],
-  });
+      sections: [
+        {
+          children: snippets.flatMap((snippet) => {
+            if (snippet.type === "image") {
+            } else {
+              const contentElements = [
+                new Paragraph({
+                  text: snippet.title,
+                  heading: HeadingLevel.HEADING_1,
+                }),
+                new Paragraph({
+                  text: snippet.category,
+                  heading: HeadingLevel.HEADING_6,
+                }),
+              ];
 
-  const blob = Packer.toBlob(doc).then(blob => {
+              contentElements.push(
+                new Paragraph({
+                  children: [new TextRun(snippet.content)],
+                  spacing: { after: 400 },
+                })
+              );
+              return contentElements;
+
+            }
+
+          }),
+        },
+      ],
+    });
+
+    const blob = Packer.toBlob(doc).then((blob) => {
       saveAs(blob, "example.docx");
-  });
-
+    });
   };
 
   return (
@@ -44,6 +75,15 @@ const MantineSearchBar = ({ onSearch, setPrinting }) => {
           style={{ justifyContent: "right", marginTop: "16px" }}
           position="apart"
           mb={"lg"}>
+          <ActionIcon
+            onClick={() => generateDoc()}
+            size="lg"
+            color="blue"
+            variant="filled"
+            radius="xl"
+            aria-label="Settings">
+            <SearchIcon style={{ color: "white", width: "70%", height: "70%" }} />
+          </ActionIcon>
           <Container m={10}>
             <Flex direction={{ base: "column", sm: "row" }} gap="sm" align="center">
               <TextInput
