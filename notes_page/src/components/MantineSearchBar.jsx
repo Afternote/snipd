@@ -14,6 +14,7 @@ import {
   VerticalAlign,
 } from "docx";
 import { saveAs } from "file-saver";
+import OfficeIcon from "../assets/OfficeIcon";
 
 const MantineSearchBar = ({ snippets, onSearch, setPrinting }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -54,9 +55,7 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting }) => {
                 })
               );
               return contentElements;
-
             }
-
           }),
         },
       ],
@@ -69,21 +68,25 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting }) => {
 
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}>
+        <Button onClick={() => generateDoc()} variant="light">
+          <div style={{ margin: "8px" }}>
+            <OfficeIcon style={{ color: "white", width: "70%", height: "70%" }} />
+          </div>
+          Export snippets as Doc
+        </Button>
+        
         <Group
           className="printHide"
           style={{ justifyContent: "right", marginTop: "16px" }}
           position="apart"
           mb={"lg"}>
-          <ActionIcon
-            onClick={() => generateDoc()}
-            size="lg"
-            color="blue"
-            variant="filled"
-            radius="xl"
-            aria-label="Settings">
-            <SearchIcon style={{ color: "white", width: "70%", height: "70%" }} />
-          </ActionIcon>
           <Container m={10}>
             <Flex direction={{ base: "column", sm: "row" }} gap="sm" align="center">
               <TextInput
