@@ -4,7 +4,6 @@ import { Group } from "@mantine/core";
 import SearchIcon from "../assets/icons/SearchIcon";
 import PrinterIcon from "../assets/icons/PrinterIcon";
 import { useDisclosure } from "@mantine/hooks";
-import { saveAs } from "file-saver";
 import OfficeIcon from "../assets/OfficeIcon";
 import WordExportSelectionModalComponent from "./Export/WordExportSelectionModalComponent";
 
@@ -32,7 +31,7 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting }) => {
 
   return (
     <>
-      <WordExportSelectionModalComponent modalState={modalState} setModalState={setModalState} handleModalClose={handleModalClose} />
+      <WordExportSelectionModalComponent snippets={snippets} modalState={modalState} setModalState={setModalState} handleModalClose={handleModalClose} />
       <div
         style={{
           display: "flex",
