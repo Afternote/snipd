@@ -1,27 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextInput, Container, Flex, ActionIcon, Button } from "@mantine/core";
 import { Group } from "@mantine/core";
 import SearchIcon from "../assets/icons/SearchIcon";
 import PrinterIcon from "../assets/icons/PrinterIcon";
-import {
-  Document,
-  HeadingLevel,
-  HorizontalPosition,
-  ImageRun,
-  Packer,
-  Paragraph,
-  TextRun,
-  VerticalAlign,
-} from "docx";
+import { useDisclosure } from "@mantine/hooks";
 import { saveAs } from "file-saver";
 import OfficeIcon from "../assets/OfficeIcon";
+import WordExportSelectionModalComponent from "./Export/WordExportSelectionModalComponent";
 
 const MantineSearchBar = ({ snippets, onSearch, setPrinting }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
-
+  const [modalState, setModalState] = useState(false);
   const print = () => {
     setPrinting(true);
     setTimeout(() => {
@@ -30,44 +22,17 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting }) => {
     }, 200);
   };
 
-  const generateDoc = () => {
-    const doc = new Document({
-      sections: [
-        {
-          children: snippets.flatMap((snippet) => {
-            if (snippet.type === "image") {
-            } else {
-              const contentElements = [
-                new Paragraph({
-                  text: snippet.title,
-                  heading: HeadingLevel.HEADING_1,
-                }),
-                new Paragraph({
-                  text: snippet.category,
-                  heading: HeadingLevel.HEADING_6,
-                }),
-              ];
-
-              contentElements.push(
-                new Paragraph({
-                  children: [new TextRun(snippet.content)],
-                  spacing: { after: 400 },
-                })
-              );
-              return contentElements;
-            }
-          }),
-        },
-      ],
-    });
-
-    const blob = Packer.toBlob(doc).then((blob) => {
-      saveAs(blob, "example.docx");
-    });
+  const handleModalClose = () => {
+    setModalState(false);
   };
+  const openOptionsModal = () => {
+    setModalState(true);
+  };
+
 
   return (
     <>
+      <WordExportSelectionModalComponent modalState={modalState} setModalState={setModalState} handleModalClose={handleModalClose} />
       <div
         style={{
           display: "flex",
@@ -75,13 +40,13 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting }) => {
           justifyContent: "space-between",
           alignItems: "center",
         }}>
-        <Button onClick={() => generateDoc()} variant="light">
+        <Button onClick={openOptionsModal} variant="light">
           <div style={{ margin: "8px" }}>
             <OfficeIcon style={{ color: "white", width: "70%", height: "70%" }} />
           </div>
           Export snippets as Doc
         </Button>
-        
+
         <Group
           className="printHide"
           style={{ justifyContent: "right", marginTop: "16px" }}
