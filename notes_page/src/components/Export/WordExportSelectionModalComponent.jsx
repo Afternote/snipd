@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Button } from "@mantine/core";
 import { SimpleGrid } from "@mantine/core";
 import { saveAs } from "file-saver";
@@ -16,6 +16,10 @@ import {
 import { Checkbox } from "@mantine/core";
 
 const WordExportSelectionModalComponent = (props) => {
+  const [titleChecked, setTitleChecked] = useState(false);
+  const [categoryChecked, setCategoryChecked] = useState(false);
+  const [dateTimeChecked, setDateTimeChecked] = useState(false);
+
   const handleExportButtonClick = () => {
     const doc = new Document({
       sections: [
@@ -23,16 +27,24 @@ const WordExportSelectionModalComponent = (props) => {
           children: props.snippets.flatMap((snippet) => {
             if (snippet.type === "image") {
             } else {
-              const contentElements = [
-                new Paragraph({
-                  text: snippet.title,
-                  heading: HeadingLevel.HEADING_1,
-                }),
-                new Paragraph({
-                  text: snippet.category,
-                  heading: HeadingLevel.HEADING_6,
-                }),
-              ];
+              const contentElements = [];
+              if (titleChecked) {
+                contentElements.push(
+                  new Paragraph({
+                    text: snippet.title,
+                    heading: HeadingLevel.HEADING_1,
+                  })
+                );
+              }
+              if (categoryChecked) {
+                contentElements.push(
+                  new Paragraph({
+                    text: snippet.category,
+                    heading: HeadingLevel.HEADING_6,
+                  })
+                );
+              }
+
               contentElements.push(
                 new Paragraph({
                   children: [new TextRun(snippet.content)],
@@ -47,7 +59,9 @@ const WordExportSelectionModalComponent = (props) => {
     });
     const blob = Packer.toBlob(doc).then((blob) => {
       saveAs(blob, "example.docx");
-    });};
+    });
+  };
+
   return (
     <Modal
       opened={props.modalState}
@@ -60,19 +74,35 @@ const WordExportSelectionModalComponent = (props) => {
         </div>
         <SimpleGrid style={{ margin: "16px" }} cols={3}>
           <div>
-            <Checkbox defaultChecked label="Title" />
+            <Checkbox
+              checked={titleChecked}
+              onChange={(event) => setTitleChecked(event.currentTarget.checked)}
+              label="Title"
+            />
           </div>
           <div>
             {" "}
-            <Checkbox defaultChecked label="Category" />
+            <Checkbox
+              checked={categoryChecked}
+              onChange={(event) => setCategoryChecked(event.currentTarget.checked)}
+              defaultChecked
+              label="Category"
+            />
           </div>
           <div>
             {" "}
-            <Checkbox defaultChecked label="Date/Time" />
+            <Checkbox
+              checked={dateTimeChecked}
+              onChange={(event) => setDateTimeChecked(event.currentTarget.checked)}
+              defaultChecked
+              label="Date/Time"
+            />
           </div>
         </SimpleGrid>
         <div style={{ margin: "16px", display: "flex", justifyContent: "right" }}>
-          <Button onClick={handleExportButtonClick} variant="light">Export</Button>
+          <Button onClick={handleExportButtonClick} variant="light">
+            Export
+          </Button>
         </div>
       </div>
     </Modal>
@@ -80,5 +110,3 @@ const WordExportSelectionModalComponent = (props) => {
 };
 
 export default WordExportSelectionModalComponent;
-
-
