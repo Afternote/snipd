@@ -3,6 +3,7 @@ import { saveAs } from "file-saver";
 import { Switch, Text, Checkbox, SimpleGrid, Modal, Button } from "@mantine/core";
 import { Document, HeadingLevel, Packer, Paragraph, TextRun } from "docx";
 import { MultiSelect } from "@mantine/core";
+import { SegmentedControl } from "@mantine/core";
 
 const WordExportSelectionModalComponent = (props) => {
   const [titleChecked, setTitleChecked] = useState(false);
@@ -10,24 +11,23 @@ const WordExportSelectionModalComponent = (props) => {
   const [dateTimeChecked, setDateTimeChecked] = useState(false);
   const [sourceChecked, setSourceChecked] = useState(false);
   const [categoriesFilterState, setCategoriesFilterState] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState([])
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
-  const handleSwitchChange = () => {
-    setCategoriesFilterState(!categoriesFilterState);
+  const handleSwitchChange = (value) => {
+    setCategoriesFilterState(value != "All Snippets");
   };
 
   const handleCategoryFilterChange = (values) => {
-    setSelectedCategories(values)
-  }
+    setSelectedCategories(values);
+  };
 
   const handleExportButtonClick = () => {
     const snippetsToExport = props.snippets.filter((snippet) => {
-        if(!categoriesFilterState){
-            return true
-        }
-        return selectedCategories.includes(snippet.category)
-    })
-  
+      if (!categoriesFilterState) {
+        return true;
+      }
+      return selectedCategories.includes(snippet.category);
+    });
 
     const doc = new Document({
       sections: [
@@ -85,13 +85,33 @@ const WordExportSelectionModalComponent = (props) => {
       title="Export Snippets"
       centered>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ margin: "16px" }}>
+        <div>
+          <SegmentedControl
+            size="xs"
+            onChange={handleSwitchChange}
+            data={["All Snippets", "Filter snippets by Category"]}
+          />
+        </div>
+        {categoriesFilterState && (
+          <div style={{marginTop:'16px', marginBottom:'16px'}} >
+            <MultiSelect
+            size="xs"
+              label="Select the categories to include"
+              placeholder="Pick a category"
+              data={props.categoryList}
+              clearable
+              searchable
+              onChange={handleCategoryFilterChange}
+            />
+          </div>
+        )}
+        <div style={{ marginTop: "16px" }}>
           <Text size="sm">
             {" "}
             Please Select the components that you want to include in the export
           </Text>
         </div>
-        <SimpleGrid style={{ margin: "16px" }} cols={4}>
+        <SimpleGrid style={{ margin: "16px" }} cols={2}>
           <div>
             <Checkbox
               checked={titleChecked}
@@ -127,24 +147,6 @@ const WordExportSelectionModalComponent = (props) => {
             />
           </div>
         </SimpleGrid>
-        <Switch
-          style={{ margin: "16px" }}
-          size="xs"
-          label="Filter snippets by Category"
-          onChange={handleSwitchChange}
-        />
-        {categoriesFilterState && (
-          <div style={{ margin: "16px" }}>
-            <MultiSelect
-              label="Select categories to include"
-              placeholder="Pick a category"
-              data={props.categoryList}
-              clearable
-              searchable
-              onChange={handleCategoryFilterChange}
-            />
-          </div>
-        )}
 
         <div style={{ margin: "16px", display: "flex", justifyContent: "right" }}>
           <Button onClick={handleExportButtonClick} variant="light">
