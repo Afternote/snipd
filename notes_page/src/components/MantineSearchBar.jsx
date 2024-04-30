@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TextInput, Container, Flex, ActionIcon, Button } from "@mantine/core";
 import { Group } from "@mantine/core";
 import SearchIcon from "../assets/icons/SearchIcon";
 import PrinterIcon from "../assets/icons/PrinterIcon";
-import { useDisclosure } from "@mantine/hooks";
 import OfficeIcon from "../assets/OfficeIcon";
 import WordExportSelectionModalComponent from "./Export/WordExportSelectionModalComponent";
 
-const MantineSearchBar = ({ snippets, onSearch, setPrinting }) => {
+const MantineSearchBar = ({ snippets, onSearch, setPrinting, categoryList }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -31,7 +30,7 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting }) => {
 
   return (
     <>
-      <WordExportSelectionModalComponent snippets={snippets} modalState={modalState} setModalState={setModalState} handleModalClose={handleModalClose} />
+      <WordExportSelectionModalComponent snippets={snippets} modalState={modalState} setModalState={setModalState} handleModalClose={handleModalClose} categoryList={categoryList}/>
       <div
         style={{
           display: "flex",

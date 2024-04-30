@@ -92,6 +92,7 @@ function App() {
           onSearch={(searchQueryInput) => {
             setFilterState({ ...filterState, searchQuery: searchQueryInput });
           }}
+          categoryList={categoryList}
         />
 
         <Stack>

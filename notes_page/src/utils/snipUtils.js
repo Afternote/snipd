@@ -29,6 +29,8 @@ async function moveSnipdDown(id) {
   }
 }
 
+
+
 async function deleteSnipd(id) {
   let obj = await chrome.storage.local.get(["snipd_store"]);
   const len = obj.snipd_store.length;
