@@ -10,16 +10,29 @@ const WordExportSelectionModalComponent = (props) => {
   const [dateTimeChecked, setDateTimeChecked] = useState(false);
   const [sourceChecked, setSourceChecked] = useState(false);
   const [categoriesFilterState, setCategoriesFilterState] = useState(false);
-
+  const [selectedCategories, setSelectedCategories] = useState([])
 
   const handleSwitchChange = () => {
-    setCategoriesFilterState(!categoriesFilterState)
+    setCategoriesFilterState(!categoriesFilterState);
+  };
+
+  const handleCategoryFilterChange = (values) => {
+    setSelectedCategories(values)
   }
+
   const handleExportButtonClick = () => {
+    const snippetsToExport = props.snippets.filter((snippet) => {
+        if(!categoriesFilterState){
+            return true
+        }
+        return selectedCategories.includes(snippet.category)
+    })
+  
+
     const doc = new Document({
       sections: [
         {
-          children: props.snippets.flatMap((snippet) => {
+          children: snippetsToExport.flatMap((snippet) => {
             if (snippet.type === "image") {
             } else {
               const contentElements = [];
@@ -114,16 +127,21 @@ const WordExportSelectionModalComponent = (props) => {
             />
           </div>
         </SimpleGrid>
-        <Switch style={{ margin: "16px" }} size="xs" label="Filter snippets by Category"   onChange={handleSwitchChange} // Update state on change
- />
+        <Switch
+          style={{ margin: "16px" }}
+          size="xs"
+          label="Filter snippets by Category"
+          onChange={handleSwitchChange}
+        />
         {categoriesFilterState && (
           <div style={{ margin: "16px" }}>
             <MultiSelect
               label="Select categories to include"
-              placeholder="Pick value"
+              placeholder="Pick a category"
               data={props.categoryList}
               clearable
               searchable
+              onChange={handleCategoryFilterChange}
             />
           </div>
         )}
