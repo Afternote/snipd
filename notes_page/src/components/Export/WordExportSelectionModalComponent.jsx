@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { saveAs } from "file-saver";
 import { Switch, Text, Checkbox, SimpleGrid, Modal, Button } from "@mantine/core";
-import { Document, HeadingLevel, Packer, Paragraph, TextRun } from "docx";
+import { Document, HeadingLevel, ImageRun, Packer, Paragraph, TextRun } from "docx";
 import { MultiSelect } from "@mantine/core";
 import { SegmentedControl } from "@mantine/core";
 
@@ -33,9 +33,13 @@ const WordExportSelectionModalComponent = (props) => {
       sections: [
         {
           children: snippetsToExport.flatMap((snippet) => {
+            const contentElements = [];
+
             if (snippet.type === "image") {
+          
+              // TODO()
             } else {
-              const contentElements = [];
+              
               if (titleChecked) {
                 contentElements.push(
                   new Paragraph({
@@ -56,6 +60,14 @@ const WordExportSelectionModalComponent = (props) => {
                 contentElements.push(
                   new Paragraph({
                     text: snippet.source,
+                    heading: HeadingLevel.HEADING_6,
+                  })
+                );
+              }
+              if (dateTimeChecked) {
+                contentElements.push(
+                  new Paragraph({
+                    text: snippet.date,
                     heading: HeadingLevel.HEADING_6,
                   })
                 );
@@ -93,9 +105,9 @@ const WordExportSelectionModalComponent = (props) => {
           />
         </div>
         {categoriesFilterState && (
-          <div style={{marginTop:'16px', marginBottom:'16px'}} >
+          <div style={{ marginTop: "16px", marginBottom: "16px" }}>
             <MultiSelect
-            size="xs"
+              size="xs"
               label="Select the categories to include"
               placeholder="Pick a category"
               data={props.categoryList}
