@@ -22,5 +22,14 @@
   },
   "side_panel": {
     "default_path": "popup/index.html"
-  }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"] 
+    }
+  ]
+  
 }

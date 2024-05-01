@@ -34,9 +34,7 @@ const WordExportSelectionModalComponent = (props) => {
         {
           children: snippetsToExport.flatMap((snippet) => {
             const contentElements = [];
-
-            if (snippet.type === "image") {
-          
+            if (snippet.type === "image") {          
               // TODO()
             } else {
               
