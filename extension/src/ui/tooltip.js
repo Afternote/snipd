@@ -105,33 +105,7 @@ function createTooltip(e, recreated = false) {
                 }, configs.animationDuration);
             });
 
-            // setTimeout(function () {
-
-            //     /// Append tooltip to the DOM
-            //     document.body.appendChild(tooltip);
-
-            //     /// Calculate tooltip position - add a delay so that we can access tooltip clientHeight
-            //     setTimeout(function () {
-            //         calculateTooltipPosition(e);
-            //     }, 5);
-
-            //     /// Create search tooltip for custom search options)
-            //     if (configs.customSearchOptionsDisplay == 'hoverCustomSearchStyle')
-            //         setTimeout(function () {
-            //             if (configs.secondaryTooltipEnabled && configs.customSearchButtons !== null && configs.customSearchButtons !== undefined && configs.customSearchButtons !== [])
-            //                 setHoverForSearchButton(searchButton);
-            //         }, 5);
-
-            //     /// Selection change listener
-            //     setTimeout(function () {
-            //         if (tooltipIsShown == false) return;
-            //         document.addEventListener("selectionchange", selectionChangeListener);
-            //     }, configs.animationDuration);
-
-            //     /// Set border radius for first and last buttons
-            //     setBorderRadiusForSideButtons(tooltip);
-            // }, 0);
-
+            
         } else hideTooltip();
 
     }, 0);

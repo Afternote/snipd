@@ -55,8 +55,6 @@ function checkTooltipForCollidingWithSideEdges() {
     let dx = tooltip.getBoundingClientRect().left;
     let tooltipWidth = 4.0;
 
-    /// we can't rely on clientWidth, because tooltip gets collapsed when colliding with screen edge
-    // tooltipWidth = tooltip.clientWidth;
     if (configs.verticalLayoutTooltip) {
         tooltipWidth = 140;
     } else {

@@ -1,32 +1,13 @@
 function initConfigs(shouldCreateTooltip = false, e) {
   const userSettingsKeys = Object.keys(configs);
 
-  /// Load user settings
   chrome.storage.local.get(
     userSettingsKeys, function (loadedConfigs) {
-      configs.changeTextSelectionColor = loadedConfigs.changeTextSelectionColor ?? false;
-      configs.textSelectionBackground = loadedConfigs.textSelectionBackground || '#338FFF';
-      configs.textSelectionColor = loadedConfigs.textSelectionColor || '#ffffff';
-      configs.textSelectionBackgroundOpacity = loadedConfigs.textSelectionBackgroundOpacity || 1.0;
-      configs.shouldOverrideWebsiteSelectionColor = loadedConfigs.shouldOverrideWebsiteSelectionColor ?? false;
       configs.enabled = loadedConfigs.enabled ?? true;
-      configs.ratesLastFetchedDate = loadedConfigs.ratesLastFetchedDate;
-
-      /// Check for domain to be in black list
-      configs.excludedDomains = loadedConfigs.excludedDomains || '';
-
-      if (configs.excludedDomains !== null && configs.excludedDomains !== undefined && configs.excludedDomains !== '')
-        configs.excludedDomains.split(',').forEach(function (domain) {
-          if (window.location.href.includes(domain.trim().toLowerCase())) configs.enabled = false;
-        });
+;
 
       if (configs.enabled) {
-        if (configs.changeTextSelectionColor)
-          setTimeout(function () {
-            setTextSelectionColor();
-          }, 1);
-
-        /// Assign loaded values to config variable
+        
         const keys = Object.keys(configs);
         for (let i = 0, l = keys.length; i < l; i++) {
           try {
@@ -39,9 +20,7 @@ function initConfigs(shouldCreateTooltip = false, e) {
           }
         }
 
-        /// Check for incorrect values
         if (configs.animationDuration < 0) configs.animationDuration = 0;
-        if (configs.updateRatesEveryDays < 0) configs.updateRatesEveryDays = 14;
 
         addButtonIcons = configs.buttonsStyle == 'onlyicon' || configs.buttonsStyle == 'iconlabel';
         verticalSecondaryTooltip = configs.secondaryTooltipLayout == 'verticalLayout';
@@ -51,7 +30,6 @@ function initConfigs(shouldCreateTooltip = false, e) {
           console.log(configs);
         }
 
-        /// Run only on first load
         if (configsWereLoaded == false) {
           setTimeout(function () {
             if (configs.addActionButtonsForTextFields)
@@ -66,31 +44,7 @@ function initConfigs(shouldCreateTooltip = false, e) {
 
           configsWereLoaded = true;
 
-          /// Fix for older browsers which don't support String.replaceAll (used here in a lot of places)
-          if (!String.prototype.replaceAll) {
-            String.prototype.replaceAll = function (find, replace) {
-              return this.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
-            };
-          }
         }
-
-        /// Check browser locales on first launch (language and metric system)
-        if (loadedConfigs.preferredMetricsSystem == null || loadedConfigs.preferredMetricsSystem == undefined)
-          try { setDefaultLocales(); } catch (e) { }
-
-        /// Check if word snapping is allowed on page
-        domainIsBlacklistedForSnapping = false;
-        if (configs.snapSelectionToWord && configs.wordSnappingBlacklist !== null && configs.wordSnappingBlacklist !== undefined && configs.wordSnappingBlacklist !== '')
-          configs.wordSnappingBlacklist.split(',').forEach(function (domain) {
-            if (window.location.href.includes(domain.trim().toLowerCase())) domainIsBlacklistedForSnapping = true;
-          });
-
-
-        // /// Set CSS rules for tooltip style
-        // setDocumentStyles();
-
-        // /// Fetch or load currency rates from storage
-        // loadCurrencyRates()
 
         if (shouldCreateTooltip)
           createTooltip(e);
@@ -98,23 +52,7 @@ function initConfigs(shouldCreateTooltip = false, e) {
     });
 }
 
-function setTextSelectionColor() {
-  let importance = configs.shouldOverrideWebsiteSelectionColor ? '!important' : '';
 
-  // CSS rules
-  let selectionBackgroundRgb = hexToRgb(configs.textSelectionBackground);
-
-  let rule = `::selection {background-color: rgba(${selectionBackgroundRgb.red}, ${selectionBackgroundRgb.green}, ${selectionBackgroundRgb.blue}, ${configs.textSelectionBackgroundOpacity}) ${importance}; color: ${configs.textSelectionColor} ${importance}; }`;
-  rule += `::-moz-selection {background-color: rgba(${selectionBackgroundRgb.red}, ${selectionBackgroundRgb.green}, ${selectionBackgroundRgb.blue}, ${configs.textSelectionBackgroundOpacity}) ${importance}; color: ${configs.textSelectionColor} ${importance};}`;
-
-  let css = document.createElement('style');
-  css.type = 'text/css';
-  css.appendChild(document.createTextNode(rule)); // Support for the rest
-  document.getElementsByTagName("head")[0].appendChild(css);
-
-  if (configs.debugMode)
-    console.log('Selecton applied custom selection color')
-}
 
 function setDocumentStyles(){
   /// Set font-size
@@ -158,56 +96,8 @@ function setDocumentStyles(){
   document.documentElement.style.setProperty('--selecton-anim-duration', `${configs.animationDuration}ms`);
 }
 
-function loadCurrencyRates(){
-  if (configs.convertCurrencies) {
-    let updateRatesEveryDays = configs.updateRatesEveryDays;
-    if (updateRatesEveryDays < 7) updateRatesEveryDays = 7;
 
-    ratesLastFetchedDate = configs.ratesLastFetchedDate;
 
-    if (ratesLastFetchedDate == null || ratesLastFetchedDate == undefined || ratesLastFetchedDate == '')
-      fetchCurrencyRates();
-    else {
-      let today = new Date();
-      let dayOfNextFetch = new Date(ratesLastFetchedDate);
-      const oneDayInMilliseconds = 1000 * 60 * 60 * 24;
-
-      if (configs.debugMode) {
-        console.log('--- Check dates to update currency rates ---');
-        console.log('Today: ' + today);
-        console.log('Date of last fetch: ' + dayOfNextFetch);
-      }
-
-      today = today.getTime();
-      dayOfNextFetch = new Date(dayOfNextFetch.getTime() + (updateRatesEveryDays * oneDayInMilliseconds));
-
-      if (configs.debugMode) {
-        console.log('Rates update interval: ' + updateRatesEveryDays);
-        console.log('Date of next fetch: ' + dayOfNextFetch);
-        console.log('--- Finished checking dates ---');
-      }
-
-      loadCurrencyRatesFromMemory();
-      if (today >= dayOfNextFetch) fetchCurrencyRates(); /// update rates from server
-    }
-  }
-}
-
-function loadTranslatedLabels(){
-  copyLabel = chrome.i18n.getMessage("copyLabel");
-  searchLabel = chrome.i18n.getMessage("searchLabel");
-  translateLabel = chrome.i18n.getMessage("translateLabel");
-  openLinkLabel = chrome.i18n.getMessage("openLinkLabel");
-  showOnMapLabel = chrome.i18n.getMessage("showOnMap");
-  cutLabel = chrome.i18n.getMessage("cutLabel");
-  pasteLabel = chrome.i18n.getMessage("pasteLabel");
-  dictionaryLabel = chrome.i18n.getMessage("dictionaryLabel");
-  markerLabel = chrome.i18n.getMessage("markerLabel");
-  italicLabel = chrome.i18n.getMessage("italicLabel");
-  boldLabel = chrome.i18n.getMessage("boldLabel");
-  strikeLabel = chrome.i18n.getMessage("strikeLabel");
-  clearLabel = chrome.i18n.getMessage("clearLabel");
-}
 
 function initMouseListeners() {
   document.addEventListener("mousedown", function (e) {
@@ -247,9 +137,6 @@ function initMouseListeners() {
           if (selectionNode !== activeEl && selectionNode.parentNode !== activeEl) return;
         }
       } catch (e) { }
-
-      /// Check if clicked on text field
-      checkTextField(e, activeEl);
 
       if (selectedText.length > 0) {
         /// create tooltip for selection
@@ -313,45 +200,9 @@ function initMouseListeners() {
     }, 0);
   }
 
-  function checkTextField(e, activeEl) {
-    /// check if textfield is focused
-
-    isTextFieldFocused = (activeEl.tagName === "INPUT" && (activeEl.getAttribute('type') == 'text' || activeEl.getAttribute('type') == 'email' || activeEl.getAttribute('name') == 'text')) ||
-      activeEl.tagName === "TEXTAREA" ||
-      activeEl.getAttribute('contenteditable') !== null;
-
-    if (isTextFieldFocused && configs.addActionButtonsForTextFields) {
-
-      /// Special handling for Firefox 
-      /// (https://stackoverflow.com/questions/20419515/window-getselection-of-textarea-not-working-in-firefox)
-      if (selectedText == '' && navigator.userAgent.indexOf("Firefox") > -1) {
-        const ta = document.querySelector(':focus');
-        if (ta != null && ta.value != undefined) {
-          selectedText = ta.value.substring(ta.selectionStart, ta.selectionEnd);
-          selection = ta.value.substring(ta.selectionStart, ta.selectionEnd);
-        }
-      }
-
-      /// Hide previous 'paste' button
-      // if (selectedText == '') hideTooltip(); 
-
-      /// Ignore single click on text field with inputted value
-      try {
-        isTextFieldEmpty = true;
-        if (activeEl.getAttribute('contenteditable') != null && activeEl.innerHTML != '' && selectedText == '' && activeEl.innerHTML != '<br>') {
-          isTextFieldEmpty = false;
-          if (configs.addPasteOnlyEmptyField) isTextFieldFocused = false;
-        } else if (activeEl.value && activeEl.value.trim() !== '' && selectedText == '') {
-          isTextFieldEmpty = false;
-          if (configs.addPasteOnlyEmptyField) isTextFieldFocused = false;
-        }
-      } catch (e) { console.log(e); }
-    }
-  }
-
   function initTooltip(e) {
     if (configs.applyConfigsImmediately) {
-      initConfigs(true, e); /// createTooltip will be called after checking for updated configs
+      initConfigs(true, e); 
     } else {
       createTooltip(e);
     }
@@ -422,17 +273,7 @@ function initMouseListeners() {
   if (configs.debugMode)
     console.log('Selection initiated mouse listeners');
 
-
-  /// Lazy loading
-
-  /// Fetch or load currency rates from storage
-  loadCurrencyRates()
-
-  /// Set CSS rules for tooltip style
   setDocumentStyles();
-
-  /// Get translated button labels
-  loadTranslatedLabels()
 }
 
 function recreateTooltip() {
@@ -469,11 +310,5 @@ function selectionChangeInitListener() {
   }
 }
 
-// function domLoadedListener() {
-//   document.removeEventListener('DOMContentLoaded', domLoadedListener);
-//   initConfigs(false);
-// }
-
-// document.addEventListener('DOMContentLoaded', domLoadedListener);
 
 initConfigs(false);
