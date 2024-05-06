@@ -109,7 +109,7 @@ function addBasicTooltipButtons(layout) {
 
                     const url = item['url'];
                     const optionEnabled = item['enabled'];
-                    const title = item['title'];
+                    const title = "Hello";
                     const icon = item['icon'];
 
                     if (optionEnabled)

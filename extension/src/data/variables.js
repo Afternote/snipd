@@ -5,9 +5,8 @@ var secondaryColor = 'lightBlue';
 var linkSymbolsToShow = 20;
 var selectionHandleLineHeight = 25;
 
-/// Button labels – translations assigned in code
 var copyLabel = 'Copy';
-var searchLabel = 'Search';
+var searchLabel = 'Add to collection +';
 var openLinkLabel = 'Open';
 var translateLabel = 'Translate';
 var showOnMapLabel = 'Show on map';

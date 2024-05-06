@@ -1,5 +1,5 @@
 
-function setHoverForSearchButton(searchButton) {
+async function setHoverForSearchButton(searchButton) {
     /// Create search options panel
     let searchPanel = createHoverPanelForButton(searchButton, undefined, undefined, true);
     searchPanel.classList.add('no-padding-tooltip');
@@ -17,14 +17,17 @@ function setHoverForSearchButton(searchButton) {
     containerPrototype.className = 'custom-search-image-button';
     if (!verticalSecondaryTooltip) containerPrototype.style.padding = '0px';
     const maxIconsInRow = configs.maxIconsInRow;
+    const categories = await chrome.storage.local.get("snipd_categories");
+    console.log(categories)
 
-    for (var i = 0; i < searchButtonsLength; i++) {
+    for (var i = 0; i < categories.snipd_categories.length; i++) {
         const item = searchButtons[i];
 
-        const url = item['url'];
-        const optionEnabled = item['enabled'];
-        const title = item['title'];
-        const icon = item['icon'];
+
+
+        const url = "https://www.google.com";
+        const optionEnabled = true;
+        const title = categories.snipd_categories[i];
 
         if (optionEnabled && url !== '') {
             let imgButton = document.createElement('img');
@@ -36,7 +39,6 @@ function setHoverForSearchButton(searchButton) {
                 }
             });
 
-            imgButton.setAttribute('src', icon !== null && icon !== undefined && icon !== '' ? icon : 'https://www.google.com/s2/favicons?domain=' + url.split('/')[2])
 
             /// Set title
             let titleText = title !== null && title !== undefined && title !== '' ? title : returnDomainFromUrl(url);
@@ -76,19 +78,6 @@ function setHoverForSearchButton(searchButton) {
         searchPanel.style.display = 'grid';
         searchPanel.style.gridTemplateColumns = `repeat(${maxIconsInRow}, 1fr)`;
     }
-
-    /// Set border radius for first and last buttons
-    // const borderRadiusForButton = configs.useCustomStyle ? configs.borderRadius : 3;
-    // const firstSearchButtonBorderRadius = verticalSecondaryTooltip ?
-    //     `${borderRadiusForButton}px ${borderRadiusForButton}px 0px 0px`
-    //     : firstButtonBorderRadius;
-    // const lastSearchButtonBorderRadius = verticalSecondaryTooltip ?
-    //     `0px 0px ${borderRadiusForButton}px ${borderRadiusForButton}px`
-    //     : lastButtonBorderRadius;
-
-    // let buttons = searchPanel.children;
-    // buttons[0].style.borderRadius = firstSearchButtonBorderRadius;
-    // buttons[buttons.length - 1].style.borderRadius = lastSearchButtonBorderRadius;
 
     /// Append panel
     searchButton.appendChild(searchPanel);
