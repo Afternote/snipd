@@ -159,7 +159,7 @@
 }
 
 /* Search tooltip with custom search options */
-.custom-search-image-button {
+.custom-category-button {
   all: revert;
   padding: 6px 8px;
   vertical-align: middle !important;
@@ -169,20 +169,20 @@
   color: var(--selection-button-foreground);
 }
 
-.custom-search-image-button:hover {
+.custom-category-button:hover {
   cursor: pointer;
   background-color: var(--selection-button-background-hover) !important;
   color: white;
 }
 
-.custom-search-image-button span {
+.custom-category-button span {
   display: inline;
   vertical-align: top !important;
   opacity: 0.75;
   padding: 2px 5px !important;
 }
 
-.custom-search-image-button img {
+.custom-category-button img {
   all: revert;
   filter: none !important;
 }
@@ -264,7 +264,7 @@
   opacity: 1.0 !important;
 }
 
-.selecton-search-tooltip-icon {
+.category-tooltip-icon {
   filter: none;
   width: var(--selecton-search-tooltip-icon-size);
   height: var(--selecton-search-tooltip-icon-size) !important;
