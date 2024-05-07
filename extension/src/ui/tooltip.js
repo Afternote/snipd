@@ -20,13 +20,7 @@ function createTooltip(e, recreated = false) {
                 selectedText = selection.toString();
 
                 selectedTextIsCode = false;
-                if (configs.disableWordSnapForCode)
-                    for (let i = 0, l = codeMarkers.length; i < l; i++) {
-                        if (selectedText.includes(codeMarkers[i])) {
-                            selectedTextIsCode = true; break;
-                        }
-                    }
-
+                
                 /// dont snap if selection is modified by drag handle, or if it looks like code
                 if (isDraggingDragHandle == false && selectedTextIsCode == false)
                     if (domainIsBlacklistedForSnapping == false && e.detail < 2 && (timerToRecreateOverlays == null || timerToRecreateOverlays == undefined))
@@ -81,7 +75,7 @@ function createTooltip(e, recreated = false) {
         addBasicTooltipButtons(null);
 
         if (dontShowTooltip == false && selectedText !== null && selectedText !== '') {
-            addContextualButtons(function () {
+            
                 /// Set border radius for first and last buttons
                 setBorderRadiusForSideButtons(tooltip);
 
@@ -103,7 +97,7 @@ function createTooltip(e, recreated = false) {
                     if (tooltipIsShown == false) return;
                     document.addEventListener("selectionchange", selectionChangeListener);
                 }, configs.animationDuration);
-            });
+            
 
             
         } else hideTooltip();

@@ -216,20 +216,6 @@ function addBasicTooltipButton(label, icon, onClick, isFirstButton = false, icon
 }
 
 
-function addContextualTooltipButton(onClick, isFirstButton = false) {
-    /// Used for more custom button, which contents will be created in code
-    const button = document.createElement('button');
-    button.setAttribute('class', isFirstButton || configs.showButtonBorders == false ? 'selection-popup-button' : 'selection-popup-button button-with-border');
-    button.addEventListener("mousedown", onClick);
-
-    if (configs.reverseTooltipButtonsOrder)
-        tooltip.insertBefore(button, tooltip.children[1]);
-    else
-        tooltip.appendChild(button);
-
-    return button;
-}
-
 /// Hide tooltip when mouse moved far from text selection
 function mouseMoveToHideListener(mouseMoveEvent) {
     if (tooltipIsShown == false || configs.hideTooltipWhenCursorMovesAway == false) {

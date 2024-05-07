@@ -6,7 +6,7 @@ var linkSymbolsToShow = 20;
 var selectionHandleLineHeight = 25;
 
 var copyLabel = 'Copy';
-var searchLabel = 'Add to collection +';
+var addToCollectionLabel = 'Add to collection +';
 var openLinkLabel = 'Open';
 var translateLabel = 'Translate';
 var showOnMapLabel = 'Show on map';
