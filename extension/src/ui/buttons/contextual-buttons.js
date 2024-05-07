@@ -437,236 +437,12 @@ function addContextualButtons(callbackOnFinish) {
             }
         }
 
-        /// Time convert button
-        if (configs.convertTime) {
-            try {
-                let textToProccess = selectedText;
-
-                /// 12H - 24H conversion
-                // let numbers = extractAmountFromSelectedText(textToProccess);   /// Check if selected text contains numbers
-                if (configs.preferredMetricsSystem == 'metric') {
-                    if (textToProccess.includes(' PM') || textToProccess.includes(' AM')) {
-                        if (configs.debugMode)
-                            console.log('converting from 12h to 24...');
-                        textToProccess = convertTime12to24(textToProccess);
-                        if (configs.debugMode)
-                            console.log('result: ' + textToProccess);
-                    }
-                } else {
-                    if (textToProccess.includes(':') && !textToProccess.includes(' ') && !textToProccess.includes('AM') && !textToProccess.includes('PM')) {
-                        if (configs.debugMode)
-                            console.log('converting from 12h to 24...');
-                        textToProccess = convertTime24to12(textToProccess);
-
-                        if (configs.debugMode)
-                            console.log('result: ' + textToProccess);
-                    }
-                }
-
-                const timeZoneKeywordsKeys = Object.keys(timeZoneKeywords);
-                let convertedTime, timeWord, marker;
-
-                for (let i = 0, l = timeZoneKeywordsKeys.length; i < l; i++) {
-                    marker = timeZoneKeywordsKeys[i];
-
-                    if (selectedText.includes(' ' + marker)) {
-                        let words = selectedText.trim().split(' ');
-
-                        for (i in words) {
-                            let word = words[i];
-
-                            if (word.includes(':')) {
-                                timeWord = word;
-                                break;
-                            }
-                        }
-
-                        if (timeWord !== null && timeWord !== undefined && timeWord !== '') {
-                            let numbers = timeWord.split(':');
-
-                            if (numbers.length == 2 || numbers.length == 3) {
-                                let today = new Date();
-                                if (configs.debugMode) {
-                                    console.log('today:');
-                                    console.log(today);
-                                }
-
-                                /// correct timezone to dst
-                                function isDST(d) {
-                                    let jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
-                                    let jul = new Date(d.getFullYear(), 6, 1).getTimezoneOffset();
-                                    return Math.max(jan, jul) !== d.getTimezoneOffset();
-                                }
-
-                                const isDst = isDST(today);
-                                if (marker == 'EST' && isDst) marker = 'EDT';
-                                if (marker == 'CET' && isDst) marker = 'CEST';
-
-                                let modifier = selectedText.includes(' PM') ? ' PM' : selectedText.includes(' AM') ? ' AM' : '';
-                                let dateStringWithTimeReplaced = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()} ${numbers[0]}:${numbers[1]}${modifier} ${timeZoneKeywords[marker]}`;
-
-                                if (configs.debugMode) {
-                                    console.log('setting date from:');
-                                    console.log(dateStringWithTimeReplaced);
-                                }
-
-                                let d = new Date(dateStringWithTimeReplaced); /// '6/29/2011 4:52:48 PM UTC'
-                                if (configs.debugMode) {
-                                    console.log('setted date:');
-                                    console.log(d)
-                                }
-
-                                convertedTime = d.toLocaleTimeString().substring(0, 5);
-                                if (configs.debugMode) {
-                                    console.log('converted time:');
-                                    console.log(convertedTime);
-                                }
-                            }
-                        }
-                        break;
-                    }
-                }
-
-                if ((convertedTime !== null && convertedTime !== undefined && convertedTime !== '' && convertedTime !== 'Inval') || textToProccess !== selectedText) {
-                    const timeStringToShow = textToProccess.match(/[+-]?\d+(\.\d)?/g).slice(0, 2).join(':');
-
-                    const timeButton = addContextualTooltipButton(function (e) {
-                        hideTooltip();
-                        removeSelectionOnPage();
-
-                        onTooltipButtonClick(e, returnSearchUrl(timeWord ? `${timeWord} ${marker}` : textToProccess), convertedTime ?? timeStringToShow)
-                    });
-
-                    timeButton.classList.add('color-highlight');
-
-                    if (addButtonIcons)
-                        timeButton.appendChild(createImageIconForButton(clockIcon, convertedTime ?? timeStringToShow, true));
-                    else
-                        timeButton.textContent = convertedTime ?? timeStringToShow;
-                }
-
-            } catch (e) { if (configs.debugMode) console.log(e); }
-        }
-
+        
         /// Calendar button for dates
         if (configs.addCalendarButton)
             checkToAddCalendarButton(selectedText);
 
-        /// Add 'open link' button
-        if (configs.addOpenLinks)
-            if (!selectionContainsSpaces && selectedText.includes('.') && !tooltip.children[3]) {
-                let link = selectedText;
-                const splittedByDots = link.split('.');
-                if (splittedByDots[0].length > 1) {
-                    const splittedByDotsLength = splittedByDots.length;
-                    const domain = splittedByDots[splittedByDotsLength - 1].split('/')[0], domainLength = domain.length;
-                    const includesUrlMarker = selectedText.includes('://');
-
-                    if (includesUrlMarker || ((splittedByDotsLength == 2 || splittedByDotsLength == 3) && domainLength > 1 && domainLength <= 4 && !isStringNumeric(domain))) {
-
-                        /// Don't recognize if selected text looks like filename
-                        for (let i = 0, l = filetypesToIgnoreAsDomains.length; i < l; i++) {
-                            if (domain.includes(filetypesToIgnoreAsDomains[i])) {
-                                isFileName = true;
-                                break;
-                            }
-                        }
-
-                        if (isFileName == false || includesUrlMarker) {
-                            link = link.replaceAll(',', '').replaceAll(')', '').replaceAll('(', '').replaceAll(`\n`, ' ');
-                            let linkLength = link.length;
-                            let lastSymbol = link[linkLength - 1];
-
-                            if (lastSymbol == '.' || lastSymbol == ',')
-                                link = link.substring(0, linkLength - 1);
-
-                            /// Remove '/' on the end of link, just for better looks in pop-up
-                            lastSymbol = link[link.length - 1];
-                            if (lastSymbol == '/')
-                                link = link.substring(0, link.length - 1);
-
-                            /// Remove quotes in start and end of the link
-                            const firstSymbol = link[0];
-                            linkLength = link.length;
-                            lastSymbol = link[linkLength - 1];
-                            if (firstSymbol == "'" || firstSymbol == '"' || firstSymbol == '«' || firstSymbol == '“')
-                                link = link.substring(1, linkLength);
-                            if (lastSymbol == "'" || lastSymbol == '"' || lastSymbol == "»" || lastSymbol == '”')
-                                link = link.substring(0, linkLength - 1);
-
-                            /// Add open link button
-                            let linkButton = addContextualTooltipButton(function (e) {
-                                if (!link.includes('://') && !link.includes('about:'))
-                                    link = 'https://' + link;
-
-                                onTooltipButtonClick(e, link);
-                            })
-
-                            let linkText = document.createElement('div');
-                            linkText.style.display = 'inline';
-                            let linkToShow = link.replaceAll('http://', '').replaceAll('https://', '');
-                            linkText.textContent = linkToShow.length > linkSymbolsToShow ? linkToShow.substring(0, linkSymbolsToShow) + '...' : linkToShow;
-                            linkText.classList.add('color-highlight');
-
-                            /// Add tooltip with full website on hover
-                            if (link.length > linkSymbolsToShow)
-                                linkButton.setAttribute('title', link);
-
-                            if (addButtonIcons)
-                                linkButton.appendChild(createImageIconForButton(openLinkButtonIcon, undefined, true));
-                            else linkButton.textContent = openLinkLabel + ' ';
-
-                            linkButton.appendChild(linkText);
-
-                            /// try fetching link favicon
-                            let openLinkIcon = linkButton.querySelector('.selecton-button-img-icon');
-                            if (openLinkIcon) {
-                                openLinkIcon.style.backgroundImage = 'url(' + openLinkButtonIcon + ')';
-                                const onFaviconLoadListener = (e) => {
-                                    if (openLinkIcon.src == openLinkButtonIcon) return;
-                                    openLinkIcon.style.backgroundImage = 'none';
-
-                                    if (openLinkIcon.naturalHeight == 16) {
-                                        /// Google returns standard 'globe' icon
-                                        openLinkIcon.removeEventListener('load', onFaviconLoadListener);
-                                        openLinkIcon.src = openLinkButtonIcon;
-                                    } else {
-                                        openLinkIcon.classList.add('no-filter-icon');
-                                    }
-                                }
-
-                                openLinkIcon.addEventListener('load', onFaviconLoadListener);
-                                // openLinkIcon.onload = onFaviconLoadListener
-
-                                openLinkIcon.onerror = function (e) {
-                                    openLinkIcon.removeEventListener('load', onFaviconLoadListener);
-                                    openLinkIcon.src = openLinkButtonIcon;
-                                    openLinkIcon.classList.remove('no-filter-icon');
-                                    openLinkIcon.style.backgroundImage = 'none';
-                                }
-
-                                openLinkIcon.src = 'https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=24&url=https://' + linkToShow.split('/')[0];
-                            }
-                        }
-
-                    }
-                }
-
-            } else if (!selectionContainsSpaces && selectedText[0] == 'r' && selectedText[1] == '/') {
-                /// Add Reddit button
-                let redditButton = addBasicTooltipButton(chrome.i18n.getMessage('openLinkLabel'), 'https://www.redditstatic.com/desktop2x/img/favicon/apple-icon-57x57.png', function (e) {
-                    onTooltipButtonClick(e, 'https://www.reddit.com/' + selectedText);
-                }, false, 1.0);
-
-                let highlightedText = document.createElement('span');
-                highlightedText.style.display = 'inline';
-                highlightedText.textContent = ' reddit';
-                highlightedText.classList.add('color-highlight');
-                redditButton.appendChild(highlightedText);
-
-                let redditFavicon = redditButton.querySelector('.selecton-button-img-icon');
-                if (redditFavicon) redditFavicon.classList.add('no-filter-icon');
-            }
+       
     }
 
     const containsSpecialSymbols = /[`#$^*_+\\[\]{};|<>\/~]/.test(selectedText) || isFileName || (selectionLength == 1 && /[,.()]/.test(selectedText));
@@ -684,10 +460,7 @@ function addContextualButtons(callbackOnFinish) {
             addDictionaryButton(selectionLength);
         }
 
-        /// Add marker button
-        if (configs.addMarkerButton)
-            addMarkerButton();
-
+        
         /// Add button to copy link to selected text
         if (configs.addButtonToCopyLinkToText) {
             const copyTextLinkBtn = addBasicTooltipButton(chrome.i18n.getMessage('linkToTextLabel'), linkIcon, function () {
@@ -698,10 +471,7 @@ function addContextualButtons(callbackOnFinish) {
             copyTextLinkBtn.title = chrome.i18n.getMessage('linkToTextDescription');
         }
 
-        /// Collapse exceeding buttons under 'more' hover button
-        if (configs.collapseButtons)
-            collapseButtons();
-
+        
         /// Set info panel & title for the Copy button
         setCopyButtonTitle(copyButton, selectionLength, wordsCount);
 

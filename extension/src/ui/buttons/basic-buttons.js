@@ -53,11 +53,7 @@ function addBasicTooltipButtons(layout) {
                     });
                 }
 
-                if (configs.collapseButtons)
-                    try {
-                        collapseButtons();
-                    } catch (e) { if (configs.debugMode) console.log(e); }
-
+                
                 setCopyButtonTitle(copyButton);
 
             } catch (e) { if (configs.debugMode) console.log(e) }
