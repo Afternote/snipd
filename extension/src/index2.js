@@ -32,11 +32,9 @@ function initConfigs(shouldCreateTooltip = false, e) {
 
         if (configsWereLoaded == false) {
           setTimeout(function () {
-            if (configs.addActionButtonsForTextFields)
-              initMouseListeners();
-            else {
+            
               document.addEventListener('selectionchange', selectionChangeInitListener);
-            }
+            
 
             if (configs.addMarkerButton)
               initMarkersRestore();
@@ -56,13 +54,13 @@ function initConfigs(shouldCreateTooltip = false, e) {
 
 function setDocumentStyles(){
   /// Set font-size
-  document.documentElement.style.setProperty('--selecton-font-size', `${configs.useCustomStyle ? configs.fontSize : 12.5}px`);
+  document.documentElement.style.setProperty('--selecton-font-size', `12.5px`);
 
   /// styles of tooltip button icon
   document.documentElement.style.setProperty('--selecton-button-icon-height', `${configs.fontSize * 1.35}px`);
 
   /// Set border radius
-  document.documentElement.style.setProperty('--selecton-border-radius', `${configs.useCustomStyle ? configs.borderRadius : 3}px`);
+  document.documentElement.style.setProperty('--selecton-border-radius', `3px`);
 
   /// pop-up buttons border
   document.documentElement.style.setProperty('--selecton-button-border-left', configs.reverseTooltipButtonsOrder ? 'none' : '1px solid var(--selection-button-background-hover)');
@@ -142,13 +140,7 @@ function initMouseListeners() {
         /// create tooltip for selection
         setCssStyles();
         initTooltip(e);
-      } else {
-        /// no selection on page - check if textfield is focused to create 'Paste' tooltip
-        if (configs.addActionButtonsForTextFields && isTextFieldFocused) {
-          setCssStyles();
-          initTooltip(e);
-        }
-      }
+      } 
 
     }, e.detail == 3 ? 200 : 0) /// special handling for triple mouse click (paragraph selection)
   });
@@ -168,20 +160,7 @@ function initMouseListeners() {
             isDarkPage = checkSelectionToHaveDarkBackground(anchornode);
         } catch (e) { }
 
-      /// Set css styles
-      if (configs.useCustomStyle) {
-        /// Custom style from settings
-        const bgColor = isDarkPage ? configs.tooltipInvertedBackground : configs.tooltipBackground;
-        document.documentElement.style.setProperty('--selecton-background-color', bgColor);
-        // document.documentElement.style.setProperty('--selecton-background-color', 'rgba(0,0,0,0.5)');
-        getTextColorForBackground(bgColor);
-
-        document.documentElement.style.setProperty('--selection-button-foreground', isDarkTooltip ? 'rgb(255,255,255)' : 'rgb(0,0,0)');
-        document.documentElement.style.setProperty('--selection-button-background-hover', isDarkTooltip ? 'rgba(255,255,255, 0.3)' : 'rgba(0,0,0, 0.5)');
-        document.documentElement.style.setProperty('--selecton-outline-color', isDarkTooltip ? 'rgba(255,255,255, 0.2)' : 'rgba(0,0,0, 0.2)');
-        document.documentElement.style.setProperty('--selecton-info-panel-color', isDarkTooltip ? 'rgba(255,255,255, 0.7)' : 'rgba(0,0,0, 0.7)');
-        secondaryColor = isDarkTooltip ? 'lightBlue' : 'royalBlue';
-      } else {
+      
         /// Default style
         document.documentElement.style.setProperty('--selecton-background-color', isDarkPage ? '#bfbfbf' : '#333232');
         document.documentElement.style.setProperty('--selection-button-foreground', isDarkPage ? '#000000' : '#ffffff');
@@ -190,7 +169,7 @@ function initMouseListeners() {
         document.documentElement.style.setProperty('--selecton-info-panel-color', isDarkPage ? 'rgba(0,0,0, 0.7)' : 'rgba(255,255,255, 0.7)');
         secondaryColor = isDarkPage ? 'royalBlue' : 'lightBlue';
         isDarkTooltip = !isDarkPage;
-      }
+      
 
       /// Invert buttons icons when dark tooltip
       document.documentElement.style.setProperty('--selecton-button-icon-invert', `invert(${isDarkTooltip ? '100' : '0'}%)`);

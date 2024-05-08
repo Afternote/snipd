@@ -30,30 +30,8 @@ function createTooltip(e, recreated = false) {
 
         /// Special tooltip for text fields
         if (isTextFieldFocused) {
-            if (configs.addActionButtonsForTextFields == false) return;
+             return;
 
-            /// Create text field tooltip
-            setUpTooltip();
-            addBasicTooltipButtons('textfield');
-
-            if (tooltip.children.length < 2) {
-                /// Don't add tooltip with no buttons
-                tooltip.remove();
-                return;
-            }
-
-            document.body.appendChild(tooltip);
-
-            /// Check resulting DY to be out of view
-            let resultDy = e.clientY - tooltip.clientHeight - arrow.clientHeight - 9;
-            let vertOutOfView = resultDy <= 0;
-            if (vertOutOfView) {
-                resultDy = e.clientY + arrow.clientHeight;
-                arrow.classList.add('arrow-on-bottom');
-            }
-
-            showTooltip(e.clientX, resultDy);
-            return;
         }
 
         /// Hide previous tooltip if exists
@@ -88,7 +66,7 @@ function createTooltip(e, recreated = false) {
                 /// Create search tooltip for custom search options)
                 if (configs.customSearchOptionsDisplay == 'hoverCustomSearchStyle')
                     setTimeout(function () {
-                        if (configs.secondaryTooltipEnabled && configs.customSearchButtons !== undefined )
+                        if (configs.secondaryTooltipEnabled )
                             setHoverForSearchButton(searchButton);
                     }, 5);
 
@@ -123,7 +101,7 @@ function setUpTooltip(recreated = false) {
     // tooltip.style.transformOrigin = '50% 100% 0';
     tooltip.style.transformOrigin = configs.tooltipRevealEffect == 'scaleUpTooltipEffect' ? '50% 30% 0' : configs.tooltipRevealEffect == 'scaleUpFromBottomTooltipEffect' ? '50% 125% 0' : '50% 100% 0';
 
-    if (configs.useCustomStyle && configs.tooltipOpacity != 1.0 && configs.tooltipOpacity != 1 && configs.fullOpacityOnHover) {
+    if (configs.tooltipOpacity != 1.0 && configs.tooltipOpacity != 1 && configs.fullOpacityOnHover) {
         tooltip.onmouseover = function () {
             setTimeout(function () {
                 if (dontShowTooltip == true) return;
@@ -156,28 +134,11 @@ function setUpTooltip(recreated = false) {
         makeTooltipElementDraggable(arrow);
     }
 
-    /// Apply custom stylings
-    if (configs.useCustomStyle) {
-        if (configs.addTooltipShadow) {
-            tooltip.style.boxShadow = `0 2px 7px rgba(0,0,0,${configs.shadowOpacity})`;
-            arrow.style.boxShadow = `1px 1px 3px rgba(0,0,0,${configs.shadowOpacity / 1.5})`;
-        }
-        /// Set rounded corners for buttons
-        if (configs.verticalLayoutTooltip) {
-            firstButtonBorderRadius = `0px 0px ${configs.borderRadius / 1.5}px ${configs.borderRadius / 1.5}px`;
-            lastButtonBorderRadius = `${configs.borderRadius / 1.5}px ${configs.borderRadius / 1.5}px 0px 0px`;
-        } else {
-            firstButtonBorderRadius = `${configs.borderRadius / 1.5}px 0px 0px ${configs.borderRadius / 1.5}px`;
-            lastButtonBorderRadius = `0px ${configs.borderRadius / 1.5}px ${configs.borderRadius / 1.5}px 0px`;
-        }
-
-        onlyButtonBorderRadius = `${configs.borderRadius / 1.5}px`;
-    } else {
+    
         /// Set default corners for buttons
         firstButtonBorderRadius = '3px 0px 0px 3px';
         lastButtonBorderRadius = '0px 3px 3px 0px';
         onlyButtonBorderRadius = '3px';
-    }
 
     if (configs.debugMode)
         console.log('Selecton tooltip was created');
@@ -281,7 +242,7 @@ function calculateTooltipPosition(e) {
 
 function showTooltip(dx, dy) {
     tooltip.style.pointerEvents = 'none';
-    tooltip.style.opacity = configs.useCustomStyle ? configs.tooltipOpacity : 1.0;
+    tooltip.style.opacity =  1.0;
     tooltip.style.top = `${dy}px`;
     tooltip.style.left = `${dx}px`;
 

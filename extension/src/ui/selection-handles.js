@@ -89,10 +89,10 @@ function addDragHandle(dragHandleIndex, selStartDimensions, selEndDimensions) {
         dragHandle.appendChild(circleDiv);
 
         setTimeout(function () {
-            dragHandle.style.opacity = configs.useCustomStyle ? configs.tooltipOpacity : 1.0;
+            dragHandle.style.opacity =  1.0;
         }, 1);
 
-        if (configs.useCustomStyle && configs.tooltipOpacity != 1.0 && configs.tooltipOpacity != 1 && configs.fullOpacityOnHover) {
+        if (configs.tooltipOpacity != 1.0 && configs.tooltipOpacity != 1 && configs.fullOpacityOnHover) {
             dragHandle.onmouseover = function (event) {
                 setTimeout(function () {
                     if (dontShowTooltip == true) return;

@@ -29,7 +29,7 @@ function createHoverPanelForButton(button, initialHtml, onHoverCallback, reverse
     /// Set panel
     let panel = document.createElement('div');
     panel.className = 'hover-vertical-tooltip selecton-entity';
-    panel.style.borderRadius = `${configs.useCustomStyle ? configs.borderRadius : 3}px`;
+    panel.style.borderRadius = `3px`;
     panel.style.opacity = 0;
     // panel.style.visibility = 'collapse';
     panel.style.width = '0px';
