@@ -25,10 +25,8 @@ function onTooltipButtonClick(e, url, text) {
                 hideTooltip();
                 removeSelectionOnPage();
 
-                if (configs.convertResultClickAction == 'copy' && text)
-                    copyManuallyToClipboard(text);
-                else
-                    chrome.runtime.sendMessage({ type: 'selecton-open-new-tab', url: url, focused: configs.leftClickBackgroundTab ? false : true });
+                
+                chrome.runtime.sendMessage({ type: 'selecton-open-new-tab', url: url, focused: configs.leftClickBackgroundTab ? false : true });
 
             } else if (evt.button == 1) {
                 /// Middle button click
@@ -106,18 +104,7 @@ function checkTooltipForCollidingWithSideEdges() {
             if (configs.debugMode)
                 console.log('Tooltip is not colliding with side edges');
 
-            /// correct tooltip's position if 'more' button is used
-            if (configs.correctTooltipPositionByMoreButtonWidth) {
-                const attachedMoreButton = tooltip.querySelector('.more-button');
-                if (!attachedMoreButton) return;
-                const moreButtonWidth = attachedMoreButton.clientWidth;
-                tooltip.style.left = parseInt(tooltip.style.left.replaceAll('px', '')) + (moreButtonWidth / 2) + 'px';
-
-                if (configs.showTooltipArrow && arrow) {
-                    const newLeftPercentForArrow = (moreButtonWidth / 2) / tooltipWidth * 100;
-                    arrow.style.left = `${50 - newLeftPercentForArrow}%`;
-                }
-            }
+            
         }
     }
 }
@@ -162,12 +149,7 @@ function setCopyButtonTitle(copyButton, symbols, words) {
     let infoString = `${symbols ?? selectedText.length} ${chrome.i18n.getMessage('symbolsCount').toLowerCase()}`;
     if (words && words > 1) infoString += ` · ${words} ${chrome.i18n.getMessage('wordsCount').toLowerCase()}`;
 
-    if (configs.showStatsOnCopyButtonHover)
-        setTimeout(function () {
-            if (copyButton.isConnected)
-                copyButton.title = (configs.buttonsStyle == 'onlyicon' ? copyLabel + ' ' : '') + infoString;
-        }, 3)
-
+   
     /// add info panel
     if (configs.showInfoPanel) {
         infoPanel = document.createElement('div');

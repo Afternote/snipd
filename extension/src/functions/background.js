@@ -36,32 +36,6 @@ chrome.runtime.onMessage.addListener(
 );
 
 
-/// Show notification on extension update
-chrome.runtime.onInstalled.addListener(function (details) {
-    if (details.reason == 'update' && !details.temporary) {
-        // show notification on extension update
-        let shouldShowNotification = true;
-        const storageKey = 'showUpdateNotification';
-
-        chrome.storage.local.get([storageKey], function (val) {
-            if (val[storageKey] !== null && val[storageKey] !== undefined)
-                shouldShowNotification = val[storageKey];
-
-            if (shouldShowNotification) {
-                // get manifest for new version number
-                const manifest = chrome.runtime.getManifest();
-
-                // show update notification and open changelog on click
-                displayNotification(
-                    chrome.i18n.getMessage('updateNotificationTitle', manifest.version),
-                    chrome.i18n.getMessage('updateNotificationMessage'),
-                    "https://github.com/emvaized/selecton-extension/blob/master/CHANGELOG.md"
-                );
-            }
-        });
-    }
-});
-
 /**
  * displays a browser notification
  * opens an URL on click if specified

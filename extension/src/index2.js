@@ -36,8 +36,6 @@ function initConfigs(shouldCreateTooltip = false, e) {
               document.addEventListener('selectionchange', selectionChangeInitListener);
             
 
-            if (configs.addMarkerButton)
-              initMarkersRestore();
           }, 1);
 
           configsWereLoaded = true;
@@ -153,15 +151,7 @@ function initMouseListeners() {
     setTimeout(function () {
       let isDarkPage = false;
 
-      if (configs.invertColorOnDarkWebsite)
-        try {
-          const anchornode = selection.anchorNode;
-          if (anchornode)
-            isDarkPage = checkSelectionToHaveDarkBackground(anchornode);
-        } catch (e) { }
-
       
-        /// Default style
         document.documentElement.style.setProperty('--selecton-background-color', isDarkPage ? '#bfbfbf' : '#333232');
         document.documentElement.style.setProperty('--selection-button-foreground', isDarkPage ? '#000000' : '#ffffff');
         document.documentElement.style.setProperty('--selection-button-background-hover', isDarkPage ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.3)');
@@ -180,11 +170,9 @@ function initMouseListeners() {
   }
 
   function initTooltip(e) {
-    if (configs.applyConfigsImmediately) {
-      initConfigs(true, e); 
-    } else {
+    
       createTooltip(e);
-    }
+    
 
     /// Listener to hide tooltip when cursor moves away
     if (configs.hideTooltipWhenCursorMovesAway && configs.tooltipPosition == 'overCursor') {

@@ -100,7 +100,7 @@ function createHoverPanelForButton(button, initialHtml, onHoverCallback, reverse
 
     /// Set mouse listeners
     if (button) {
-        let delayToRevealOnHover = revealAfterDelay ? (configs.delayToRevealHoverPanels ?? 400) : 0;
+        let delayToRevealOnHover = revealAfterDelay ? ( 400) : 0;
         let panelIsPinned = false;
 
         if (pinOnClick)

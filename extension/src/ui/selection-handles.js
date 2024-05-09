@@ -73,18 +73,9 @@ function addDragHandle(dragHandleIndex, selStartDimensions, selEndDimensions) {
             circleDiv.style.top = `-${circleHeight - 1}px`;
         else circleDiv.style.bottom = `-${selectionHandleLineHeight - 1}px`;
 
-        /// Set the handle style
-        if (configs.dragHandleStyle == 'triangle') {
-            circleDiv.classList.add('draghandle-triangle');
-
-            if (dragHandleIndex == 0) {
-                circleDiv.style.clipPath = 'polygon(0% 0%, 100% 100%, 0% 100%)';
-                circleDiv.style.right = `${-lineWidth}px`;
-            } else
-                circleDiv.style.clipPath = 'polygon(0% 0%, 100% 100%, 100% 0%)';
-        } else {
-            circleDiv.style.right = `${(circleHeight / 2) - (lineWidth / 2)}px`;
-        }
+        
+        circleDiv.style.right = `${(circleHeight / 2) - (lineWidth / 2)}px`;
+        
 
         dragHandle.appendChild(circleDiv);
 
