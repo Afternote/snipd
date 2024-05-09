@@ -12,10 +12,7 @@ function returnTooltipRevealTransform(endPosition = true, shouldShift = true) {
 }
 
 function onTooltipButtonClick(e, url, text) {
-    // if (configs.addDragHandles)
-    //     hideDragHandles();
-
-    /// Open new tab with passed url
+    
     try {
         const evt = e || window.event;
 
@@ -109,26 +106,6 @@ function checkTooltipForCollidingWithSideEdges() {
     }
 }
 
-function createImageIconForButton(url, title, shouldAlwaysAddSpacing = false, opacity) {
-    let container = document.createDocumentFragment();
-
-    let img = document.createElement('img');
-    img.setAttribute('src', url);
-    img.setAttribute('class', 'selecton-button-img-icon');
-
-    const onlyIconStyle = configs.buttonsStyle == 'onlyicon';
-    img.style.opacity = opacity ?? (configs.buttonsStyle == 'onlylabel' ? 0.65 : onlyIconStyle ? 0.75 : 0.5);
-    if (!onlyIconStyle || shouldAlwaysAddSpacing) img.style.marginRight = '3px';
-    container.appendChild(img);
-
-    if (title != undefined && title != '') {
-        let label = document.createElement('span');
-        label.textContent = title;
-        container.appendChild(label);
-    }
-
-    return container;
-}
 
 function setBorderRadiusForSideButtons(parent, applyOnlyToButtons = true) {
     /// Set border radius for first and last buttons of horizontal tooltip
@@ -145,34 +122,7 @@ function setBorderRadiusForSideButtons(parent, applyOnlyToButtons = true) {
     // }, 50);
 }
 
-function setCopyButtonTitle(copyButton, symbols, words) {
-    let infoString = `${symbols ?? selectedText.length} ${chrome.i18n.getMessage('symbolsCount').toLowerCase()}`;
-    if (words && words > 1) infoString += ` · ${words} ${chrome.i18n.getMessage('wordsCount').toLowerCase()}`;
 
-   
-    /// add info panel
-    if (configs.showInfoPanel) {
-        infoPanel = document.createElement('div');
-        infoPanel.className = 'selecton-info-panel';
-        infoPanel.innerText = infoString;
-
-        configs.verticalLayoutTooltip ? tooltip.appendChild(infoPanel) : tooltip.insertBefore(infoPanel, tooltip.children[1]);
-        makeTooltipElementDraggable(infoPanel, false);
-
-        if (selectedTextIsCode == true) {
-            // setTimeout(function () {
-            //     if (!tooltipIsShown) return;
-
-            /// Detect language of code (currently disabled)
-            // let detectedLang = detectCodeLanguage(selectedText);
-            // if (detectedLang && detectedLang !== 'Unknown')
-            //     infoPanel.innerText += ' · ' + detectedLang;
-            // else
-            infoPanel.innerText += ' · code';
-            // }, 5)
-        }
-    }
-}
 
 function addBasicTooltipButton(label, icon, onClick, isFirstButton = false, iconOpacity) {
     /// Used for basic button with action label + icon, when enabled
@@ -181,8 +131,7 @@ function addBasicTooltipButton(label, icon, onClick, isFirstButton = false, icon
 
     if (configs.buttonsStyle == 'onlyicon' && configs.showButtonLabelOnHover)
         button.setAttribute('title', label);
-    if (addButtonIcons)
-        button.appendChild(createImageIconForButton(icon, configs.buttonsStyle == 'onlyicon' ? '' : label, false, iconOpacity));
+   
     else
         button.textContent = label;
 

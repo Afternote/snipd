@@ -1,30 +1,7 @@
-/// Functions used for buttons with on-hover functionality
-/// First of all, Live translate and Dictionary buttons
-
-function addAstrixToHoverButton(button) {
-    if (configs.showDotForHoverButtons == false) return;
-
-    /// add astrix indicator when hover enabled
-    const astrix = document.createElement('span');
-    astrix.className = 'selecton-hover-button-indicator';
-    button.appendChild(astrix);
-    return astrix;
-}
-
-function showHoverIndicator(indicator) {
-    if (configs.showDotForHoverButtons == false) return;
-    indicator.style.opacity = 0.3;
-}
-
-function hideHoverIndicator(indicator) {
-    if (configs.showDotForHoverButtons == false) return;
-    indicator.style.opacity = 0;
-}
 
 
 function createHoverPanelForButton(button, initialHtml, onHoverCallback, reverseOrder = false, revealAfterDelay = true, pinOnClick = false, unknownHeight = true) {
     let timerToRemovePanel, timeoutToRevealPanel;
-    let hoverIndicator = revealAfterDelay ? addAstrixToHoverButton(button) : undefined;
 
     /// Set panel
     let panel = document.createElement('div');
@@ -83,14 +60,6 @@ function createHoverPanelForButton(button, initialHtml, onHoverCallback, reverse
             if (unknownHeight)
                 button.classList.add(panelOnBottom ? 'button-with-bottom-hover-panel' : 'button-with-top-hover-panel');
 
-            /// If button is not alone in the tooltip, and located in the start, align hover panel to the left
-            // if (!reverseOrder) {
-            //     if (!button.classList.contains('button-with-border') && button.parentNode.children.length > 1) {
-            //         panel.style.left = '0px';
-            //         panel.style.right = 'unset';
-            //         dxTransformValue = '-2px';
-            //     }
-            // }
         }
 
         /// Set initial transform position for panel
@@ -119,7 +88,6 @@ function createHoverPanelForButton(button, initialHtml, onHoverCallback, reverse
 
             timeoutToRevealPanel = setTimeout(function () {
                 revealHoverPanel(panel, dxTransformValue);
-                if (revealAfterDelay) hideHoverIndicator(hoverIndicator);
                 if (onHoverCallback) onHoverCallback();
             }, delayToRevealOnHover);
         });
@@ -132,7 +100,6 @@ function createHoverPanelForButton(button, initialHtml, onHoverCallback, reverse
                 if (!panel) return;
 
                 hideHoverPanel(panel, dxTransformValue, panelOnBottom);
-                if (revealAfterDelay) showHoverIndicator(hoverIndicator);
             }, 100);
         });
 

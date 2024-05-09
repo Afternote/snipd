@@ -1,11 +1,5 @@
 function setDragHandles(selStartDimensions, selEndDimensions) {
-    /// Hide existing drag handles
-    //hideDragHandles();
-
-    /// Dont add drag handles if they are already added
-    // let existingDragHandle = document.querySelector('.selection-tooltip-draghandle');
-    // if (existingDragHandle !== null && existingDragHandle !== undefined) return;
-
+    
     let existingDragHandle = document.getElementById('selecton-draghandle-0');
     if (existingDragHandle == null || existingDragHandle == undefined)
         addDragHandle(0, selStartDimensions, selEndDimensions);
@@ -128,14 +122,6 @@ function addDragHandle(dragHandleIndex, selStartDimensions, selEndDimensions) {
                 try {
                     e.preventDefault();
 
-                    /// Dynamically adapt handler height to last selected word
-                    // var lastWordLineHeight = window.getComputedStyle(dragHandleIndex == 0 ? selection.anchorNode.parentElement : selection.focusNode.parentElement, null).getPropertyValue('line-height');
-                    // lastWordLineHeight = parseInt(lastWordLineHeight.replaceAll('px', '')) + 5;
-                    // lineHeight = lastWordLineHeight;
-                    // dragHandle.style.height = `${lastWordLineHeight}px`;
-                    // circleDiv.style.bottom = `${-lastWordLineHeight - 1}px;`;
-
-                    /// Calculate deltas
                     const deltaXFromInitial = dragHandleIndex == 0 ? (selStartDimensions.dx - e.clientX) : (selEndDimensions.dx - e.clientX);
                     const deltaYFromInitial = dragHandleIndex == 0 ? (selStartDimensions.dy - e.clientY) : (e.clientY - selEndDimensions.dy);
 
@@ -225,10 +211,6 @@ function addDragHandle(dragHandleIndex, selStartDimensions, selEndDimensions) {
 
                         extendSelectionByWord(windowSelection, dragHandleIndex)
                     }
-
-                    /// old fix - left it here in case needed in future
-                    // if (configs.applyConfigsImmediately == false)
-                    //     createTooltip(e);
 
                     setTimeout(function () {
                         isDraggingDragHandle = false;
