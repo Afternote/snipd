@@ -7,12 +7,20 @@
   "icons": {
     "48": "images/snipdLogo8.png"
   },
-  "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage",  "sidePanel",     "clipboardRead"
-],
-  "host_permissions": ["file:///*", "https://*/*"],
-
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "contextMenus",
+    "scripting",
+    "storage",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "file:///*",
+    "https://*/*"
+  ],
   "background": {
-    "service_worker": "index.js"
+    "service_worker": "src/functions/background.js"
   },
   "action": {
     "default_title": "Click to open panel"
@@ -24,7 +32,6 @@
   "side_panel": {
     "default_path": "popup/index.html"
   },
-
   "content_scripts": [
     {
       "matches": [
@@ -40,7 +47,7 @@
         "src/ui/buttons/hover-buttons/search-button.js",
         "src/ui/selection-handles.js",
         "src/ui/tooltip.js",
-        "src/index2.js"
+        "src/index.js"
       ],
       "css": [
         "src/index.css"
@@ -48,12 +55,5 @@
       "run_at": "document_start",
       "all_frames": true
     }
-  ],
-
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "selection_action@emvaized.com"
-    }
-  }
-  
+  ]
 }
