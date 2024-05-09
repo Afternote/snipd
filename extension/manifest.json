@@ -7,11 +7,20 @@
   "icons": {
     "48": "images/snipdLogo8.png"
   },
-  "permissions": ["tabs", "activeTab", "contextMenus", "scripting", "storage",  "sidePanel"],
-  "host_permissions": ["file:///*", "https://*/*"],
-
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "contextMenus",
+    "scripting",
+    "storage",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "file:///*",
+    "https://*/*"
+  ],
   "background": {
-    "service_worker": "index.js"
+    "service_worker": "src/functions/background.js"
   },
   "action": {
     "default_title": "Click to open panel"
@@ -22,5 +31,29 @@
   },
   "side_panel": {
     "default_path": "popup/index.html"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/data/configs.js",
+        "src/data/variables.js",
+        "src/functions/selection-functions.js",
+        "src/functions/tooltip-functions.js",
+        "src/functions/hover-buttons-functions.js",
+        "src/ui/buttons/basic-buttons.js",
+        "src/ui/buttons/hover-buttons/search-button.js",
+        "src/ui/selection-handles.js",
+        "src/ui/tooltip.js",
+        "src/index.js"
+      ],
+      "css": [
+        "src/index.css"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
 }

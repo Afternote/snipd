@@ -1,23 +1,21 @@
-/**
- * @type typeof chrome
- */
+
 let ext_api = chrome;
 const ID_ADD_SELECTED_TEXT_TO_COLLECTION = "add_selected_text_to_collection";
 
-chrome.tabs.onActivated.addListener(async function(activeInfo) {
+chrome.tabs.onActivated.addListener(async function (activeInfo) {
   await chrome.sidePanel.setOptions({
-    enabled: false
+    enabled: false,
   });
   await chrome.sidePanel.setOptions({
-    enabled: true
+    enabled: true,
   });
 });
-chrome.runtime.onConnect.addListener(function (port) {
-  if (port.name === 'mySidepanel') {
-    port.onDisconnect.addListener(async () => {
-      console.log('Sidepanel closed.');
-      chrome.storage.local.remove(["snip_content", "snip_type"]);
 
+chrome.runtime.onConnect.addListener(function (port) {
+  if (port.name === "mySidepanel") {
+    port.onDisconnect.addListener(async () => {
+      console.log("Sidepanel closed.");
+      chrome.storage.local.remove(["snip_content", "snip_type"]);
     });
   }
 });
@@ -25,27 +23,25 @@ chrome.runtime.onConnect.addListener(function (port) {
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
     chrome.tabs.create({
-      url: "https://snipd-landing.vercel.app/"
+      url: "https://snipd-landing.vercel.app/",
     });
-  } 
+  }
 });
 
-chrome.action.onClicked.addListener(async function(){
+chrome.action.onClicked.addListener(async function () {
   await chrome.sidePanel.setOptions({
-    enabled: true
+    enabled: true,
   });
   await chrome.sidePanel
-  .setPanelBehavior({  
-    
-    openPanelOnActionClick: true })
-  .catch((error) => console.error(error));
-
-}
-)
+    .setPanelBehavior({
+      openPanelOnActionClick: true,
+    })
+    .catch((error) => console.error(error));
+});
 chrome.sidePanel
-  .setPanelBehavior({  
-    
-    openPanelOnActionClick: true })
+  .setPanelBehavior({
+    openPanelOnActionClick: true,
+  })
   .catch((error) => console.error(error));
 
 ext_api.contextMenus.create({
@@ -54,7 +50,6 @@ ext_api.contextMenus.create({
   id: ID_ADD_SELECTED_TEXT_TO_COLLECTION,
 });
 
-//context menu item for image
 ext_api.contextMenus.create({
   title: "Add Image to Collection",
   contexts: ["image"],
@@ -69,7 +64,7 @@ ext_api.contextMenus.create({
 
 ext_api.contextMenus.onClicked.addListener((info, tab) => {
   chrome.sidePanel.setOptions({
-    enabled: true
+    enabled: true,
   });
   switch (info.menuItemId) {
     case "add_image_to_collection":
@@ -82,13 +77,12 @@ ext_api.contextMenus.onClicked.addListener((info, tab) => {
 
     case "add_selected_text_to_collection":
       chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-          chrome.storage.local.set({
-            snip_type: "text",
-            snip_content: info.selectionText,
-          });
+        chrome.storage.local.set({
+          snip_type: "text",
+          snip_content: info.selectionText,
+        });
 
-          chrome.sidePanel.open({ windowId: tabs[0].windowId });
-        
+        chrome.sidePanel.open({ windowId: tabs[0].windowId });
       });
       break;
 
@@ -102,12 +96,10 @@ ext_api.contextMenus.onClicked.addListener((info, tab) => {
   }
 });
 
-// Make a storage array if it doesn't exist
 ext_api.storage.local.get(["snipd_store"]).then((e) => {
   if (!e.snipd_store) ext_api.storage.local.set({ snipd_store: [] });
 });
 
-// Make a storage array if it doesn't exist
 ext_api.storage.local.get(["snipd_categories"]).then((e) => {
   if (!e.snipd_categories) ext_api.storage.local.set({ snipd_categories: ["Default"] });
 });

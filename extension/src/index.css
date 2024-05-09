@@ -1,0 +1,433 @@
+/* Tooltip */
+.selection-tooltip {
+  all: revert;
+  background: var(--selecton-background-color);
+  opacity: 0;
+  display: inline-block;
+  position: absolute;
+  padding: var(--selecton-tooltip-inner-padding);
+  color: white;
+  border-radius: var(--selecton-border-radius);
+  font-stretch: condensed;
+  text-decoration: none;
+  z-index: 100001 !important;
+  /* max-height: 24px !important; */
+  margin: 0px !important;
+  line-height: 1.0 !important;
+  box-sizing: unset !important;
+  border: 0.25px solid var(--selecton-outline-color);
+  min-width: fit-content !important;
+  white-space: nowrap !important;
+  /* backdrop-filter: blur(5px) !important; */
+}
+
+/* Blur experiments */
+/* .selection-tooltip::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  backdrop-filter: blur(5px) !important;
+}
+
+.hover-vertical-tooltip {
+  backdrop-filter: blur(5px) !important;
+}*/
+
+
+/* Tooltip arrow */
+.selection-tooltip-arrow {
+  z-index: 100000 !important;
+  height: 15px;
+  width: 25px;
+  overflow: hidden;
+  position: absolute;
+  background: none !important;
+  box-shadow: none !important;
+  left: 50%;
+  top: 100%;
+  transform: translate(-12.5px, -1px);
+}
+
+.arrow-on-bottom {
+  top: unset;
+  bottom: 100%;
+  transform: rotate(180deg) translate(12.5px, -1px);
+}
+
+/* .selection-tooltip-arrow-child { */
+.selection-tooltip-arrow::after {
+  content: "";
+  position: absolute;
+  left: 25%;
+  bottom: 50%;
+  width: 15px;
+  height: 15px;
+  transform: rotate(45deg);
+  border-bottom: 0.25px solid var(--selecton-outline-color);
+  border-right: 0.25px solid var(--selecton-outline-color);
+  background: var(--selecton-background-color);
+
+  /* apply clip-path for future blurred tooltip option */
+  /* clip-path: polygon(0% 100%, 100% 0%, 100% 100%) !important; */
+}
+
+/* Buttons */
+.selection-popup-button {
+  all: revert;
+  font: status-bar !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  color: var(--selection-button-foreground) !important;
+  background-color: transparent !important;
+  cursor: pointer;
+  border: none !important;
+  box-shadow: none !important;
+  padding: var(--selecton-button-padding) !important;
+  vertical-align: top !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  margin: 0px !important;
+  transition: background-color 25ms ease-in-out !important;
+  text-transform: none !important;
+  outline: none !important;
+  text-align: center !important;
+  font-size: var(--selecton-font-size) !important;
+  line-height: 1.2 !important;
+  position: relative;
+}
+
+.tooltip-with-icons .selection-popup-button span {
+  vertical-align: middle !important;
+}
+
+.color-highlight {
+  color: var(--selecton-secondary-color) !important;
+}
+
+.selection-popup-button:hover,
+.highlighted-popup-button {
+  all: revert;
+  background-color: var(--selection-button-background-hover) !important;
+  background-clip: padding-box !important;
+  cursor: pointer;
+  color: white !important;
+  transition: background-color 25ms ease-in-out !important;
+  position: relative;
+}
+
+
+/* Clip content in buttons with hover panels */
+.button-with-top-hover-panel {
+  clip-path: polygon(-2000% -2000%, 2000% -2000%, 2000% 100%, -2000% 100%) !important;
+}
+
+.button-with-bottom-hover-panel {
+  clip-path: polygon(-2000% 0%, 2000% 0%, 2000% 2000%, -2000% 2000%) !important;
+}
+
+.hover-vertical-tooltip {
+  all: revert;
+  transition: transform var(--selecton-anim-duration) ease-out, opacity var(--selecton-anim-duration) ease-out !important;
+  opacity: 0.0;
+  /* z-index: 100001 !important; */
+  z-index: -1;
+  position: absolute;
+  margin: 0px !important;
+  padding: 6px !important;
+  line-height: 1.0 !important;
+  border: 0.25px solid var(--selecton-outline-color);
+  background: var(--selecton-background-color) !important;
+  font-size: var(--selecton-font-size) !important;
+  max-width: 400%;
+  pointer-events: none;
+  color: var(--selection-button-foreground);
+  white-space: normal !important;
+}
+
+.no-padding-tooltip {
+  padding: 0px !important;
+}
+
+.default-padding-tooltip {
+  padding: 2px !important;
+}
+
+/* Color accent for fetch results panel (translate, dictionary) */
+.selecton-live-translation {
+  color: var(--selecton-secondary-color) !important;
+}
+
+/* Search tooltip with custom search options */
+.custom-category-button {
+  all: revert;
+  padding: 6px 8px;
+  vertical-align: middle !important;
+  height: max-content;
+  font-size: var(--selecton-font-size) !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  color: var(--selection-button-foreground);
+}
+
+.custom-category-button:hover {
+  cursor: pointer;
+  background-color: var(--selection-button-background-hover) !important;
+  color: white;
+}
+
+.custom-category-button span {
+  display: inline;
+  vertical-align: top !important;
+  opacity: 0.75;
+  padding: 2px 5px !important;
+}
+
+.custom-category-button img {
+  all: revert;
+  filter: none !important;
+}
+
+.selection-popup-color-preview-circle {
+  max-width: 9px;
+  max-height: 9px;
+  padding: 0px 7.5px !important;
+  border-radius: 50%;
+  border: solid 1px var(--selection-button-background-hover);
+  display: inline;
+}
+
+.button-with-border {
+  border-left: var(--selecton-button-border-left) !important;
+  border-right: var(--selecton-button-border-right) !important;
+}
+
+.hover-vertical-tooltip .button-with-border {
+  border-right: var(--selecton-button-border-left) !important;
+  border-left: var(--selecton-button-border-right) !important;
+}
+
+/* Highter z-index for search tooltip on bottom */
+.higher-z-index {
+  z-index: 100002 !important;
+}
+
+.selection-tooltip-draghandle {
+  position: fixed;
+  z-index: 99998;
+  left: 0px;
+  top: 0px;
+  opacity: 0;
+  /* background: var(--selecton-background-color) !important; */
+}
+
+.selection-tooltip-draghandle-line {
+  background: var(--selecton-background-color);
+  opacity: 0.7;
+  position: absolute;
+  border-radius: 4px;
+  transition: height 200ms ease;
+}
+
+.selection-tooltip-draghandle-circle {
+  border: 0.25px solid var(--selecton-outline-color);
+  z-index: 99998;
+  border-radius: 50%;
+  background: var(--selecton-background-color);
+  position: relative;
+  height: var(--selecton-handle-circle-radius);
+  width: var(--selecton-handle-circle-radius);
+}
+
+.draghandle-triangle {
+  border-radius: 4px;
+  transform: translate(-50%) rotate(45deg);
+}
+
+.selecton-button-img-icon {
+  all: revert;
+  fill: white;
+  vertical-align: top !important;
+  display: unset !important;
+  transform: translate(0, -1px);
+  height: var(--selecton-button-icon-height);
+  max-height: var(--selecton-button-icon-height) !important;
+  filter: var(--selecton-button-icon-invert) !important;
+  width: unset !important;
+  background-color: transparent;
+  width: var(--selecton-button-icon-height) !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+}
+
+.no-filter-icon {
+  filter: none !important;
+  opacity: 1.0 !important;
+}
+
+.category-tooltip-icon {
+  filter: none;
+  width: var(--selecton-search-tooltip-icon-size);
+  height: var(--selecton-search-tooltip-icon-size) !important;
+  max-height: var(--selecton-search-tooltip-icon-size);
+  vertical-align: top !important;
+}
+
+.selecton-hover-button-indicator {
+  opacity: 0.3;
+  position: absolute;
+  right: 4px !important;
+  top: 2px !important;
+  width: 4px !important;
+  height: 4px !important;
+  transform: translate(0px, 0.5px);
+  margin: 0 auto !important;
+  background-color: var(--selection-button-foreground) !important;
+  border-radius: 50% !important;
+  transition: opacity 100ms ease !important;
+  pointer-events: none;
+}
+
+/* Marker */
+.marker-scrollbar-hint {
+  position: fixed;
+  right: 1px;
+  outline: 1px solid lightgrey;
+  width: 15px !important;
+  cursor: pointer;
+  transition: width 200ms ease-in-out;
+  z-index: 2147483646 !important;
+  opacity: 0.55;
+}
+
+.marker-scrollbar-hint:hover {
+  opacity: 1.0;
+}
+
+.marker-scrollbar-hint .marker-scrollbar-tooltip {
+  visibility: hidden;
+  width: 200px;
+  background-color: #555 !important;
+  color: white !important;
+  text-align: center;
+  padding: 5px 3px;
+  border-radius: 6px;
+  padding: 12px !important;
+  pointer-events: none !important;
+  position: absolute;
+  z-index: 2147483647 !important;
+  bottom: 0;
+  right: 120%;
+  width: max-content !important;
+  text-align: start !important;
+  font-size: 12px !important;
+  opacity: 0;
+  transition: opacity 250ms, visibility 250ms !important;
+}
+
+.marker-scrollbar-tooltip-bottom {
+  bottom: unset !important;
+  top: 0px !important;
+}
+
+.marker-scrollbar-hint:hover .marker-scrollbar-tooltip {
+  visibility: visible;
+  opacity: 0.8;
+  transition-delay: 100ms;
+}
+
+/* Marker delete button */
+.marker-highlight-delete {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  background: #555;
+  color: white;
+  border-radius: 2px;
+  border: 1px solid lightgray;
+  z-index: 999999999999 !important;
+  opacity: 0;
+  font-size: 14px;
+  transition: opacity 200ms;
+  padding: 0px 4px;
+  cursor: pointer;
+}
+
+.selecton-marker-highlight:hover .marker-highlight-delete {
+  opacity: 0.85;
+}
+
+.marker-highlight-delete:hover {
+  background: red;
+}
+
+
+/* Vertical layout for tooltip */
+.selection-tooltip.vertical-layout-tooltip {
+  max-height: unset !important;
+}
+
+.selection-tooltip.reversed-order {
+  display: flex !important;
+  flex-direction: column-reverse !important;
+}
+
+.selection-tooltip.reversed-order .selection-popup-button {
+  flex: 0 0 auto !important;
+}
+
+.vertical-layout-tooltip .selection-popup-button {
+  display: block !important;
+  width: 100% !important;
+  clip-path: none !important;
+}
+
+.vertical-layout-tooltip .hover-vertical-tooltip .selection-popup-button {
+  border-radius: unset !important;
+}
+
+.vertical-layout-tooltip .selection-popup-button img {
+  float: left;
+}
+
+.vertical-layout-tooltip .selecton-hover-button-indicator {
+  top: 50% !important;
+  right: 2px !important;
+}
+
+.vertical-layout-tooltip .hover-vertical-tooltip {
+  left: 101% !important;
+  top: -2px !important;
+  height: fit-content !important;
+  max-height: fit-content !important;
+}
+
+.vertical-layout-tooltip .button-with-border {
+  border-left: none !important;
+  border-right: none !important;
+  border-top: 1px solid var(--selection-button-background-hover) !important;
+}
+
+.vertical-layout-tooltip.reversed-order .button-with-border {
+  border-top: unset !important;
+  border-bottom: 1px solid var(--selection-button-background-hover) !important;
+}
+
+
+/* Info panel */
+.selecton-info-panel {
+  text-align: center !important;
+  font: status-bar !important;
+  font-size: 9px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  /* color: rgba(256, 256, 256, 0.7); */
+  color: var(--selecton-info-panel-color) !important;
+  border-bottom: 1px solid var(--selection-button-background-hover) !important;
+  padding: 0 0 2px 0 !important;
+}
+
+.info-panel-on-bottom {
+  border-bottom: unset !important;
+  border-top: 1px solid var(--selection-button-background-hover) !important;
+  padding: 2px 0 0 0 !important;
+}
