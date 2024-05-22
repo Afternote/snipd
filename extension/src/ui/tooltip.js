@@ -89,7 +89,7 @@ function setUpTooltip(recreated = false) {
     tooltip = document.createElement('div');
     tooltip.className = 'selection-tooltip selecton-entity';
     if (configs.verticalLayoutTooltip) {
-        tooltip.classList.add('vertical-layout-tooltip');
+        // tooltip.classList.add('vertical-layout-tooltip');
         tooltip.classList.add('reversed-order');
     }
     if (configs.buttonsStyle == 'onlyicon' || configs.buttonsStyle == 'iconlabel') tooltip.classList.add('tooltip-with-icons');

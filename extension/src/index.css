@@ -7,7 +7,7 @@
   position: absolute;
   padding: var(--selecton-tooltip-inner-padding);
   color: white;
-  border-radius: var(--selecton-border-radius);
+  border-radius: 100px;
   font-stretch: condensed;
   text-decoration: none;
   z-index: 100001 !important;
@@ -18,7 +18,6 @@
   border: 0.25px solid var(--selecton-outline-color);
   min-width: fit-content !important;
   white-space: nowrap !important;
-  /* backdrop-filter: blur(5px) !important; */
 }
 
 /* Blur experiments */
