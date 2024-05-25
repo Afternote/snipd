@@ -1,3 +1,4 @@
+
 function returnTooltipRevealTransform(endPosition = true, shouldShift = true) {
   const dxOffset = shouldShift ? "-50%" : "0";
   const dyPercentOffset = configs.verticalLayoutTooltip ? 30 : 100;
@@ -119,7 +120,6 @@ function checkTooltipForCollidingWithSideEdges() {
 
 function setBorderRadiusForSideButtons(parent, applyOnlyToButtons = true) {
   /// Set border radius for first and last buttons of horizontal tooltip
-  // setTimeout(function () {
   const children = applyOnlyToButtons
     ? parent.querySelectorAll(".selection-tooltip > .selection-popup-button")
     : parent.children;
@@ -135,7 +135,6 @@ function setBorderRadiusForSideButtons(parent, applyOnlyToButtons = true) {
       ? firstButtonBorderRadius
       : lastButtonBorderRadius;
   }
-  // }, 50);
 }
 
 function addBasicTooltipButton(label, icon, onClick, isFirstButton = false, iconOpacity) {
@@ -148,33 +147,24 @@ function addBasicTooltipButton(label, icon, onClick, isFirstButton = false, icon
       : "selection-popup-button button-with-border"
   );
 
-//   if (configs.buttonsStyle == "onlyicon" && configs.showButtonLabelOnHover)
-//     button.setAttribute("title", label);
-//   else {
-    button.textContent = label;
-    const buttonContainer = document.createElement("span");
-    buttonContainer.classList.add("button-container"); // Add styling class
-    buttonContainer.appendChild(button);
-    const icon3 = document.createElement("img");
-    icon3.classList.add("button-icon"); // Add styling class
-    icon3.src = configs.addIcon; // Assuming configs.icon has the image path
-    buttonContainer.setAttribute(
-        "class",
-        isFirstButton || configs.showButtonBorders == false
-          ? "selection-popup-button"
-          : "selection-popup-button button-with-border"
-      );
-    buttonContainer.insertBefore(icon3, button);
-//   } // Insert before button
+  const image = document.createElement("img");
+  image.src = chrome.runtime.getURL('../icons/button-icons/marker.svg');
+  button.appendChild(image);
+  console.log(image.src)
+  button.setAttribute(
+    "class",
+    isFirstButton || configs.showButtonBorders == false
+      ? "selection-popup-button"
+      : "selection-popup-button button-with-border"
+  );
 
-  // button.addEventListener("mousedown", onClick);
-  buttonContainer.onmousedown = onClick;
+  button.onmousedown = onClick;
 
   if (configs.reverseTooltipButtonsOrder && isFirstButton == false)
-    tooltip.insertBefore(buttonContainer, tooltip.children[1]);
-  else tooltip.appendChild(buttonContainer);
+    tooltip.insertBefore(button, tooltip.children[1]);
+  else tooltip.appendChild(button);
 
-  return buttonContainer;
+  return button;
 }
 
 /// Hide tooltip when mouse moved far from text selection

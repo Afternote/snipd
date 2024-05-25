@@ -7,6 +7,15 @@
   "icons": {
     "48": "images/snipdLogo8.png"
   },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/button-icons/bold.svg",
+        "icons/button-icons/marker.svg"
+      ],
+      "matches": ["<all_urls>"] 
+    }
+  ],
   "permissions": [
     "tabs",
     "activeTab",

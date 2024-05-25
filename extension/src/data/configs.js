@@ -1,5 +1,5 @@
 const configs = {
-    'addIcon': 'https://img.icons8.com/?size=100&id=1349&format=png&color=000000',
+    'addIcon': '../../../icons/button-icons/marker.svg',
     'hideOnScroll': true,
     'tooltipOpacity': 1.0,
     'shadowOpacity': 0.5,
