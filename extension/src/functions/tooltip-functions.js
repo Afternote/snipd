@@ -125,7 +125,7 @@ function setBorderRadiusForSideButtons(parent, applyOnlyToButtons = true) {
     : parent.children;
   const childrenLength = children.length;
   if (childrenLength == 1) {
-    children[0].style.borderRadius = onlyButtonBorderRadius;
+    children[0].style.borderRadius = 0;
   } else {
     const revertedVerticalButtons = configs.verticalLayoutTooltip && tooltipOnBottom;
     children[0].style.borderRadius = revertedVerticalButtons
@@ -140,23 +140,19 @@ function setBorderRadiusForSideButtons(parent, applyOnlyToButtons = true) {
 function addBasicTooltipButton(label, icon, onClick, isFirstButton = false, iconOpacity) {
   /// Used for basic button with action label + icon, when enabled
   const button = document.createElement("button");
+  button.classList.add("circular-button");
   button.setAttribute(
     "class",
     isFirstButton || configs.showButtonBorders == false
-      ? "selection-popup-button"
-      : "selection-popup-button button-with-border"
+      ? "selection-popup-button circular-button"
+      : "selection-popup-button circular-button" 
   );
 
   const image = document.createElement("img");
   image.src = chrome.runtime.getURL('../icons/button-icons/marker.svg');
   button.appendChild(image);
   console.log(image.src)
-  button.setAttribute(
-    "class",
-    isFirstButton || configs.showButtonBorders == false
-      ? "selection-popup-button"
-      : "selection-popup-button button-with-border"
-  );
+  
 
   button.onmousedown = onClick;
 
