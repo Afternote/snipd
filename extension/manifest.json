@@ -11,7 +11,10 @@
     {
       "resources": [
         "icons/button-icons/bold.svg",
-        "icons/button-icons/marker.svg"
+        "icons/button-icons/marker.svg",
+        "icons/button-icons/note.svg",
+        "icons/button-icons/snipd2.png",
+        "icons/button-icons/home.svg"
       ],
       "matches": ["<all_urls>"] 
     }

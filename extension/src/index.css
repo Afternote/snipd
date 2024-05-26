@@ -2,15 +2,15 @@
 .selection-tooltip {
   opacity: 0;
   display: inline-block;
+  position: absolute;
   background: black;
-  padding: var(--selecton-tooltip-inner-padding);
-  border-radius: 50%;
+  padding: 4px;
+  border-radius: 32px;
   z-index: 100001 !important;
   margin: 0px !important;
   box-sizing: unset !important;
   border: 0.25px solid black;
   min-width: fit-content !important;
-  left: -100%;
 }
 
 
@@ -100,8 +100,10 @@
   opacity: 0.0;
   /* z-index: 100001 !important; */
   z-index: -1;
+  position: absolute;
   margin: 0px !important;
   padding: 6px !important;
+  line-height: 1.0 !important;
   border: 0.25px solid var(--selecton-outline-color);
   background: var(--selecton-background-color) !important;
   font-size: var(--selecton-font-size) !important;
