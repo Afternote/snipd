@@ -41,6 +41,15 @@
   height: 40px !important; /* Adjust height as needed (should match width for circle) */
   border-radius: 50% !important; /* Set border-radius to 50% for a circle */
   border: 0px;
+  background: transparent;
+}
+
+.circular-button:hover {
+  background-color: blue;
+}
+
+.first-button{
+  margin-left: 4px;
 }
 
 .arrow-on-bottom {
@@ -70,7 +79,7 @@
   cursor: pointer;
   vertical-align: top !important;
   margin: 0px !important;
-  transition: background-color 25ms ease-in-out !important;
+  /* transition: background-color 25ms ease-in-out !important; */
   position: relative;
   background: black;
 }
@@ -80,7 +89,7 @@
 }
 
 .color-highlight {
-  color: var(--selecton-secondary-color) !important;
+  /* color: var(--selecton-secondary-color) !important; */
 }
 
 .selection-popup-button:hover,
@@ -89,7 +98,8 @@
   /* background-color: var(--selection-button-background-hover) !important; */
   cursor: pointer;
   /* color: white !important; */
-  transition: background-color 25ms ease-in-out !important;
+  background:gray;
+  /* transition: background-color 25ms ease-in-out !important; */
   position: relative;
 }
 

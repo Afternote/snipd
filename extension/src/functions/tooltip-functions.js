@@ -143,8 +143,8 @@ function addBasicTooltipButton(label, icon, onClick, isFirstButton = false, icon
   button.setAttribute(
     "class",
     isFirstButton || configs.showButtonBorders == false
-      ? "selection-popup-button circular-button"
-      : "selection-popup-button circular-button"
+      ? "selection-popup-button circular-button first-button"
+      : "selection-popup-button circular-button first-button"
   );
 
   const image = document.createElement("img");
