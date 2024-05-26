@@ -166,6 +166,11 @@ function addBasicTooltipButton(label, icon, onClick, isFirstButton = false, icon
   snipdLogoImage.src = chrome.runtime.getURL("../icons/button-icons/note.svg");
   sidepanelButton.appendChild(snipdLogoImage);
 
+  sidepanelButton.onmousedown = () => {
+    console.log("sidepanel clicked");
+    chrome.runtime.sendMessage({ type: "open-sidepanel" });
+  };
+
   const centralPageButton = document.createElement("button");
   centralPageButton.classList.add("circular-button");
   centralPageButton.setAttribute(
@@ -184,10 +189,7 @@ function addBasicTooltipButton(label, icon, onClick, isFirstButton = false, icon
 
   const separator = document.createElement("div");
   separator.classList.add("tooltip-separator");
-  separator.setAttribute(
-    "class",
-    "tooltip-separator"
-  )
+  separator.setAttribute("class", "tooltip-separator");
   tooltip.appendChild(separator);
 
   tooltip.appendChild(sidepanelButton);
