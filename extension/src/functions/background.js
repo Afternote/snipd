@@ -18,6 +18,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       console.log(window.id)
       chrome.sidePanel.open({ windowId: window.id });
     });
+  }else if(message.type === "open-central-page"){
+    chrome.runtime.openOptionsPage();
   }
 });
 

@@ -183,6 +183,11 @@ function addBasicTooltipButton(label, icon, onClick, isFirstButton = false, icon
   homeImage.src = chrome.runtime.getURL("../icons/button-icons/home.svg");
   centralPageButton.appendChild(homeImage);
 
+  centralPageButton.onmousedown = () => {
+    chrome.runtime.sendMessage({ type: "open-central-page" });
+
+  }
+
   if (configs.reverseTooltipButtonsOrder && isFirstButton == false)
     tooltip.insertBefore(button, tooltip.children[1]);
   else tooltip.appendChild(button);
