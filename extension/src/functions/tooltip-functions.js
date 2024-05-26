@@ -1,4 +1,3 @@
-
 function returnTooltipRevealTransform(endPosition = true, shouldShift = true) {
   const dxOffset = shouldShift ? "-50%" : "0";
   const dyPercentOffset = configs.verticalLayoutTooltip ? 30 : 100;
@@ -145,45 +144,54 @@ function addBasicTooltipButton(label, icon, onClick, isFirstButton = false, icon
     "class",
     isFirstButton || configs.showButtonBorders == false
       ? "selection-popup-button circular-button"
-      : "selection-popup-button circular-button" 
+      : "selection-popup-button circular-button"
   );
 
   const image = document.createElement("img");
-  image.src = chrome.runtime.getURL('../icons/button-icons/snipd2.png');
+  image.src = chrome.runtime.getURL("../icons/button-icons/snipd2.png");
   button.appendChild(image);
-  console.log(image.src)
-  
+  console.log(image.src);
+
   button.onmousedown = onClick;
 
-  const sidepanelButton = document.createElement("button")
+  const sidepanelButton = document.createElement("button");
   sidepanelButton.classList.add("circular-button");
   sidepanelButton.setAttribute(
     "class",
     isFirstButton || configs.showButtonBorders == false
       ? "selection-popup-button circular-button"
-      : "selection-popup-button circular-button" 
+      : "selection-popup-button circular-button"
   );
-  const snipdLogoImage = document.createElement("img")
-  snipdLogoImage.src = chrome.runtime.getURL('../icons/button-icons/note.svg')
-  sidepanelButton.appendChild(snipdLogoImage)
+  const snipdLogoImage = document.createElement("img");
+  snipdLogoImage.src = chrome.runtime.getURL("../icons/button-icons/note.svg");
+  sidepanelButton.appendChild(snipdLogoImage);
 
-  const centralPageButton = document.createElement("button")
+  const centralPageButton = document.createElement("button");
   centralPageButton.classList.add("circular-button");
   centralPageButton.setAttribute(
     "class",
     isFirstButton || configs.showButtonBorders == false
       ? "selection-popup-button circular-button"
-      : "selection-popup-button circular-button" 
+      : "selection-popup-button circular-button"
   );
-  const homeImage = document.createElement("img")
-  homeImage.src = chrome.runtime.getURL('../icons/button-icons/home.svg')
-  centralPageButton.appendChild(homeImage)
+  const homeImage = document.createElement("img");
+  homeImage.src = chrome.runtime.getURL("../icons/button-icons/home.svg");
+  centralPageButton.appendChild(homeImage);
 
   if (configs.reverseTooltipButtonsOrder && isFirstButton == false)
     tooltip.insertBefore(button, tooltip.children[1]);
   else tooltip.appendChild(button);
-  tooltip.appendChild(sidepanelButton)
-  tooltip.appendChild(centralPageButton)
+
+  const separator = document.createElement("div");
+  separator.classList.add("tooltip-separator");
+  separator.setAttribute(
+    "class",
+    "tooltip-separator"
+  )
+  tooltip.appendChild(separator);
+
+  tooltip.appendChild(sidepanelButton);
+  tooltip.appendChild(centralPageButton);
 
   return button;
 }

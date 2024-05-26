@@ -13,6 +13,14 @@
   min-width: fit-content !important;
 }
 
+.tooltip-separator {
+  color: white;
+  background-color: white; /* Change color as desired */
+  height: 30px;
+  margin: 4px 4px 0px 4px;
+  display: inline-flex;
+  width: 0.5px;
+}
 
 /* Tooltip arrow */
 .selection-tooltip-arrow {
@@ -50,7 +58,7 @@
   width: 15px;
   height: 15px;
   transform: rotate(45deg);
-  
+
   background: black;
 
   /* apply clip-path for future blurred tooltip option */
@@ -85,7 +93,6 @@
   position: relative;
 }
 
-
 /* Clip content in buttons with hover panels */
 .button-with-top-hover-panel {
 }
@@ -96,14 +103,15 @@
 
 .hover-vertical-tooltip {
   all: revert;
-  transition: transform var(--selecton-anim-duration) ease-out, opacity var(--selecton-anim-duration) ease-out !important;
-  opacity: 0.0;
+  transition: transform var(--selecton-anim-duration) ease-out,
+    opacity var(--selecton-anim-duration) ease-out !important;
+  opacity: 0;
   /* z-index: 100001 !important; */
   z-index: -1;
   position: absolute;
   margin: 0px !important;
   padding: 6px !important;
-  line-height: 1.0 !important;
+  line-height: 1 !important;
   border: 0.25px solid var(--selecton-outline-color);
   background: var(--selecton-background-color) !important;
   font-size: var(--selecton-font-size) !important;
@@ -229,7 +237,7 @@
 
 .no-filter-icon {
   filter: none !important;
-  opacity: 1.0 !important;
+  opacity: 1 !important;
 }
 
 .category-tooltip-icon {
@@ -268,7 +276,7 @@
 }
 
 .marker-scrollbar-hint:hover {
-  opacity: 1.0;
+  opacity: 1;
 }
 
 .marker-scrollbar-hint .marker-scrollbar-tooltip {
@@ -328,7 +336,6 @@
   background: red;
 }
 
-
 /* Vertical layout for tooltip */
 .selection-tooltip.vertical-layout-tooltip {
   max-height: unset !important;
@@ -379,7 +386,6 @@
   border-top: unset !important;
   border-bottom: 1px solid var(--selection-button-background-hover) !important;
 }
-
 
 /* Info panel */
 .selecton-info-panel {
