@@ -35,4 +35,5 @@ const configs = {
     'hideTooltipWhenCursorMovesAway': true,
     'showInfoPanel': true,
     'customSearchOptionsDisplay': 'hoverCustomSearchStyle', 
+    'tooltipEnabled': false
 };

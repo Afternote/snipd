@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import astronautUfo from "../assets/ufo_ast.png";
 import { Button } from "@mantine/core";
 import { openAllSnipdPage } from "../utils/snippitUtils";
@@ -9,19 +9,38 @@ import { MantineProvider, Switch } from "@mantine/core";
 
 export function EmptySelection() {
   const [isNewNote, setIsNewNote] = useState(false);
-  const [researchMode, setResearchMode] = useState(true);
+  const [researchMode, setResearchMode] = useState(false); // Initial state set to false
+
+  const handleResearchSwitchClick = () => {
+    setResearchMode(!researchMode);
+  };
+
+  useEffect(() => {
+    // Retrieve researchMode from local storage on component mount
+    chrome.storage.local.get("tooltip_enabled", (data) => {
+      const storedResearchMode = data?.tooltip_enabled ?? true; // Default to true if not found
+      setResearchMode(storedResearchMode);
+    });
+  }, []); // Empty dependency array to run only once on mount
+
+  useEffect(() => {
+    // Retrieve researchMode from local storage on component mount
+    chrome.storage.local.set({"tooltip_enabled": researchMode})
+    
+  }, [researchMode]); 
 
   const NoSelect = () => {
     return (
       <div className="emptySelectionDiv">
         <div
-          style={{ cursor: "", display: "flex", justifyContent: "flex-end", marginRight: "16px" }}>
+          style={{ cursor: "", display: "flex", justifyContent: "flex-end", marginRight: "16px" }}
+        >
           <Switch
             style={{ cursor: "pointer" }}
             color="indigo"
             size="xs"
             checked={researchMode}
-            onChange={(event) => setResearchMode(!researchMode)}
+            onChange={handleResearchSwitchClick}
             label={
               researchMode
                 ? "Turn off Research Mode (disables tooltip)"
@@ -38,9 +57,9 @@ export function EmptySelection() {
                 backgroundColor: "rgba(244, 244, 244, 0.9)",
                 padding: "16px",
                 borderRadius: "12px",
-              }}>
+              }}
+            >
               <Title order={3}>Uh Oh! Nothing Found</Title>
-
               <Text fz="md" lh="sm" style={{ padding: "8px" }}>
                 To save a snippet, please make a selection. It appears that no{" "}
                 <b>text/image/link</b> has been selected.
@@ -54,11 +73,9 @@ export function EmptySelection() {
             style={{ width: "90%", margin: "4px" }}
             onClick={() => setIsNewNote(true)}
             color="cyan"
-            radius="xl">
-            <MantineProvider
-              theme={{
-                fontFamily: "Roboto",
-              }}>
+            radius="xl"
+          >
+            <MantineProvider theme={{ fontFamily: "Roboto" }}>
               <Text fz="md" lh="sm" style={{ padding: "8px" }}>
                 Make note
               </Text>
@@ -69,11 +86,9 @@ export function EmptySelection() {
             style={{ width: "90%", margin: "4px" }}
             onClick={() => openAllSnipdPage()}
             color="cyan"
-            radius="xl">
-            <MantineProvider
-              theme={{
-                fontFamily: "Roboto",
-              }}>
+            radius="xl"
+          >
+            <MantineProvider theme={{ fontFamily: "Roboto" }}>
               <Text fz="md" lh="sm" style={{ padding: "8px" }}>
                 Central Page
               </Text>
