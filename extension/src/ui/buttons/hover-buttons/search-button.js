@@ -49,10 +49,21 @@ async function setHoverForSearchButton(addToCollectionButton) {
         snipd_store.unshift(snipd);
         chrome.storage.local.set({ snipd_store: snipd_store }).then(() => {
           hideTooltip();
+          clearSelection()
         });
       });
     });
   }
+
+  function clearSelection() {
+    if (window.getSelection) {
+      const selection = window.getSelection();
+      selection.removeAllRanges(); // For most browsers
+    } else if (document.selection && document.selection.empty) { // For older IE versions
+      document.selection.empty();
+    }
+  }
+  
 
   // Cleanup
   containerPrototype.remove();

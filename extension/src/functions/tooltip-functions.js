@@ -163,7 +163,7 @@ function addBasicTooltipButton(label, icon, onClick, isFirstButton = false, icon
       : "selection-popup-button circular-button"
   );
   const snipdLogoImage = document.createElement("img");
-  snipdLogoImage.src = chrome.runtime.getURL("../icons/button-icons/note.svg");
+  snipdLogoImage.src = chrome.runtime.getURL("../icons/button-icons/marker.svg");
   sidepanelButton.appendChild(snipdLogoImage);
 
   sidepanelButton.onmousedown = () => {
