@@ -1,38 +1,26 @@
 /* Tooltip */
 .selection-tooltip {
-  all: revert;
-  background: var(--selecton-background-color);
   opacity: 0;
   display: inline-block;
   position: absolute;
-  padding: var(--selecton-tooltip-inner-padding);
-  color: white;
-  border-radius: var(--selecton-border-radius);
-  font-stretch: condensed;
-  text-decoration: none;
+  background: black;
+  padding: 4px;
+  border-radius: 32px;
   z-index: 100001 !important;
-  /* max-height: 24px !important; */
   margin: 0px !important;
-  line-height: 1.0 !important;
   box-sizing: unset !important;
-  border: 0.25px solid var(--selecton-outline-color);
+  border: 0.25px solid black;
   min-width: fit-content !important;
-  white-space: nowrap !important;
-  /* backdrop-filter: blur(5px) !important; */
 }
 
-/* Blur experiments */
-/* .selection-tooltip::before {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0; left: 0; right: 0;
-  backdrop-filter: blur(5px) !important;
+.tooltip-separator {
+  color: white;
+  background-color: white; /* Change color as desired */
+  height: 30px;
+  margin: 4px 4px 0px 4px;
+  display: inline-flex;
+  width: 0.5px;
 }
-
-.hover-vertical-tooltip {
-  backdrop-filter: blur(5px) !important;
-}*/
-
 
 /* Tooltip arrow */
 .selection-tooltip-arrow {
@@ -48,6 +36,22 @@
   transform: translate(-12.5px, -1px);
 }
 
+.circular-button {
+  width: 40px !important; /* Adjust width as needed */
+  height: 40px !important; /* Adjust height as needed (should match width for circle) */
+  border-radius: 50% !important; /* Set border-radius to 50% for a circle */
+  border: 0px;
+  background: transparent;
+}
+
+.circular-button:hover {
+  background-color: blue;
+}
+
+.first-button{
+  margin-left: 4px;
+}
+
 .arrow-on-bottom {
   top: unset;
   bottom: 100%;
@@ -59,13 +63,12 @@
   content: "";
   position: absolute;
   left: 25%;
-  bottom: 50%;
+  bottom: 75%;
   width: 15px;
   height: 15px;
   transform: rotate(45deg);
-  border-bottom: 0.25px solid var(--selecton-outline-color);
-  border-right: 0.25px solid var(--selecton-outline-color);
-  background: var(--selecton-background-color);
+
+  background: black;
 
   /* apply clip-path for future blurred tooltip option */
   /* clip-path: polygon(0% 100%, 100% 0%, 100% 100%) !important; */
@@ -73,28 +76,12 @@
 
 /* Buttons */
 .selection-popup-button {
-  all: revert;
-  font: status-bar !important;
-  font-weight: 500 !important;
-  letter-spacing: 0 !important;
-  color: var(--selection-button-foreground) !important;
-  background-color: transparent !important;
   cursor: pointer;
-  border: none !important;
-  box-shadow: none !important;
-  padding: var(--selecton-button-padding) !important;
   vertical-align: top !important;
-  font-family: Arial, Helvetica, sans-serif !important;
-  height: 100% !important;
-  min-height: 100% !important;
   margin: 0px !important;
-  transition: background-color 25ms ease-in-out !important;
-  text-transform: none !important;
-  outline: none !important;
-  text-align: center !important;
-  font-size: var(--selecton-font-size) !important;
-  line-height: 1.2 !important;
+  /* transition: background-color 25ms ease-in-out !important; */
   position: relative;
+  background: black;
 }
 
 .tooltip-with-icons .selection-popup-button span {
@@ -102,24 +89,22 @@
 }
 
 .color-highlight {
-  color: var(--selecton-secondary-color) !important;
+  /* color: var(--selecton-secondary-color) !important; */
 }
 
 .selection-popup-button:hover,
 .highlighted-popup-button {
   all: revert;
-  background-color: var(--selection-button-background-hover) !important;
-  background-clip: padding-box !important;
+  /* background-color: var(--selection-button-background-hover) !important; */
   cursor: pointer;
-  color: white !important;
-  transition: background-color 25ms ease-in-out !important;
+  /* color: white !important; */
+  background:gray;
+  /* transition: background-color 25ms ease-in-out !important; */
   position: relative;
 }
 
-
 /* Clip content in buttons with hover panels */
 .button-with-top-hover-panel {
-  clip-path: polygon(-2000% -2000%, 2000% -2000%, 2000% 100%, -2000% 100%) !important;
 }
 
 .button-with-bottom-hover-panel {
@@ -128,14 +113,15 @@
 
 .hover-vertical-tooltip {
   all: revert;
-  transition: transform var(--selecton-anim-duration) ease-out, opacity var(--selecton-anim-duration) ease-out !important;
-  opacity: 0.0;
+  transition: transform var(--selecton-anim-duration) ease-out,
+    opacity var(--selecton-anim-duration) ease-out !important;
+  opacity: 0;
   /* z-index: 100001 !important; */
   z-index: -1;
   position: absolute;
   margin: 0px !important;
   padding: 6px !important;
-  line-height: 1.0 !important;
+  line-height: 1 !important;
   border: 0.25px solid var(--selecton-outline-color);
   background: var(--selecton-background-color) !important;
   font-size: var(--selecton-font-size) !important;
@@ -261,7 +247,7 @@
 
 .no-filter-icon {
   filter: none !important;
-  opacity: 1.0 !important;
+  opacity: 1 !important;
 }
 
 .category-tooltip-icon {
@@ -300,7 +286,7 @@
 }
 
 .marker-scrollbar-hint:hover {
-  opacity: 1.0;
+  opacity: 1;
 }
 
 .marker-scrollbar-hint .marker-scrollbar-tooltip {
@@ -360,7 +346,6 @@
   background: red;
 }
 
-
 /* Vertical layout for tooltip */
 .selection-tooltip.vertical-layout-tooltip {
   max-height: unset !important;
@@ -411,7 +396,6 @@
   border-top: unset !important;
   border-bottom: 1px solid var(--selection-button-background-hover) !important;
 }
-
 
 /* Info panel */
 .selecton-info-panel {

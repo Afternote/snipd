@@ -11,6 +11,18 @@ chrome.tabs.onActivated.addListener(async function (activeInfo) {
   });
 });
 
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === "open-sidepanel") {
+    console.log("message recieved")
+    chrome.windows.getCurrent((window) => {
+      console.log(window.id)
+      chrome.sidePanel.open({ windowId: window.id });
+    });
+  }else if(message.type === "open-central-page"){
+    chrome.runtime.openOptionsPage();
+  }
+});
+
 chrome.runtime.onConnect.addListener(function (port) {
   if (port.name === "mySidepanel") {
     port.onDisconnect.addListener(async () => {
