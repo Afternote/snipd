@@ -4,14 +4,32 @@ import { Button } from "@mantine/core";
 import { openAllSnipdPage } from "../utils/snippitUtils";
 import "../styles/EmptySelection.css";
 import { NewNote } from "./NewNote";
-import { Text, MantineProvider, Title, Card } from "@mantine/core";
+import { Text, Title, Card } from "@mantine/core";
+import { MantineProvider, Switch } from "@mantine/core";
 
 export function EmptySelection() {
   const [isNewNote, setIsNewNote] = useState(false);
+  const [researchMode, setResearchMode] = useState(true);
 
   const NoSelect = () => {
     return (
       <div className="emptySelectionDiv">
+        <div
+          style={{ cursor: "", display: "flex", justifyContent: "flex-end", marginRight: "16px" }}>
+          <Switch
+            style={{ cursor: "pointer" }}
+            color="indigo"
+            size="xs"
+            checked={researchMode}
+            onChange={(event) => setResearchMode(!researchMode)}
+            label={
+              researchMode
+                ? "Turn off Research Mode (disables tooltip)"
+                : "Turn on Research Mode (enables tooltip)"
+            }
+            labelPosition="left"
+          />
+        </div>
         <center>
           <img className="astronautUfoImage" src={astronautUfo} alt="Logo" />
           <MantineProvider theme={{ fontFamily: "Roboto" }}>
