@@ -120,6 +120,9 @@
   z-index: -1;
   position: absolute;
   margin: 0px !important;
+  overflow: auto;
+  max-height: 200px;
+  min-width: 100px;
   padding: 6px !important;
   line-height: 1 !important;
   border: 0.25px solid var(--selecton-outline-color);
