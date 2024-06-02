@@ -134,6 +134,9 @@ function initMouseListeners() {
         }
       } catch (e) { }
 
+      checkTextField(e, activeEl);
+
+
       if (selectedText.length > 0) {
         /// create tooltip for selection
         setCssStyles();
@@ -168,6 +171,43 @@ function initMouseListeners() {
       document.documentElement.style.setProperty('--selecton-secondary-color', secondaryColor);
     }, 0);
   }
+
+  function checkTextField(e, activeEl) {
+    /// check if textfield is focused
+
+    isTextFieldFocused = (activeEl.tagName === "INPUT" && (activeEl.getAttribute('type') == 'text' || activeEl.getAttribute('type') == 'email' || activeEl.getAttribute('name') == 'text')) ||
+      activeEl.tagName === "TEXTAREA" ||
+      activeEl.getAttribute('contenteditable') !== null;
+
+    if (isTextFieldFocused && configs.addActionButtonsForTextFields) {
+
+      /// Special handling for Firefox 
+      /// (https://stackoverflow.com/questions/20419515/window-getselection-of-textarea-not-working-in-firefox)
+      if (selectedText == '' && navigator.userAgent.indexOf("Firefox") > -1) {
+        const ta = document.querySelector(':focus');
+        if (ta != null && ta.value != undefined) {
+          selectedText = ta.value.substring(ta.selectionStart, ta.selectionEnd);
+          selection = ta.value.substring(ta.selectionStart, ta.selectionEnd);
+        }
+      }
+
+      /// Hide previous 'paste' button
+      // if (selectedText == '') hideTooltip(); 
+
+      /// Ignore single click on text field with inputted value
+      try {
+        isTextFieldEmpty = true;
+        if (activeEl.getAttribute('contenteditable') != null && activeEl.innerHTML != '' && selectedText == '' && activeEl.innerHTML != '<br>') {
+          isTextFieldEmpty = false;
+          if (configs.addPasteOnlyEmptyField) isTextFieldFocused = false;
+        } else if (activeEl.value && activeEl.value.trim() !== '' && selectedText == '') {
+          isTextFieldEmpty = false;
+          if (configs.addPasteOnlyEmptyField) isTextFieldFocused = false;
+        }
+      } catch (e) { console.log(e); }
+    }
+  }
+
 
   function initTooltip(e) {
     

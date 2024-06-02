@@ -56,8 +56,10 @@ const Note = ({ snipd }) => {
     setSnipdCategories((old) => [...old, newCategory]);
   };
 
-  const handleSaveSnippet = () => {
+  const handleSaveSnippet = async () => {
     snipd.category = category;
+    await chrome.storage.local.set({"last_category": category})
+    
     snipd.customNotes = customNotes;
     (snipd.id = uuidv4()),
       saveSnipd(snipd).then(() => {
@@ -71,11 +73,10 @@ const Note = ({ snipd }) => {
   };
 
   const handleErrorClick = () => {
-    setErrorFlag(false);
-    setErrorMessage("");
+    setErrorFlag(false); setErrorMessage("");
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     const fetchData = async () => {
       try {
         const categories = await fetchSnipdCategories();
@@ -85,7 +86,21 @@ const Note = ({ snipd }) => {
       }
     };
 
+    // chrome.storage.local.get("last_category", (data) => {
+    //   const last_category = data?.last_category
+    //   setCategory(last_category)
+
+    // });
+
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    chrome.storage.local.get("last_category", (data) => {
+      console.log(data)
+      const last_category = data?.last_category
+      setCategory(last_category)
+    });
   }, []);
 
   return (

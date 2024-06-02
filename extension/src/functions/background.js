@@ -38,6 +38,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
       url: "https://snipd-landing.vercel.app/",
     });
     await chrome.storage.local.set({"tooltip_enabled": true})
+    await chrome.storage.local.set({"last_category": "Default"})
 
   }
 });
