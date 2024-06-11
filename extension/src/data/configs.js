@@ -6,6 +6,7 @@ const configs = {
     'borderRadius': 3,
     'shiftTooltipWhenWebsiteHasOwn': false,
     'draggableTooltip': false,
+    'dontSnapTextfieldSelection': true,
     'enabled': true,
     'hideOnKeypress': true,
     'middleClickHidesTooltip': false,

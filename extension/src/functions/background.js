@@ -32,11 +32,14 @@ chrome.runtime.onConnect.addListener(function (port) {
   }
 });
 
-chrome.runtime.onInstalled.addListener((details) => {
+chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
     chrome.tabs.create({
       url: "https://snipd-landing.vercel.app/",
     });
+    await chrome.storage.local.set({"tooltip_enabled": true})
+    await chrome.storage.local.set({"last_category": "Default"})
+
   }
 });
 

@@ -31,6 +31,7 @@ const CategoriesMenuMantine = ({ category, addCategory, categoriesList, setCateg
           variant="light"
           color="rgba(73, 152, 201, 1)">
           Category:
+          {console.log(category)}
           <Button style={{ color: "rgba(196, 77, 77, 1)" }} variant="transparent" size="sm">
             {category}
             <EditIcon size={14} />

@@ -70,8 +70,6 @@
 
   background: black;
 
-  /* apply clip-path for future blurred tooltip option */
-  /* clip-path: polygon(0% 100%, 100% 0%, 100% 100%) !important; */
 }
 
 /* Buttons */
@@ -116,10 +114,12 @@
   transition: transform var(--selecton-anim-duration) ease-out,
     opacity var(--selecton-anim-duration) ease-out !important;
   opacity: 0;
-  /* z-index: 100001 !important; */
   z-index: -1;
   position: absolute;
   margin: 0px !important;
+  overflow: auto;
+  max-height: 200px;
+  min-width: 100px;
   padding: 6px !important;
   line-height: 1 !important;
   border: 0.25px solid var(--selecton-outline-color);
