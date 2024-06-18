@@ -27,10 +27,15 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting, categoryList }) => 
     setModalState(true);
   };
 
-
   return (
     <>
-      <WordExportSelectionModalComponent snippets={snippets} modalState={modalState} setModalState={setModalState} handleModalClose={handleModalClose} categoryList={categoryList}/>
+      <WordExportSelectionModalComponent
+        snippets={snippets}
+        modalState={modalState}
+        setModalState={setModalState}
+        handleModalClose={handleModalClose}
+        categoryList={categoryList}
+      />
       <div
         style={{
           display: "flex",
@@ -43,6 +48,13 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting, categoryList }) => 
             <OfficeIcon style={{ color: "white", width: "70%", height: "70%" }} />
           </div>
           Export snippets as Doc
+        </Button>
+
+        <Button variant="light">
+          {/* <div style={{ margin: "8px" }}>
+            <OfficeIcon style={{ color: "white", width: "70%", height: "70%" }} />
+          </div> */}
+          Summarize Snippets (With Gemini){" "}
         </Button>
 
         <Group
