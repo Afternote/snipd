@@ -5,6 +5,8 @@ import SearchIcon from "../assets/icons/SearchIcon";
 import PrinterIcon from "../assets/icons/PrinterIcon";
 import OfficeIcon from "../assets/OfficeIcon";
 import WordExportSelectionModalComponent from "./Export/WordExportSelectionModalComponent";
+import IconGemini from "../assets/geminiIcon.png";
+import SummarizeSnippetsModalComponent from "./Summary/SummarizeSnippetsModalComponent";
 
 const MantineSearchBar = ({ snippets, onSearch, setPrinting, categoryList }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,6 +14,8 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting, categoryList }) => 
     setSearchQuery(event.target.value);
   };
   const [modalState, setModalState] = useState(false);
+  const [summarizeSnippetModalState, setSummarizeSnippetModalState] = useState(false);
+
   const print = () => {
     setPrinting(true);
     setTimeout(() => {
@@ -27,6 +31,14 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting, categoryList }) => 
     setModalState(true);
   };
 
+  const handleSummarizeSnippetModalClose = () => {
+    setSummarizeSnippetModalState(false);
+  };
+
+  const openSummarizeModel = () => {
+    setSummarizeSnippetModalState(true);
+  };
+
   return (
     <>
       <WordExportSelectionModalComponent
@@ -35,6 +47,11 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting, categoryList }) => 
         setModalState={setModalState}
         handleModalClose={handleModalClose}
         categoryList={categoryList}
+      />
+      <SummarizeSnippetsModalComponent
+        modalState={summarizeSnippetModalState}
+        setModalState={setSummarizeSnippetModalState}
+        handleModalClose={handleSummarizeSnippetModalClose}
       />
       <div
         style={{
@@ -50,11 +67,12 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting, categoryList }) => 
           Export snippets as Doc
         </Button>
 
-        <Button variant="light">
-          {/* <div style={{ margin: "8px" }}>
-            <OfficeIcon style={{ color: "white", width: "70%", height: "70%" }} />
-          </div> */}
-          Summarize Snippets (With Gemini){" "}
+        <Button onClick={openSummarizeModel} variant="light">
+          
+          <div style={{ margin: "8px" }}>
+            <img src={IconGemini} style={{ color: "white", width: "24px", height: "24px" }} />
+          </div>
+          Summarize Snippets (With Gemini)
         </Button>
 
         <Group
