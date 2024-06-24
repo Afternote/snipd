@@ -52,6 +52,8 @@ const MantineSearchBar = ({ snippets, onSearch, setPrinting, categoryList }) => 
         modalState={summarizeSnippetModalState}
         setModalState={setSummarizeSnippetModalState}
         handleModalClose={handleSummarizeSnippetModalClose}
+        categoryList={categoryList}
+
       />
       <div
         style={{
