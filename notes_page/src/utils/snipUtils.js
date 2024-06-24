@@ -89,6 +89,16 @@ const fetchDataFromChromeStorage = async (keys) => {
   }
 };
 
+const fetchDataFromChromeStorageByCategory = async (key, category) => {
+  try {
+    const { snipd_store } = await fetchDataFromChromeStorage(key);
+    return snipd_store.filter((a) => a.category === category);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
 function filterCategories(categoryQuery, categories) {
   return categories.filter((a) => {
     return a.toLowerCase().includes(categoryQuery.toLowerCase());
@@ -103,5 +113,6 @@ export {
   filterSnipds,
   getSnipdCounts,
   fetchDataFromChromeStorage,
+  fetchDataFromChromeStorageByCategory,
   filterCategories,
 };

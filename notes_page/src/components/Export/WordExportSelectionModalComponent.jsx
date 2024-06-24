@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { saveAs } from "file-saver";
-import { Switch, Text, Checkbox, SimpleGrid, Modal, Button } from "@mantine/core";
-import { Document, HeadingLevel, ImageRun, Packer, Paragraph, TextRun } from "docx";
+import { Text, Checkbox, SimpleGrid, Modal, Button } from "@mantine/core";
+import { Document, HeadingLevel,Packer, Paragraph, TextRun } from "docx";
 import { MultiSelect } from "@mantine/core";
 import { SegmentedControl } from "@mantine/core";
 
@@ -25,7 +25,7 @@ const WordExportSelectionModalComponent = (props) => {
     const snippetsToExport = props.snippets.filter((snippet) => {
       if (!categoriesFilterState) {
         return true;
-      }
+      }q
       return selectedCategories.includes(snippet.category);
     });
 
