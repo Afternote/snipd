@@ -37,7 +37,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     chrome.tabs.create({
       url: "https://snipd-landing.vercel.app/",
     });
-    await chrome.storage.local.set({"tooltip_enabled": true})
+    await chrome.storage.local.set({"tooltip_enabled": false})
     await chrome.storage.local.set({"last_category": "Default"})
 
   }
