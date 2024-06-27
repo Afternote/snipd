@@ -35,8 +35,8 @@ const SummarizeSnippetsModalComponent = (props) => {
       setLoading(true);
 
       // Fetch data from Chrome Storage by category
-      const data = await fetchDataFromChromeStorageByCategory(CACHE_KEYS.SNIPD_STORE, value);
-      
+      const data= await fetchDataFromChromeStorageByCategory(CACHE_KEYS.SNIPD_STORE, value);
+      const dataWithoutImagesOrLinks = data.filter((item) => item.type !== "image" && item.type !== "link");
       // Send a POST request to the Gemini API
       const response = await fetch(
         "http://ec2-13-200-252-204.ap-south-1.compute.amazonaws.com:4040/gemini",
@@ -45,7 +45,7 @@ const SummarizeSnippetsModalComponent = (props) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify(dataWithoutImagesOrLinks),
         }
       );
 
